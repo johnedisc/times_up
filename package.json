@@ -6,6 +6,9 @@
   "repository": "https://github.com/johnedisc/times_up.git",
   "author": "johnedisc",
   "license": "MIT",
+  "scripts": {
+    "dev": "tsc src/ts/index.ts && open src/app.html"
+  },
   "dependencies": {
     "typescript": "^5.1.6"
   }
