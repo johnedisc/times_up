@@ -1,11 +1,14 @@
-const printNumber = ():void => {
-
-  const div: HTMLElement = document.createElement('div');
-  div.innerHTML = '6';
-  div.classList.add
-  document.querySelector('#container');
+const buildStartScreen = ():void => {
+  const h1: HTMLElement = document.createElement('h1');
+  h1.innerHTML = 'OPEN';
+  h1.classList.add('start-screen');
+  document.querySelector('#container')?.appendChild(h1);
 };
 
 window.addEventListener('load', (event) => {
-  console.log('this is the main event: ', event);
+  screen.orientation.lock("landscape");
+  console.log('is this is the main event: ', event);
+  buildStartScreen();
 });
+
+
