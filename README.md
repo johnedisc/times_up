@@ -1,6 +1,30 @@
 #times-up.
 ### an interval timer app (kind of like this, but better)
 
+### screens
+
+[Tap 0.0](./refImages/Interval Timer TAP 0.0 START SCREEN.jpg) is the screen before start. The name of the interval sequence is displayed (I accidentally gave the full sequence the same name as the first interval, which is confusing).
+
+Tap 1.0 is the result of the first tap: the name of the Interval 1 is displayed at the top, and a countdown of the previously specified duration begins.
+
+Tap 1.1 illustrates the automatic transition to counting up in red numerals if the Interval 1 countdown reaches 0:00 before Tap 2. Countup in red continues ad infinitum until Tap 2.
+
+Tap 2.0 illustrates the PLUS/MINUS option deselected: finishing the preceding interval over/under time does not add or subtract time from the following interval.
+
+Tap 3.0 illustrates the initiation of an early tap to end Interval 2.
+
+Tap 3.1 shows the result of that early tap with the PLUS/MINUS option selected: the balance of the time from Interval 2 has been added to the normally-allotted time for Interval 3, which immediately starts counting down as it would under normal conditions; the addition of time is indicated by a change to blue digits.
+
+Tap 3.2 illustrates a change back to black digits once the added time from the previous interval has elapsed.
+
+Tap 4.0 illustrates the initiation of a late tap to end Interval 3; the clock has started counting up from 0:00. Red digits indicate overtime.
+
+Tap 4.1 shows the result of the late tap: the overage from Interval 3 has been subtracted from the time normally allotted for Interval 4. This abbreviated period is indicated by a change to yellow digits; they will remain yellow for the duration of Interval 4 (switching to red if Interval 4 runs long, of course).
+
+I think this covers all the options I mentioned, at least as far as the bulk of the UI is concerned. Obviously it needs some kind of menu for editing interval names / durations / colors and toggling the plus/minus option.
+
+### logic
+
 CUSTOMIZABLE OPTIONS:
 Number of intervals
 Duration of each interval
