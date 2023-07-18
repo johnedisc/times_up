@@ -1,7 +1,7 @@
 var printNumber = function () {
     var div = document.createElement('div');
     div.innerHTML = '6';
-    div.classList;
+    div.classList.add;
     document.querySelector('#container');
 };
 window.addEventListener('load', function (event) {
