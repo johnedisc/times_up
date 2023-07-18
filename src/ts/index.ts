@@ -2,7 +2,7 @@ const printNumber = ():void => {
 
   const div: HTMLElement = document.createElement('div');
   div.innerHTML = '6';
-  div.classList
+  div.classList.add
   document.querySelector('#container');
 };
 
