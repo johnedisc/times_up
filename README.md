@@ -3,7 +3,8 @@
 
 ### screens
 
-[Tap 0.0](./refImages/Interval Timer TAP 0.0 START SCREEN.jpg) is the screen before start. The name of the interval sequence is displayed (I accidentally gave the full sequence the same name as the first interval, which is confusing).
+![tap 0.0]('./refImages/Interval Timer TAP 0.0 START SCREEN.jpg') 
+Tap 0.0 is the screen before start. The name of the interval sequence is displayed (I accidentally gave the full sequence the same name as the first interval, which is confusing).
 
 Tap 1.0 is the result of the first tap: the name of the Interval 1 is displayed at the top, and a countdown of the previously specified duration begins.
 
