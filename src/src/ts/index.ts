@@ -6,8 +6,7 @@ const buildStartScreen = ():void => {
 };
 
 window.addEventListener('load', (event) => {
-  screen.orientation.lock("landscape");
-  console.log('is this is the main event: ', event);
+//  screen.orientation.lock("landscape");
   buildStartScreen();
 });
 

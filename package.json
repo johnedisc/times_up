@@ -1,15 +1,19 @@
 {
   "name": "times-up",
+  "private": true,
   "version": "1.0.0",
   "description": "multi-timer sequencer for keeping track of time data for multiple sequential tasks.",
-  "main": "index.js",
+  "type": "module",
   "repository": "https://github.com/johnedisc/times_up.git",
   "author": "johnedisc",
   "license": "MIT",
   "scripts": {
-    "dev": "tsc src/ts/index.ts && open src/app.html"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
-  "dependencies": {
-    "typescript": "^5.1.6"
+  "devDependencies": {
+    "typescript": "^5.0.2",
+    "vite": "^4.4.0"
   }
 }

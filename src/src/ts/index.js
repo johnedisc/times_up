@@ -6,7 +6,6 @@ var buildStartScreen = function () {
     (_a = document.querySelector('#container')) === null || _a === void 0 ? void 0 : _a.appendChild(h1);
 };
 window.addEventListener('load', function (event) {
-    screen.orientation.lock("landscape");
-    console.log('is this is the main event: ', event);
+    //  screen.orientation.lock("landscape");
     buildStartScreen();
 });
