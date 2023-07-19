@@ -12,6 +12,8 @@
 }
 
 .start-screen {
+  background-color: var(--bg-start-screen);
   font-size: 6em;
   font-weight: 400;
+  color: pink;
 }
