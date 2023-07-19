@@ -1,9 +1,14 @@
 @import './variables.css';
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
 #container {
-  position: absolute;
-  top: 0;
-  left: 0;;
   width: 100%;
   height: 100%;
   background-color: var(--bg-start-screen);
@@ -11,9 +16,36 @@
   font-family: var(--primary-font);
 }
 
+.flex-down {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .start-screen {
-  background-color: var(--bg-start-screen);
-  font-size: 6em;
+  width: 100%;
+  height: 100%;
+  font-size: 5em;
   font-weight: 400;
-  color: pink;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .start-screen {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    height: 100vw;
+    width: 100vh;
+    position: fixed;
+    top: 100%;
+    bottom: 0;
+  }
 }

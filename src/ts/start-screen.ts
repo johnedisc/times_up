@@ -1,16 +1,12 @@
 import '../css/container.css';
 import { clearScreen } from '../main.ts';
 
-export const startScreen = ():string => {
+export const startScreen = ():void => {
   clearScreen();
   const h1: HTMLDivElement = document.createElement('h1');
+  const div: HTMLDivElement = document.createElement('div');
   h1.innerHTML = 'OPEN';
-  h1.classList.add('start-screen');
-  document.querySelector('#container')?.appendChild(h1);
-  
-  return `
-    <div class=${'start-screen'}>     
-      ${h1}
-    </div>
-  `;
+  div.appendChild(h1);
+  div.classList.add('flex-row', 'start-screen');
+  document.querySelector('#container')?.appendChild(div);
 }

@@ -3,4 +3,5 @@
   --bg-count-down: #FF6160;
   --primary-font-color: #000000;
   --primary-font: 'Arial Black', sans-serif;
+  box-sizing: border-box;
 }

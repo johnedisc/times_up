@@ -7,6 +7,7 @@ export const clearScreen = ():void => {
 }
 
 window.addEventListener('load', (event) => {
+  console.log(event);
   startScreen();
 });
 
