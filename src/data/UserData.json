@@ -1,0 +1,13 @@
+{
+  "name": "bob",
+  "timerList": [
+    {
+      "name": "cleaning",
+      "total": 30000
+    },
+    {
+      "name": "workout",
+      "total": 55000
+    }
+  ]
+}
