@@ -1,10 +1,9 @@
-interface Store {
+interface IUser {
   name: string,
   timerList: string[]
 }
 
-export const Store: Store = {
-  name: "",
-  timerList: [],
+export const Store = {
+  user: null
 }
 

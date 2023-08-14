@@ -2,7 +2,6 @@ import '../css/container.css';
 import { clearScreen } from '../main.ts';
 
 export const startScreen = ():void => {
-  clearScreen();
   const h1: HTMLDivElement = document.createElement('h1');
   const div: HTMLDivElement = document.createElement('div');
   h1.innerHTML = 'OPEN';

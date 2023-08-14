@@ -3,6 +3,8 @@ import './css/variables.css';
 import { startScreen } from './ts/start-screen.ts';
 import { Store } from './services/Store.ts';
 import { LoadData } from './services/LoadData.ts';
+import { Router } from './services/Router.ts';
+import { setupCounter } from './ts/counter.ts';
 
 declare global {
   interface Window {
@@ -11,7 +13,8 @@ declare global {
 }
 
 window._timesUpApp = { };
-_timesUpApp.store = { };
+_timesUpApp.store = Store;
+_timesUpApp.router = Router;
 
 export const clearScreen = ():void => {
   document.querySelector<HTMLElement>('#container')!.innerHTML = ``;
@@ -20,6 +23,7 @@ export const clearScreen = ():void => {
 document.addEventListener('DOMContentLoaded', (event) => {
   LoadData();
   startScreen();
+  _timesUpApp.router.init();
 });
 
 
