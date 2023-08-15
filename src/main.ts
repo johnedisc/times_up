@@ -15,14 +15,10 @@ declare global {
 window._timesUpApp = { };
 _timesUpApp.store = Store;
 _timesUpApp.router = Router;
-
-export const clearScreen = ():void => {
-  document.querySelector<HTMLElement>('#container')!.innerHTML = ``;
-}
+_timesUpApp.store.container = document.getElementById('container');
 
 document.addEventListener('DOMContentLoaded', (event) => {
   LoadData();
-  startScreen();
   _timesUpApp.router.init();
 });
 
