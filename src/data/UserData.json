@@ -2,12 +2,30 @@
   "name": "bob",
   "timerList": [
     {
-      "name": "cleaning",
-      "total": 30000
+      "name": "clean",
+      "list": [
+        {
+          "name": "mopping",
+          "total": 30000
+        },
+        {
+          "name": "bleach sink",
+          "total": 55000
+        }
+      ]
     },
     {
       "name": "workout",
-      "total": 55000
+      "list": [
+        {
+          "name": "lat pull",
+          "total": 30000
+        },
+        {
+          "name": "deadlift",
+          "total": 55000
+        }
+      ]
     }
   ]
 }

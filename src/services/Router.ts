@@ -1,3 +1,4 @@
+import { StartPage } from "../components/StartPage.ts";
 import { errorPage, startScreen } from "../ts/start-screen.ts";
 import { clearScreen } from "../utilities/utilities.ts";
 
@@ -22,7 +23,6 @@ export const Router = {
 //    });
 
     _timesUpApp.store.container.addEventListener('click', event => {
-      Router.go('/help');
     });
     
     // check initial url from client
@@ -31,7 +31,7 @@ export const Router = {
   },
   go: (path: string, addToHistory=true) => {
 
-    console.log(`router go method\ngoing to ${path}`);
+    console.log(`router go method going to ${path}`);
 
     if (addToHistory) {
       history.pushState({ path }, '', path)
@@ -42,18 +42,22 @@ export const Router = {
 
     switch (path) {
       case "/":
-        pageElement = startScreen();
+        pageElement = document.createElement('start-page');
+        break;
+      case "/menu":
+        pageElement = document.createElement('menu-modal');
+        break;
+      case "/interval":
+        pageElement = document.createElement('interval-page');
         break;
       case "/help":
-        clearScreen();
-        const h1 = document.createElement('h1');
-        h1.innerHTML = 'help';
-        pageElement = h1;
+        pageElement = document.createElement('help-page');
         break;
       default:
-        pageElement = errorPage();
+        pageElement = document.createElement('error-page');
     }
 
+    console.log(pageElement);
     _timesUpApp.store.container.appendChild(pageElement);
 //    window.scrollX = 0;
 //    window.scrollY = 0;
