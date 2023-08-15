@@ -15,12 +15,12 @@ export const Router = {
 //        });
 //      };
 //    }
-//
-//    // event handler for changes popstate
-//    window.addEventListener('popstate', (event) => {
-//      console.log(event);
-//      Router.go(event.state.path, false);
-//    });
+
+    // event handler for changes popstate
+    window.addEventListener('popstate', (event) => {
+      console.log(event);
+      Router.go(event.state.path, false);
+    });
 
     _timesUpApp.store.container.addEventListener('click', event => {
     });
@@ -39,21 +39,40 @@ export const Router = {
     }
 
     let pageElement: HTMLElement | null = null;
+    
+    let purePath;
+    let pathID;
 
-    switch (path) {
+    if (path.lastIndexOf('/') > 0) {
+      pathID = path.substring(path.lastIndexOf('/')+1);
+      purePath = path.substring(0, path.lastIndexOf('/'));
+    } else {
+      purePath = path;
+    }
+    
+    console.log(purePath);
+
+    switch (purePath) {
       case "/":
+        clearScreen();
         pageElement = document.createElement('start-page');
         break;
       case "/menu":
         pageElement = document.createElement('menu-modal');
         break;
       case "/interval":
+        clearScreen();
         pageElement = document.createElement('interval-page');
+        if (pathID) {
+          pageElement.setAttribute('sequence',pathID);
+        }
         break;
       case "/help":
+        clearScreen();
         pageElement = document.createElement('help-page');
         break;
       default:
+        clearScreen();
         pageElement = document.createElement('error-page');
     }
 

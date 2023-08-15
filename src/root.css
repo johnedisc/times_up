@@ -1,7 +1,8 @@
 :root {
-  --bg-start-screen: 
-  --primary-font-color:
-  --primary-font:
+  --bg-start-screen: #727272;
+  --bg-count-down: #FF6160;
+  --primary-font-color: #000000;
+  --primary-font: 'Arial Black', sans-serif;
 }
 
 html,

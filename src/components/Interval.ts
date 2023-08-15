@@ -5,12 +5,11 @@ export class Interval extends HTMLElement {
     super();
   }
 
-  renderInterval(intervalName: string, time: number):HTMLElement {
-    clearScreen();
+  renderInterval(id: string):HTMLElement {
     const h1: HTMLDivElement = document.createElement('h1');
     const h5: HTMLDivElement = document.createElement('h5');
     const div: HTMLDivElement = document.createElement('div');
-    h1.innerHTML = `${time}`;
+    h1.innerHTML = id;
     h1.style.margin = '1rem';
     h5.innerHTML = `${intervalName}`;
     h5.style.margin = '0';
@@ -24,6 +23,7 @@ export class Interval extends HTMLElement {
   }
 
   connectedCallback() {
+    console.log(this);
     this.appendChild(this.renderInterval());
   }
 }
