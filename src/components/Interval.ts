@@ -9,11 +9,13 @@ export class Interval extends HTMLElement {
     const h1: HTMLDivElement = document.createElement('h1');
     const h5: HTMLDivElement = document.createElement('h5');
     const div: HTMLDivElement = document.createElement('div');
-    h1.innerHTML = id;
+    const intervalProgram = _timesUpApp.store.user.timerList.filter(item => item['name'] === id)[0].list;
+    console.log(intervalProgram);
+    h1.innerHTML =  intervalProgram[0].total;
     h1.style.margin = '1rem';
-    h5.innerHTML = `${intervalName}`;
+    h5.innerHTML =  intervalProgram[0].name;
     h5.style.margin = '0';
-    h5.addEventListener('click', event => {
+    div.addEventListener('click', event => {
       console.log('clicked');
     })
     div.appendChild(h5);
@@ -23,8 +25,14 @@ export class Interval extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log(this);
-    this.appendChild(this.renderInterval());
+    try {
+      if (!this.dataset.sequence) {
+        throw new Error('this sequence can\'t be accessed');
+      }
+      this.appendChild(this.renderInterval(this.dataset.sequence));
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

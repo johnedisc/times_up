@@ -62,9 +62,11 @@ export const Router = {
         break;
       case "/interval":
         clearScreen();
+        console.log('router interval');
         pageElement = document.createElement('interval-page');
+        console.log(pageElement, 'returned element');
         if (pathID) {
-          pageElement.setAttribute('sequence',pathID);
+          pageElement.dataset.sequence = pathID;
         }
         break;
       case "/help":
