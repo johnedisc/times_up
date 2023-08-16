@@ -39,7 +39,6 @@ export const Router = {
     }
 
     let pageElement: HTMLElement | null = null;
-    
     let purePath;
     let pathID;
 
@@ -49,8 +48,6 @@ export const Router = {
     } else {
       purePath = path;
     }
-    
-    console.log(purePath);
 
     switch (purePath) {
       case "/":
@@ -62,9 +59,7 @@ export const Router = {
         break;
       case "/interval":
         clearScreen();
-        console.log('router interval');
         pageElement = document.createElement('interval-page');
-        console.log(pageElement, 'returned element');
         if (pathID) {
           pageElement.dataset.sequence = pathID;
         }
@@ -78,7 +73,6 @@ export const Router = {
         pageElement = document.createElement('error-page');
     }
 
-    console.log(pageElement);
     _timesUpApp.store.container.appendChild(pageElement);
 //    window.scrollX = 0;
 //    window.scrollY = 0;

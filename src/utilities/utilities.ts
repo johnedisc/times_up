@@ -1,3 +1,4 @@
+import { ITimerList, IUser } from "../services/Store.ts";
 
 export const clearScreen = ():void => {
   while (_timesUpApp.store.container.children[0]) {
@@ -11,3 +12,4 @@ export const linkWrapper = (element: HTMLElement, url: string):HTMLAnchorElement
   aTag.appendChild(element);
   return aTag;
 }
+
