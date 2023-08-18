@@ -8,13 +8,6 @@ import './components/HelpModal.ts';
 import './components/MenuModal.ts';
 import './components/StartPage.ts';
 
-declare global {
-  interface Window {
-    _timesUpApp: any,
-  }
-}
-
-
 window._timesUpApp = { };
 _timesUpApp.store = Store;
 _timesUpApp.router = Router;
