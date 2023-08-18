@@ -6,11 +6,11 @@
       "list": [
         {
           "name": "mopping",
-          "total": 30000
+          "total": 10000
         },
         {
           "name": "bleach sink",
-          "total": 55000
+          "total": 15000
         }
       ]
     },
@@ -19,11 +19,11 @@
       "list": [
         {
           "name": "lat pull",
-          "total": 30000
+          "total": 3000
         },
         {
           "name": "deadlift",
-          "total": 55000
+          "total": 5500
         }
       ]
     }

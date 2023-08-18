@@ -6,6 +6,19 @@ export const clearScreen = ():void => {
   }
 }
 
+export const clearElementChildren = (element: HTMLElement):void => {
+  while (element.children[0]) {
+    element.removeChild(element.children[0]);
+  }
+}
+
+export const clearSelf = (element: HTMLElement):void => {
+  if (element.parentElement) {
+    const parentEl = element.parentElement;
+    parentEl.removeChild(element);
+  }
+}
+
 export const linkWrapper = (element: HTMLElement, url: string):HTMLAnchorElement => {
   const aTag: HTMLAnchorElement = document.createElement('a');
   aTag.href = url;

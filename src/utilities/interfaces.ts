@@ -12,11 +12,10 @@ export interface IStore {
   user: IUser | null,
   container: HTMLElement | null,
   currentProgram: ITimerList | null,
-  currentIndex: number
+  currentIndex: number | null
 }
 
-declare global {
-  interface Window {
-    _timesUpApp: any,
-  }
+export interface IApp {
+  store: IStore | null,
+  router: any
 }
