@@ -1,7 +1,9 @@
-import { ITimerList } from '../services/Store';
-import { clearElementChildren, clearScreen, clearSelf } from '../utilities/utilities';
+import { clearElementChildren, clearScreen, clearSelf, counter } from '../utilities/utilities.ts';
 
 export class Interval extends HTMLElement {
+
+  root;
+
   constructor() {
     super();
 
@@ -9,32 +11,16 @@ export class Interval extends HTMLElement {
 
   }
 
-
   // methods
-  async loadCSS() {
-    const cssRequest = await fetch('/src/components/Interval.css.text');
+  async loadCSS(url: string) {
+    const cssRequest = await fetch(`/src/components/${url}`);
     const parsedCSS = await cssRequest.text();
     const styleTag = document.createElement('style');
     this.root.appendChild(styleTag);
     styleTag.textContent = parsedCSS;
   }
 
-  counter(program: ITimerList[], element: HTMLElement, index: number):void {
-
-    let runningTotal = program[index].total;
-
-    setInterval(() => {
-      if (runningTotal < -10000) {
-        element.innerHTML = 'you\'re done, agburre';
-      } else {
-        runningTotal--;
-        element.innerHTML = runningTotal.toString();
-      }
-    }, 1000);
-  }
-
-  renderInterval(id: string, index: number):HTMLElement {
-    console.log(_timesUpApp.store.currentIndex);
+  renderInterval(programNameProp: string, index: number):HTMLElement {
       // define the elements
       const h1: HTMLDivElement = document.createElement('h1');
       const h5: HTMLDivElement = document.createElement('h5');
@@ -42,7 +28,7 @@ export class Interval extends HTMLElement {
       const p: HTMLDivElement = document.createElement('p');
 
       // cache the user's selected program list
-      const intervalProgram = _timesUpApp.store.user.timerList.filter(item => item['name'] === id)[0].list;
+      const intervalProgram = _timesUpApp.store.user.timerList.filter(item => item['name'] === programNameProp)[0].list;
       console.log(intervalProgram[index]);
 
       // print the time
@@ -52,12 +38,11 @@ export class Interval extends HTMLElement {
 
       // add event listeners
       div.addEventListener('click', event => {
-        this.counter(intervalProgram, h1, index);
-        console.log('clicked');
+        counter(intervalProgram, h1, index);
       }, { once: true })
       p.addEventListener('click', event => {
         console.log('next clicked');
-        if (_timesUpApp.store.currentIndex + 1 < _timesUpApp.store.user.timerList.length) {
+        if (_timesUpApp.store.currentIndex < _timesUpApp.store.user.timerList.length) {
           _timesUpApp.store.currentIndex++;
         }       
       });
@@ -66,6 +51,7 @@ export class Interval extends HTMLElement {
       h1.style.margin = '1rem';
       h5.style.margin = '0';
       div.classList.add('start-screen', 'flex-down');
+      div.setAttribute('id', 'interval-container');
       p.setAttribute('id', 'next');
       p.style.margin = '1rem';
       p.style.margin = '0';
@@ -95,21 +81,22 @@ export class Interval extends HTMLElement {
 
   connectedCallback() {
     try {
-      if (!this.dataset.sequence) {
-        throw new Error('this sequence can\'t be accessed');
+      if (!this.dataset.programName) {
+        throw new Error('this program can\'t be accessed');
       }
-      this.loadCSS();
-      this.root.appendChild(this.renderInterval(this.dataset.sequence, 0));
+      this.root.appendChild(this.renderInterval(this.dataset.programName, 0));
+      this.loadCSS('Interval.css.text');
       window.addEventListener("indexchanged", () => {
-        console.log('index changed fired', this.dataset.sequence);
         console.log(this.root);
-        clearElementChildren(this.root);
-        this.loadCSS();
-        if (_timesUpApp.store.currentIndex < _timesUpApp.store.user.timerList.length) {
-          this.root.appendChild(this.renderInterval(this.dataset.sequence, _timesUpApp.store.currentIndex));
+        clearScreen();
+//        clearElementChildren(document.getElementById('interval-container'));
+//        clearSelf(document.getElementById('interval-container'));
+        if (_timesUpApp.store.currentIndex < _timesUpApp.store.user.timerList.length - 1) {
+          this.root.appendChild(this.renderInterval(this.dataset.programName, _timesUpApp.store.currentIndex));
         } else {
           this.completeSequence();
         }
+        this.loadCSS('Interval.css.text');
       });
     } catch (error) {
       console.error(error);

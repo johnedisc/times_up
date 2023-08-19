@@ -61,7 +61,7 @@ export const Router = {
         clearScreen();
         pageElement = document.createElement('interval-page');
         if (pathID) {
-          pageElement.dataset.sequence = pathID;
+          pageElement.dataset.programName = pathID;
         }
         break;
       case "/help":
