@@ -1,14 +1,32 @@
+import { ITimerList } from '../utilities/interfaces.ts';
 import { clearElementChildren, clearScreen, clearSelf, counter } from '../utilities/utilities.ts';
 
 export class Interval extends HTMLElement {
 
   root;
+  timerHeader: HTMLElement;
+  categoryHeader: HTMLElement;
+  divContainer: HTMLDivElement;
+  nextButton: HTMLParagraphElement;
+  intervalID: number = 0;
 
   constructor() {
     super();
 
     this.root = this.attachShadow({ mode: 'open' });
 
+    this.timerHeader = document.createElement('h1');
+    this.categoryHeader = document.createElement('h5');
+    this.divContainer = document.createElement('div');
+    this.nextButton = document.createElement('p');
+    this.nextButton.setAttribute('id', 'next-button');
+    this.nextButton.innerText = 'next';
+    this.divContainer.appendChild(this.categoryHeader);
+    this.divContainer.appendChild(this.timerHeader);
+    this.divContainer.appendChild(this.nextButton);
+    this.divContainer.classList.add('flex-down');
+    this.divContainer.setAttribute('id', 'interval-container');
+    this.root.appendChild(this.divContainer);
   }
 
   // methods
@@ -20,62 +38,32 @@ export class Interval extends HTMLElement {
     styleTag.textContent = parsedCSS;
   }
 
-  renderInterval(programNameProp: string, index: number):HTMLElement {
-      // define the elements
-      const h1: HTMLDivElement = document.createElement('h1');
-      const h5: HTMLDivElement = document.createElement('h5');
-      const div: HTMLDivElement = document.createElement('div');
-      const p: HTMLDivElement = document.createElement('p');
+  renderInterval(programNameProp: string, index: number):void {
+    // cache the user's selected program list
+    const intervalProgram = _timesUpApp.store.user.timerList.filter(item => item['name'] === programNameProp)[0].list;
+    console.log(intervalProgram[index]);
 
-      // cache the user's selected program list
-      const intervalProgram = _timesUpApp.store.user.timerList.filter(item => item['name'] === programNameProp)[0].list;
-      console.log(intervalProgram[index]);
+    // print the time
+    this.timerHeader.innerHTML = intervalProgram[index].total;
+    this.categoryHeader.innerHTML = intervalProgram[index].name;
 
-      // print the time
-      h1.innerHTML = intervalProgram[index].total;
-      h5.innerHTML = intervalProgram[index].name;
-      p.innerHTML = 'next';
-
-      // add event listeners
-      div.addEventListener('click', event => {
-        counter(intervalProgram, h1, index);
-      }, { once: true })
-      p.addEventListener('click', event => {
-        console.log('next clicked');
-        if (_timesUpApp.store.currentIndex < _timesUpApp.store.user.timerList.length) {
-          _timesUpApp.store.currentIndex++;
-        }       
-      });
-
-      // add stylings. change method?
-      h1.style.margin = '1rem';
-      h5.style.margin = '0';
-      div.classList.add('start-screen', 'flex-down');
-      div.setAttribute('id', 'interval-container');
-      p.setAttribute('id', 'next');
-      p.style.margin = '1rem';
-      p.style.margin = '0';
-      p.style.position = 'absolute';
-      p.style.right = '1rem';
-      p.style.top = '0';
-      p.style.color = 'pink';
-      p.style.fontSize = '2rem';
-
-      // attach to parent
-      div.appendChild(h5);
-      div.appendChild(h1);
-      document.getElementById('container').appendChild(p);
-      return div;
+    // add event listeners
+    this.divContainer.addEventListener('click', event => {
+      this.intervalID = counter(intervalProgram, this.timerHeader, index);
+    }, { once: true })
+    this.nextButton.addEventListener('click', event => {
+      console.log('next clicked');
+      if (_timesUpApp.store.currentIndex < _timesUpApp.store.user.timerList.length) {
+        _timesUpApp.store.currentIndex++;
+      }       
+      clearInterval(this.intervalID);
+    });
   }
 
   completeSequence() {
-//    clearElementChildren(this.root);
-//    this.loadCSS();
-    const h1: HTMLDivElement = document.createElement('h1');
-    const div: HTMLDivElement = document.createElement('div');
-    h1.innerHTML = 'all done.';
-    div.appendChild(h1);
-    this.root.appendChild(div);
+    clearSelf(this.nextButton);
+    clearSelf(this.categoryHeader);
+    this.timerHeader.innerHTML = 'all done.';
   }
 
 
@@ -84,19 +72,14 @@ export class Interval extends HTMLElement {
       if (!this.dataset.programName) {
         throw new Error('this program can\'t be accessed');
       }
-      this.root.appendChild(this.renderInterval(this.dataset.programName, 0));
+      this.renderInterval(this.dataset.programName, 0);
       this.loadCSS('Interval.css.text');
       window.addEventListener("indexchanged", () => {
-        console.log(this.root);
-        clearScreen();
-//        clearElementChildren(document.getElementById('interval-container'));
-//        clearSelf(document.getElementById('interval-container'));
-        if (_timesUpApp.store.currentIndex < _timesUpApp.store.user.timerList.length - 1) {
-          this.root.appendChild(this.renderInterval(this.dataset.programName, _timesUpApp.store.currentIndex));
+        if (_timesUpApp.store.currentIndex < _timesUpApp.store.user.timerList.length) {
+          this.renderInterval(this.dataset.programName, _timesUpApp.store.currentIndex);
         } else {
           this.completeSequence();
         }
-        this.loadCSS('Interval.css.text');
       });
     } catch (error) {
       console.error(error);

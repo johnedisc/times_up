@@ -28,16 +28,17 @@ export const linkWrapper = (element: HTMLElement, url: string):HTMLAnchorElement
   return aTag;
 }
 
-export const counter = (program: ITimerList[], element: HTMLElement, index: number):void => {
+export const counter = (program: ITimerList[], element: HTMLElement, index: number):number => {
 
     let runningTotal = program[index].total;
 
-    setInterval(() => {
+    return setInterval(() => {
       if (runningTotal < -1000) {
         element.innerHTML = 'you\'re done, agburre';
       } else {
         runningTotal--;
         element.innerHTML = runningTotal.toString();
+        console.log(element, `is running at ${runningTotal}`);
       }
     }, 1000);
 
