@@ -11,20 +11,20 @@ import { grabColors } from './utilities/utilities.ts';
 
 declare global {
   interface Window {
-    _timesUpApp: any
+    _timesUpApp: any;
   }
 }
 
-window._timesUpApp = { };
-_timesUpApp.store = StoreProxy;
-_timesUpApp.router = Router;
-_timesUpApp.store.container = document.getElementById('container');
-_timesUpApp.store.currentIndex = 0;
-_timesUpApp.store.backgroundColors = grabColors();
+window._timesUpApp = {};
+window._timesUpApp.store = StoreProxy;
+window._timesUpApp.router = Router;
+window._timesUpApp.store.container = document.getElementById('container');
+window._timesUpApp.store.currentIndex = 0;
+window._timesUpApp.store.backgroundColors = grabColors();
 
-document.addEventListener('DOMContentLoaded', async (event) => {
+document.addEventListener('DOMContentLoaded', async () => {
   await LoadData();
-  _timesUpApp.router.init();
+  window._timesUpApp.router.init();
 });
 
 

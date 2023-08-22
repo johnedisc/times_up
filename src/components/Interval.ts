@@ -91,6 +91,7 @@ export class Interval extends HTMLElement {
         this.nextButton.addEventListener('click', event => {
           console.log('nextButton')
           this.timerHeader.removeAttribute('id');
+          console.log(this.timerHeader.innerText);
           clearInterval(this.intervalID);
           //      this.divContainer.removeChild(this.timerHeader);
           if (_timesUpApp.store.currentIndex < this.intervalProgram?.length - 1) {

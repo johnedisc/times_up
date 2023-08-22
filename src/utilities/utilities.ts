@@ -65,7 +65,6 @@ export const counter = (program: ITimerList[], element: HTMLElement, index: numb
           minutes++;
           runningTotal--;
         }
-        element.innerHTML = fillOutZeros(minutes, seconds);
       } else {
         if (element.hasAttribute('id')) element.removeAttribute('id');
         if (seconds > 0) {
@@ -77,9 +76,10 @@ export const counter = (program: ITimerList[], element: HTMLElement, index: numb
           minutes--;
           runningTotal--;
         }
-        element.innerHTML = fillOutZeros(minutes, seconds);
         //        console.log(element, `is running at ${runningTotal}`);
       }
+      element.dataset.runningTotal = runningTotal;
+      element.innerHTML = fillOutZeros(minutes, seconds);
     }, 1000);
 
   }
