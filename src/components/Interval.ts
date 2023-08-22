@@ -10,7 +10,6 @@ export class Interval extends HTMLElement {
   nextButton: HTMLParagraphElement;
   intervalID: number = 0;
   intervalProgram: ITimerList[] | null = null;
-  openIntervals: number[] = [];
   backgroundColorIndex: number = 0;
 
   constructor() {
@@ -55,8 +54,10 @@ export class Interval extends HTMLElement {
     }
 
     // print the time
-    this.timerHeader.innerHTML = convertSeconds2Time(this.intervalProgram[index].total);
-    this.categoryHeader.innerHTML = this.intervalProgram[index].name;
+    if (this.intervalProgram) {
+      this.timerHeader.innerHTML = convertSeconds2Time(this.intervalProgram[index].total);
+      this.categoryHeader.innerHTML = this.intervalProgram[index].name;
+    }
   }
 
   completeSequence() {
@@ -86,22 +87,22 @@ export class Interval extends HTMLElement {
       this.divContainer.addEventListener('click', event => {
         console.log('start')
         this.intervalID = counter(this.intervalProgram, this.timerHeader, _timesUpApp.store.currentIndex);
-        this.openIntervals.push(this.intervalID);
+
+        this.nextButton.addEventListener('click', event => {
+          console.log('nextButton')
+          this.timerHeader.removeAttribute('id');
+          clearInterval(this.intervalID);
+          //      this.divContainer.removeChild(this.timerHeader);
+          if (_timesUpApp.store.currentIndex < this.intervalProgram?.length - 1) {
+            _timesUpApp.store.currentIndex++;
+            this.intervalID = counter(this.intervalProgram, this.timerHeader, _timesUpApp.store.currentIndex);
+            console.log('current index', _timesUpApp.store.currentIndex);
+          } else if (_timesUpApp.store.currentIndex === this.intervalProgram?.length - 1) {
+            _timesUpApp.store.currentIndex++;
+          }       
+        });
       }, { once: true });
 
-      this.nextButton.addEventListener('click', event => {
-        console.log('nextButton')
-        clearInterval(this.intervalID);
-        //      this.divContainer.removeChild(this.timerHeader);
-        if (_timesUpApp.store.currentIndex < this.intervalProgram?.length - 1) {
-          _timesUpApp.store.currentIndex++;
-          this.intervalID = counter(this.intervalProgram, this.timerHeader, _timesUpApp.store.currentIndex);
-          this.openIntervals.push(this.intervalID);
-          console.log('current index', _timesUpApp.store.currentIndex);
-        } else if (_timesUpApp.store.currentIndex === this.intervalProgram?.length - 1) {
-          _timesUpApp.store.currentIndex++;
-        }       
-      });
 
       window.addEventListener("indexchanged", () => {
         if (_timesUpApp.store.currentIndex > 0) {

@@ -49,18 +49,36 @@ export const counter = (program: ITimerList[], element: HTMLElement, index: numb
     let seconds = runningTotal % 60;
 
     return setInterval(() => {
-      if (minutes < -60) {
-        element.innerHTML = 'you\'re done, agburre';
+//      console.log(runningTotal, minutes, seconds);
+      if (runningTotal <= 0) {
+        element.setAttribute('id','warning') 
+        if (minutes < -60) {
+          element.innerHTML = 'you\'re done, agburre';
+          return;
+        }
+        if (seconds <= 60) {
+          seconds++;
+          runningTotal--;
+        }
+        else {
+          seconds -= 60;
+          minutes++;
+          runningTotal--;
+        }
+        element.innerHTML = fillOutZeros(minutes, seconds);
       } else {
-        if (seconds > 0) seconds--;
+        if (element.hasAttribute('id')) element.removeAttribute('id');
+        if (seconds > 0) {
+          seconds--;
+          runningTotal--;
+        }
         else {
           seconds += 59;
           minutes--;
+          runningTotal--;
         }
         element.innerHTML = fillOutZeros(minutes, seconds);
-;
-        console.log('this is running');
-//        console.log(element, `is running at ${runningTotal}`);
+        //        console.log(element, `is running at ${runningTotal}`);
       }
     }, 1000);
 
