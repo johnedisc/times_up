@@ -11,6 +11,7 @@ export class Interval extends HTMLElement {
   intervalID: number = 0;
   intervalProgram: ITimerList[] | null = null;
   backgroundColorIndex: number = 0;
+  remainder: number = 0;
 
   constructor() {
     super();
