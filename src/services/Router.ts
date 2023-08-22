@@ -18,7 +18,6 @@ export const Router = {
 
     // event handler for changes popstate
     window.addEventListener('popstate', (event) => {
-      console.log(event);
       Router.go(event.state.path, false);
     });
 
@@ -31,11 +30,8 @@ export const Router = {
   },
   go: (path: string, addToHistory=true) => {
 
-    console.log(`router go method going to ${path}`);
-
     if (addToHistory) {
       history.pushState({ path }, '', path)
-      console.log(path);
     }
 
     let pageElement: HTMLElement | null = null;

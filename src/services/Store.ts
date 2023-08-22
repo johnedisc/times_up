@@ -4,7 +4,9 @@ const Store: IStore = {
   user: null,
   container: null,
   currentProgram: null,
-  currentIndex: null
+  currentIndex: null,
+  usageData: null,
+  backgroundColors: null
 }
 
 export const StoreProxy = new Proxy(Store, {

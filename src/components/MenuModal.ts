@@ -20,6 +20,8 @@ export class MenuModal extends HTMLElement {
 
     }
 
+    ul.classList.add('flex-down');
+    ul.style.paddingInlineStart = '0';
     div.appendChild(ul);
     div.classList.add('flex-down', 'menu');
     return div;

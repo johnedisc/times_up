@@ -29,18 +29,37 @@ export const linkWrapper = (element: HTMLElement, url: string):HTMLAnchorElement
 }
 
 export const counter = (program: ITimerList[], element: HTMLElement, index: number):number => {
+    console.log('counter funct');
 
     let runningTotal = program[index].total;
 
+    console.log('this is the counter function at index:', index);
     return setInterval(() => {
       if (runningTotal < -1000) {
         element.innerHTML = 'you\'re done, agburre';
       } else {
         runningTotal--;
         element.innerHTML = runningTotal.toString();
-        console.log(element, `is running at ${runningTotal}`);
+        console.log('this is running');
+//        console.log(element, `is running at ${runningTotal}`);
       }
     }, 1000);
 
   }
 
+  export const grabColors = ():string[] => {
+
+    const ruleArray = document.styleSheets[0].cssRules[0].cssText.split(';');
+    const regExp:RegExp = /--bg-\d+/;
+    const backgroundColors:string[] = [];
+
+    for (let i=0; i < ruleArray.length; i++) {
+      if (regExp.test(ruleArray[i])) {
+        const ruleString = ruleArray[i].split(': ');
+        backgroundColors.push(ruleString[1]);
+      }
+    }
+    
+    console.log(backgroundColors);
+    return backgroundColors;
+  }

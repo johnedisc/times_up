@@ -7,6 +7,7 @@ import './components/Interval.ts';
 import './components/HelpModal.ts';
 import './components/MenuModal.ts';
 import './components/StartPage.ts';
+import { grabColors } from './utilities/utilities.ts';
 
 declare global {
   interface Window {
@@ -19,6 +20,7 @@ _timesUpApp.store = StoreProxy;
 _timesUpApp.router = Router;
 _timesUpApp.store.container = document.getElementById('container');
 _timesUpApp.store.currentIndex = 0;
+_timesUpApp.store.backgroundColors = grabColors();
 
 document.addEventListener('DOMContentLoaded', async (event) => {
   await LoadData();

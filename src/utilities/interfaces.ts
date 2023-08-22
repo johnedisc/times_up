@@ -8,11 +8,16 @@ export interface IUser {
   timerList: ITimerList[]
 }
 
+export interface IUsageData {
+}
+
 export interface IStore {
   user: IUser | null,
   container: HTMLElement | null,
   currentProgram: ITimerList | null,
-  currentIndex: number | null
+  currentIndex: number | null,
+  usageData: any | null,
+  backgroundColors: [] | null
 }
 
 export interface IApp {

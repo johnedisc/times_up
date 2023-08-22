@@ -11,6 +11,30 @@
         {
           "name": "bleach sink",
           "total": 15000
+        },
+        {
+          "name": "dusting",
+          "total": 4000
+        },
+        {
+          "name": "vacuuming",
+          "total": 8000
+        },
+        {
+          "name": "2mopping",
+          "total": 6000
+        },
+        {
+          "name": "2bleach sink",
+          "total": 15000
+        },
+        {
+          "name": "2dusting",
+          "total": 4000
+        },
+        {
+          "name": "2vacuuming",
+          "total": 8000
         }
       ]
     },
@@ -24,6 +48,69 @@
         {
           "name": "deadlift",
           "total": 5500
+        },
+        {
+          "name": "push-ups",
+          "total": 1500
+        },
+        {
+          "name": "sit-ups",
+          "total": 2000
+        }
+      ]
+    },
+    {
+      "name": "study",
+      "list": [
+        {
+          "name": "read book",
+          "total": 4000
+        },
+        {
+          "name": "take notes",
+          "total": 2500
+        },
+        {
+          "name": "research",
+          "total": 3000
+        }
+      ]
+    },
+    {
+      "name": "cook",
+      "list": [
+        {
+          "name": "chop vegetables",
+          "total": 1800
+        },
+        {
+          "name": "cook pasta",
+          "total": 1200
+        },
+        {
+          "name": "grill chicken",
+          "total": 2200
+        },
+        {
+          "name": "prepare salad",
+          "total": 1600
+        }
+      ]
+    },
+    {
+      "name": "read",
+      "list": [
+        {
+          "name": "novel",
+          "total": 5000
+        },
+        {
+          "name": "articles",
+          "total": 3000
+        },
+        {
+          "name": "magazine",
+          "total": 2500
         }
       ]
     }
