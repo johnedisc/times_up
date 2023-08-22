@@ -32,14 +32,24 @@ export const counter = (program: ITimerList[], element: HTMLElement, index: numb
     console.log('counter funct');
 
     let runningTotal = program[index].total;
+    let minutes = runningTotal / 60;
+    let seconds = runningTotal % 60;
+    console.log(minutes, seconds);
 
-    console.log('this is the counter function at index:', index);
     return setInterval(() => {
-      if (runningTotal < -1000) {
+      if (minutes < -60) {
         element.innerHTML = 'you\'re done, agburre';
       } else {
-        runningTotal--;
-        element.innerHTML = runningTotal.toString();
+        console.log(minutes, seconds);
+
+        if (seconds > 0) seconds--;
+        else {
+          seconds += 60;
+          minutes--;
+        }
+        console.log('directly', minutes, seconds);
+        element.innerHTML = `${minutes}: ${seconds}`;
+;
         console.log('this is running');
 //        console.log(element, `is running at ${runningTotal}`);
       }
