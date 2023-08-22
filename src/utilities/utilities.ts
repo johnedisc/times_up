@@ -28,6 +28,15 @@ export const linkWrapper = (element: HTMLElement, url: string):HTMLAnchorElement
   return aTag;
 }
 
+export const printTime = (timeInSeconds: number): string => {
+    let minutes = timeInSeconds / 60;
+    let seconds = timeInSeconds % 60;
+    if (seconds < 10) {
+      return `${minutes}:0${seconds}`;
+    }
+    return `${minutes}:${seconds}`;
+}
+
 export const counter = (program: ITimerList[], element: HTMLElement, index: number):number => {
     console.log('counter funct');
 
