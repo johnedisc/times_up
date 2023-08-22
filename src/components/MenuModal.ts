@@ -32,4 +32,3 @@ export class MenuModal extends HTMLElement {
   }
 }
 
-customElements.define('menu-modal', MenuModal);

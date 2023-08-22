@@ -2,12 +2,19 @@ import './root.css';
 import { StoreProxy } from './services/Store.ts';
 import { LoadData } from './services/LoadData.ts';
 import { Router } from './services/Router.ts';
+
 // link web components
-import './components/Interval.ts';
-import './components/HelpModal.ts';
-import './components/MenuModal.ts';
-import './components/StartPage.ts';
+import { Interval } from './components/Interval.ts';
+import { HelpModal } from './components/HelpModal.ts';
+import { MenuModal } from './components/MenuModal.ts';
+import { StartPage } from './components/StartPage.ts';
+import { ProgramForm } from './components/ProgramForm.ts';
 import { grabColors } from './utilities/utilities.ts';
+customElements.define('interval-page', Interval);
+customElements.define('help-modal', HelpModal);
+customElements.define('program-form', ProgramForm);
+customElements.define('menu-modal', MenuModal);
+customElements.define('start-page', StartPage);
 
 declare global {
   interface Window {

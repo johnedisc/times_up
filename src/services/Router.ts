@@ -62,7 +62,11 @@ export const Router = {
         break;
       case "/help":
         clearScreen();
-        pageElement = document.createElement('help-page');
+        pageElement = document.createElement('help-modal');
+        break;
+      case "/program-form":
+        clearScreen();
+        pageElement = document.createElement('program-form');
         break;
       default:
         clearScreen();

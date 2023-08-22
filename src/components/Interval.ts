@@ -91,7 +91,7 @@ export class Interval extends HTMLElement {
         this.nextButton.addEventListener('click', event => {
           console.log('nextButton')
           this.timerHeader.removeAttribute('id');
-          console.log(this.timerHeader.innerText);
+          console.log(this.intervalProgram[_timesUpApp.store.currentIndex].name, this.timerHeader.dataset.runningTotal);
           clearInterval(this.intervalID);
           //      this.divContainer.removeChild(this.timerHeader);
           if (_timesUpApp.store.currentIndex < this.intervalProgram?.length - 1) {
@@ -121,4 +121,3 @@ export class Interval extends HTMLElement {
   }
 }
 
-customElements.define('interval-page', Interval);

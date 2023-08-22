@@ -28,4 +28,3 @@ export class StartPage extends HTMLElement {
   }
 }
 
-customElements.define('start-page', StartPage);
