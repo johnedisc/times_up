@@ -1,5 +1,5 @@
 import { ITimerList } from '../utilities/interfaces.ts';
-import { clearElementChildren, clearScreen, clearSelf, counter, printTime } from '../utilities/utilities.ts';
+import { clearElementChildren, clearScreen, clearSelf, convertSeconds2Time, counter, printTime } from '../utilities/utilities.ts';
 
 export class Interval extends HTMLElement {
 
@@ -55,7 +55,7 @@ export class Interval extends HTMLElement {
     }
 
     // print the time
-    this.timerHeader.innerHTML = printTime(this.intervalProgram[index].total);
+    this.timerHeader.innerHTML = convertSeconds2Time(this.intervalProgram[index].total);
     this.categoryHeader.innerHTML = this.intervalProgram[index].name;
   }
 

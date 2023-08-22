@@ -28,36 +28,36 @@ export const linkWrapper = (element: HTMLElement, url: string):HTMLAnchorElement
   return aTag;
 }
 
-export const printTime = (timeInSeconds: number): string => {
-    let minutes = timeInSeconds / 60;
+export const convertSeconds2Time = (timeInSeconds: number): string => {
+    let minutes = Math.round(timeInSeconds / 60);
     let seconds = timeInSeconds % 60;
-    if (seconds < 10) {
-      return `${minutes}:0${seconds}`;
-    }
-    return `${minutes}:${seconds}`;
+    return fillOutZeros(minutes, seconds);
+}
+
+export function fillOutZeros(minutes:number, seconds:number):string {
+  if (seconds < 10) {
+    return `${minutes}:0${seconds}`;
+  }
+  return `${minutes}:${seconds}`;
 }
 
 export const counter = (program: ITimerList[], element: HTMLElement, index: number):number => {
     console.log('counter funct');
 
     let runningTotal = program[index].total;
-    let minutes = runningTotal / 60;
+    let minutes = Math.round(runningTotal / 60);
     let seconds = runningTotal % 60;
-    console.log(minutes, seconds);
 
     return setInterval(() => {
       if (minutes < -60) {
         element.innerHTML = 'you\'re done, agburre';
       } else {
-        console.log(minutes, seconds);
-
         if (seconds > 0) seconds--;
         else {
-          seconds += 60;
+          seconds += 59;
           minutes--;
         }
-        console.log('directly', minutes, seconds);
-        element.innerHTML = `${minutes}: ${seconds}`;
+        element.innerHTML = fillOutZeros(minutes, seconds);
 ;
         console.log('this is running');
 //        console.log(element, `is running at ${runningTotal}`);
