@@ -63,11 +63,15 @@ export class Interval extends HTMLElement {
   completeSequence() {
     console.log('complete')
     clearInterval(this.intervalID);
-    clearSelf(this.nextButton);
     clearSelf(this.categoryHeader);
 //    clearSelf(this.timerHeader);
 //    this.divContainer.appendChild(this.timerHeader);
-    this.timerHeader.innerHTML = 'all done.';
+    this.nextButton.innerText = 'menu';
+    this.nextButton.addEventListener('click', () => {
+      _timesUpApp.router.go('/menu');
+      clearSelf(this.nextButton);
+    });
+    this.timerHeader.innerText = 'all done.';
     this.timerHeader.style.fontSize = '4rem';
     _timesUpApp.store.currentIndex = 0;
   }

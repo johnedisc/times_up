@@ -1,4 +1,6 @@
-*** todo
+# times_up
+### todo
 
-. interval.ts: make method to print minutes: seconds with modulo
-. make map of whole app structure
+* make map of whole app structure
+* choose google font to import or choose standard browser sans-serif as template
+* 
