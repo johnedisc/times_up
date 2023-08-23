@@ -8,8 +8,8 @@ export class StartPage extends HTMLElement {
   constructor() {
     super();
 
-    this.div.appendChild(this.h1);
     this.div.appendChild(this.h5);
+    this.div.appendChild(this.h1);
   }
 
   
@@ -27,7 +27,7 @@ export class StartPage extends HTMLElement {
 
   connectedCallback() {
     this.appendChild(this.div);
-//    this.startScreen(_timesUpApp.store.user.name);
+    this.startScreen(_timesUpApp.store.user.name);
   }
 }
 

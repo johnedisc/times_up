@@ -1,4 +1,4 @@
-import './root.css';
+import './components/Main.css';
 import { StoreProxy } from './services/Store.ts';
 import { LoadData } from './services/LoadData.ts';
 import { Router } from './services/Router.ts';

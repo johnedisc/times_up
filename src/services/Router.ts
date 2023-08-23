@@ -47,6 +47,10 @@ export const Router = {
         clearScreen();
         pageElement = document.createElement('log-in');
         break;
+      case "/start":
+        clearScreen();
+        pageElement = document.createElement('start-page');
+        break;
       case "/menu":
         pageElement = document.createElement('menu-modal');
         break;

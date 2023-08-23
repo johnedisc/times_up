@@ -19,6 +19,15 @@ export class LogIn extends HTMLElement {
         <button type='submit'>go</button>
       </form>
     `;
+    try {
+      this.querySelector('form')?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        _timesUpApp.router.go('/start');
+      });
+    } catch (error) {
+      console.error(error);
+      _timesUpApp.router.go('/error');
+    }
   }
 
   connectedCallback() {
