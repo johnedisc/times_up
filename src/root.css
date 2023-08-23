@@ -13,7 +13,7 @@
   --balance-text: rgb(16,13,255);
   --yellow-text: rgb(253,254,2);
   --gutter: 1.4rem;
-  --scale: 1.6;
+  --scale: 1.618;
   --base-font-size: 16px;
   --h5: calc(var(--base-font-size) * var(--scale));
   --h4: calc(var(--h5) * var(--scale));
@@ -23,7 +23,9 @@
   --p: calc(var(--base-font-size));
   --small: calc(var(--p) / var(--scale));
   --x-small: calv(var(--small) / var(--scale));
+  /*
   --base-line-height: 1.75; 
+  */
 }
 
 html,
@@ -49,7 +51,7 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-  margin-top: 0;
+  margin: 0;
   font-size: var(--h1);
 }
 

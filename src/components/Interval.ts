@@ -19,7 +19,7 @@ export class Interval extends HTMLElement {
     this.root = this.attachShadow({ mode: 'open' });
 
     this.timerHeader = document.createElement('h1');
-    this.categoryHeader = document.createElement('h5');
+    this.categoryHeader = document.createElement('h4');
     this.divContainer = document.createElement('div');
     this.nextButton = document.createElement('p');
     this.nextButton.setAttribute('id', 'next-button');

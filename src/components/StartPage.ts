@@ -15,9 +15,7 @@ export class StartPage extends HTMLElement {
   
   startScreen(user: string):void {
     this.h1.innerHTML = `hi, ${user}`;
-    this.h1.style.margin = '1rem';
     this.h5.innerHTML = 'select your interval sequence';
-    this.h5.style.margin = '0';
     this.div.classList.add('flex-down', 'start-screen');
 
     this.h5.addEventListener('click', () => {
