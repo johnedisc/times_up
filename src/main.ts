@@ -31,6 +31,10 @@ window._timesUpApp.store.container = document.getElementById('container');
 window._timesUpApp.store.currentIndex = 0;
 window._timesUpApp.store.backgroundColors = grabColors();
 
+// grab vh and set in root node
+const vh = window.innerHeight;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+
 document.addEventListener('DOMContentLoaded', async () => {
   await LoadData();
   window._timesUpApp.router.init();
