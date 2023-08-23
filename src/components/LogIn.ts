@@ -4,6 +4,10 @@ export class LogIn extends HTMLElement {
 
   }
 
+  connectedCallback() {
+    this.logIn();
+  }
+
   logIn():void {
     this.innerHTML = `
       <form class='flex-down log-in'>
@@ -20,18 +24,24 @@ export class LogIn extends HTMLElement {
       </form>
     `;
     try {
-      this.querySelector('form')?.addEventListener('submit', (event) => {
-        event.preventDefault();
-        _timesUpApp.router.go('/start');
-      });
+      this.setFormBindings(this.querySelector('frm'));
     } catch (error) {
-      console.error(error);
-      _timesUpApp.router.go('/error');
+      window._timesUpApp.router.go('/error');
+      console.error('didn\'t find the form');
     }
   }
 
-  connectedCallback() {
-    this.logIn();
+
+  setFormBindings(form) {
+    try {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        window._timesUpApp.router.go('/start');
+      });
+    } catch (error) {
+      window._timesUpApp.router.go('/error');
+      console.error(error);
+    }
   }
 
 }

@@ -86,7 +86,7 @@ export const counter = (program: ITimerList[], element: HTMLElement, index: numb
 
   export const grabColors = ():string[] => {
 
-    const ruleArray = document.styleSheets[0].cssRules[0].cssText.split(';');
+    const ruleArray = document.styleSheets[0].cssRules[1].cssText.split(';');
     const regExp:RegExp = /--bg-\d+/;
     const backgroundColors:string[] = [];
 
