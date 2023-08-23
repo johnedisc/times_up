@@ -24,7 +24,7 @@ export class LogIn extends HTMLElement {
       </form>
     `;
     try {
-      this.setFormBindings(this.querySelector('frm'));
+      this.setFormBindings(this.querySelector('form'));
     } catch (error) {
       window._timesUpApp.router.go('/error');
       console.error('didn\'t find the form');

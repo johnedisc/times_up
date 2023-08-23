@@ -13,7 +13,7 @@ export class ErrorPage extends HTMLElement {
     document.getElementById('back')?.addEventListener('click', (event) => {
 
 //      window._timesUpApp.router.go('/start');
-      console.log(event, window.history);
+      history.back();
     });
   }
 }

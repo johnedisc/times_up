@@ -18,6 +18,7 @@ export const Router = {
 
     // event handler for changes popstate
     window.addEventListener('popstate', (event) => {
+      console.log('pop');
       Router.go(event.state.path, false);
     });
     
