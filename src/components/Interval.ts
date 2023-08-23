@@ -12,6 +12,7 @@ export class Interval extends HTMLElement {
   intervalProgram: ITimerList[] | null = null;
   backgroundColorIndex: number = 0;
   remainder: number = 0;
+  h1div: HTMLElement;
 
   constructor() {
     super();
@@ -30,8 +31,18 @@ export class Interval extends HTMLElement {
     this.divContainer.classList.add('flex-down');
     this.divContainer.setAttribute('id', 'interval-container');
     this.root.appendChild(this.divContainer);
+    this.sizes();
   }
 
+  sizes() {
+    const fullwidth = window.innerHeight;
+    const adjustedWidth = fullwidth * .9
+    if (matchMedia('(max-width: 767px)')) {
+      this.divContainer.style.height = adjustedWidth.toString();
+//      this.timerHeader.style.width = '100%';
+      console.log(fullwidth, adjustedWidth)
+    }
+  }
   
   // methods
 

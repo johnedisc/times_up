@@ -12,7 +12,7 @@
   --warning-text: rgb(254,1,0);
   --balance-text: rgb(16,13,255);
   --yellow-text: rgb(253,254,2);
-  --gutter: 1.4rem;
+  --gutter: 1.7rem;
   --scale: 1.618;
   --base-font-size: 16px;
   --h5: calc(var(--base-font-size) * var(--scale));
