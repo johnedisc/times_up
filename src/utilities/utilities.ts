@@ -97,6 +97,5 @@ export const counter = (program: ITimerList[], element: HTMLElement, index: numb
       }
     }
     
-    console.log(backgroundColors);
     return backgroundColors;
   }

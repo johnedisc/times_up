@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 :root {
   --bg-start-screen: #727272;
   --bg-count-down: #FF6160;
   --primary-font-color: #000000;
-  --primary-font: 'Arial Black', sans-serif;
+  --primary-font: 'Archivo Black', sans-serif;
   --bg-1: rgb(255,97,96);
   --bg-2: rgb(248,168,43);
   --bg-3: rgb(248,247,44);
@@ -12,7 +14,13 @@
   --yellow-text: rgb(253,254,2);
   --gutter: 1.4rem;
   --scale: 1.6;
-  
+  --base-font-size: 16px;
+  --h5: calc(var(--base-font-size) * var(--scale));
+  --h4: calc(var(--h5) * var(--scale));
+  --h3: calc(var(--h4) * var(--scale));
+  --h2: calc(var(--h3) * var(--scale));
+  --h1: calc(var(--h2) * var(--scale));
+  --base-line-height: 1.75; 
 }
 
 html,
@@ -21,14 +29,39 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
+  background-color: var(--bg-start-screen);
+  color: var(--primary-font-color);
+  font-family: var(--primary-font);
+  font-size: var(--base-font-size);
+  line-height: var(--base-line-height);
 }
+
+p {margin-bottom: 1rem;}
+
+h1, h2, h3, h4, h5 {
+  margin: 3rem 0 1.38rem;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 11.089rem;
+}
+
+h2 {font-size: 6.854rem;}
+
+h3 {font-size: 4.236rem;}
+
+h4 {font-size: calc(h5 * var(--scale))}
+
+h5 {font-size: var(--h5)}
+
+small, .text_small {font-size: 0.618rem;}
 
 #container {
   width: 100%;
   height: 100%;
-  background-color: var(--bg-start-screen);
-  color: var(--primary-font-color);
-  font-family: var(--primary-font);
 }
 
 .flex-down {
@@ -45,10 +78,10 @@ body {
 }
 
 .start-screen,
-.error-page {
+.error-page,
+.log-in {
   width: 100%;
   height: 100%;
-  font-size: 5rem;
   font-weight: 400;
   justify-content: center;
   align-items: center;
@@ -60,7 +93,6 @@ body {
   border-radius: 1rem;
   width: 70%;
   height: 70%;
-  font-size: 3rem;
   font-weight: 600;
   top: 15%;
   left: 15%;
@@ -75,10 +107,13 @@ li {
 }
 
 .error-page {
-  font-size: 4rem;
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
+  .log-in {
+    max-width: 90%;
+    margin: auto;
+  }
   .start-screen {
     transform: rotate(-90deg);
     transform-origin: left top;
@@ -87,6 +122,5 @@ li {
     position: fixed;
     top: 100%;
     bottom: 0;
-    font-size: 2rem;
   }
 }

@@ -20,9 +20,6 @@ export const Router = {
     window.addEventListener('popstate', (event) => {
       Router.go(event.state.path, false);
     });
-
-    _timesUpApp.store.container.addEventListener('click', event => {
-    });
     
     // check initial url from client
     Router.go(location.pathname);
@@ -48,7 +45,7 @@ export const Router = {
     switch (purePath) {
       case "/":
         clearScreen();
-        pageElement = document.createElement('start-page');
+        pageElement = document.createElement('log-in');
         break;
       case "/menu":
         pageElement = document.createElement('menu-modal');
