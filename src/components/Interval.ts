@@ -29,6 +29,7 @@ export class Interval extends HTMLElement {
     this.divContainer.appendChild(this.timerHeader);
     this.divContainer.appendChild(this.nextButton);
     this.divContainer.classList.add('flex-down');
+    this.categoryHeader.classList.add('h3');
     this.divContainer.setAttribute('id', 'interval-container');
     this.root.appendChild(this.divContainer);
   }
