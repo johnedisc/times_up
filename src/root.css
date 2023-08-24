@@ -13,6 +13,7 @@
   --balance-text: rgb(16,13,255);
   --yellow-text: rgb(253,254,2);
   --gutter: 1.7rem;
+  --form-gutter: .8rem;
   --scale: 1.618;
   --base-font-size: 16px;
   --h5: calc(var(--base-font-size) * var(--scale));
@@ -23,80 +24,82 @@
   --p: calc(var(--base-font-size));
   --small: calc(var(--p) / var(--scale));
   --x-small: calv(var(--small) / var(--scale));
-  /*
-  --base-line-height: 1.75; 
-  */
-}
+  --base-line-height: 1; 
+  }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--bg-start-screen);
-  color: var(--primary-font-color);
-  font-family: var(--primary-font);
-  font-size: var(--base-font-size);
-  line-height: var(--base-line-height);
-}
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-start-screen);
+    color: var(--primary-font-color);
+    font-family: var(--primary-font);
+    font-size: var(--base-font-size);
+    line-height: var(--base-line-height);
+  }
 
 
-h1, h2, h3, h4, h5 {
-  /*
-  margin: 3rem 0 1.38rem;
-  font-weight: 400;
-  line-height: 1.3;
-  */
-}
+  h1, h2, h3, h4, h5 {
+    margin: 1rem;
+    /*
+    margin: 3rem 0 1.38rem;
+    font-weight: 400;
+    line-height: 1.3;
+     */
+  }
 
-h1 {
-  margin: 0;
-  font-size: var(--h1);
-}
+  h1 {
+    margin: 0;
+    font-size: var(--h1);
+  }
 
-h2 {font-size: var(--h2)}
+  h2 {font-size: var(--h2)}
 
-h3 {font-size: var(--h3)}
+  h3 {font-size: var(--h3)}
 
-h4 {font-size: var(--h4)}
+  h4 {font-size: var(--h4)}
 
-h5 {font-size: var(--h5)}
+  h5 {font-size: var(--h5)}
 
-p {
+  p {
   /*
   margin-bottom: 1rem;
-  */
+   */
   font-size: var(--p);
-}
+  }
 
-small, .text_small {font-size: var(--small)}
+  small, .text_small {font-size: var(--small)}
 
-.x-small {font-size: var(--x-small)}
+  .x-small {font-size: var(--x-small)}
 
-ul {
-  gap: var(--gutter);
-}
+  ul {
+    gap: var(--gutter);
+  }
 
-li {
-  list-style-type: none;
-}
+  li {
+    list-style-type: none;
+  }
 
-#container {
-  width: 100%;
-  height: 100%;
-}
+  form {
+    gap: var(--form-gutter);
+  }
 
-.flex-down {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+  #container {
+    width: 100%;
+    height: 100%;
+  }
 
-.flex-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .flex-down {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
+  .flex-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
