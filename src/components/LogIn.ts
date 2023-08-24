@@ -1,4 +1,9 @@
 export class LogIn extends HTMLElement {
+  #user = {
+    email: '',
+    password: ''
+  }
+
   constructor() {
     super();
 
@@ -25,9 +30,13 @@ export class LogIn extends HTMLElement {
     `;
     try {
       this.setFormBindings(this.querySelector('form'));
+
+      // test out the 2-way binding
+//      this.#user.email = 'fljsd@lkjsdfkjdf.com';
+//      console.log(this.#user.email)
     } catch (error) {
       window._timesUpApp.router.go('/error');
-      console.error('didn\'t find the form');
+      console.error('didn\'t find the form.', error);
     }
   }
 
@@ -36,8 +45,35 @@ export class LogIn extends HTMLElement {
     try {
       form.addEventListener('submit', (event) => {
         event.preventDefault();
-        window._timesUpApp.router.go('/start');
+        
+        // todo, grab user data from DB
+
+        window._timesUpApp.router.go(`/start`);
       });
+
+      this.#user = new Proxy(this.#user, {
+        set(target, property, value) {
+          try {
+            if (typeof target[property] === typeof value) {
+            target[property] = value;
+            form.elements[property].value = value;
+            console.log(property, target[property]);
+            return true;
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      });
+
+      for (let i = 0; i < form.elements.length; i++) {
+        const el = form.elements[i];
+        el.addEventListener('change', (event) => {
+          console.log(el.name, el.value);
+          this.#user[el.name] = el.value;
+        });
+      };
+
     } catch (error) {
       window._timesUpApp.router.go('/error');
       console.error(error);
