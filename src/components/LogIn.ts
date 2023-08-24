@@ -52,17 +52,18 @@ export class LogIn extends HTMLElement {
       });
 
       this.#user = new Proxy(this.#user, {
-        set(target, property, value) {
+        set(target, property, value, receiver) {
           try {
+            console.log(target, receiver);
             if (typeof target[property] === typeof value) {
             target[property] = value;
             form.elements[property].value = value;
             console.log(property, target[property]);
-            return true;
             }
           } catch (error) {
             console.error(error);
           }
+          return true;
         }
       });
 
