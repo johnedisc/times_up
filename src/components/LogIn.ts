@@ -1,5 +1,5 @@
 export class LogIn extends HTMLElement {
-  #user = {
+  #user: Record<string | symbol, string> = {
     email: '',
     password: ''
   }
@@ -29,7 +29,8 @@ export class LogIn extends HTMLElement {
       </form>
     `;
     try {
-      this.setFormBindings(this.querySelector('form'));
+      const form: HTMLFormElement | null = this.querySelector('form');
+      if (form) this.setFormBindings(form);
 
       // test out the 2-way binding
 //      this.#user.email = 'fljsd@lkjsdfkjdf.com';
@@ -41,7 +42,7 @@ export class LogIn extends HTMLElement {
   }
 
 
-  setFormBindings(form) {
+  setFormBindings(form: HTMLFormElement): void {
     try {
       form.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -54,11 +55,10 @@ export class LogIn extends HTMLElement {
       this.#user = new Proxy(this.#user, {
         set(target, property, value, receiver) {
           try {
-            console.log(target, receiver);
             if (typeof target[property] === typeof value) {
             target[property] = value;
             form.elements[property].value = value;
-            console.log(property, target[property]);
+            console.log(target, target[property]);
             }
           } catch (error) {
             console.error(error);
@@ -68,10 +68,11 @@ export class LogIn extends HTMLElement {
       });
 
       for (let i = 0; i < form.elements.length; i++) {
-        const el = form.elements[i];
-        el.addEventListener('change', (event) => {
-          console.log(el.name, el.value);
-          this.#user[el.name] = el.value;
+        const el = form.elements[i] as HTMLInputElement;
+        el.addEventListener('change', () => {
+          if (el) {
+            this.#user[el.name] = el.value;
+          }
         });
       };
 
