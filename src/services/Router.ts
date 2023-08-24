@@ -1,5 +1,3 @@
-import { StartPage } from "../components/StartPage.ts";
-import { errorPage, startScreen } from "../ts/start-screen.ts";
 import { clearScreen } from "../utilities/utilities.ts";
 
 export const Router = {
@@ -75,7 +73,7 @@ export const Router = {
         pageElement = document.createElement('error-page');
     }
 
-    _timesUpApp.store.container.appendChild(pageElement);
+    window._timesUpApp.store.container.appendChild(pageElement);
 //    window.scrollX = 0;
 //    window.scrollY = 0;
   }

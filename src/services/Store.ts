@@ -10,7 +10,13 @@ const Store: IStore = {
 }
 
 export const StoreProxy = new Proxy(Store, {
-  set(target, property, value, receiver) {
+  get(target, p, receiver) {
+    console.log('hi proxy getter');
+    console.log('target', target,'\npara', p, '\nreceiver', receiver);
+    return target;
+  },
+  set(target, property, value, _) {
+    console.log('hi proxy setter');
     try {
       if (target.hasOwnProperty(property)) {
         target[property as keyof IStore] = value;
@@ -23,9 +29,9 @@ export const StoreProxy = new Proxy(Store, {
           window.dispatchEvent(new Event('userchanged'));
         }
       }
-      return true;
     } catch(error) {
       console.error(error);
     }
+    return true;
   }
 });

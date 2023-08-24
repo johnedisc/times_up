@@ -1,5 +1,3 @@
-import { clearScreen } from "../utilities/utilities.ts";
-
 export class StartPage extends HTMLElement {
   h1: HTMLElement = document.createElement('h1');
   div: HTMLElement = document.createElement('div');
@@ -20,13 +18,13 @@ export class StartPage extends HTMLElement {
     this.h1.classList.add('h2');
 
     this.h5.addEventListener('click', () => {
-      _timesUpApp.router.go('/menu');
+      window._timesUpApp.router.go('/menu');
     })
   }
 
   connectedCallback() {
     this.appendChild(this.div);
-    this.startScreen(_timesUpApp.store.user.name);
+    this.startScreen(window._timesUpApp.store.user.name);
   }
 }
 

@@ -10,9 +10,9 @@ export class ErrorPage extends HTMLElement {
         <h5 id='back'>back</h4>
       </div>
     `;
-    document.getElementById('back')?.addEventListener('click', (event) => {
+    document.getElementById('back')?.addEventListener('click', () => {
 
-//      _timesUpApp.router.go('/start');
+//      window._timesUpApp.router.go('/start');
       history.back();
     });
   }
