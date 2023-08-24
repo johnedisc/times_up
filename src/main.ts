@@ -20,18 +20,12 @@ customElements.define('menu-modal', MenuModal);
 customElements.define('start-page', StartPage);
 customElements.define('log-in', LogIn);
 
-declare global {
-  interface Window {
-    _timesUpApp: any;
-  }
-}
-
-window._timesUpApp = {};
-window._timesUpApp.store = StoreProxy;
-window._timesUpApp.router = Router;
-window._timesUpApp.store.container = document.getElementById('container');
-window._timesUpApp.store.currentIndex = 0;
-window._timesUpApp.store.backgroundColors = grabColors();
+// look in /src/utilities/global.d.ts for this definition
+_timesUpApp.store = StoreProxy;
+_timesUpApp.router = Router;
+_timesUpApp.store.container = document.getElementById('container');
+_timesUpApp.store.currentIndex = 0;
+_timesUpApp.store.backgroundColors = grabColors();
 
 // grab vh and set in root node
 const vh = window.innerHeight;
@@ -39,7 +33,7 @@ document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 document.addEventListener('DOMContentLoaded', async () => {
   await LoadData();
-  window._timesUpApp.router.init();
+  _timesUpApp.router.init();
 });
 
 

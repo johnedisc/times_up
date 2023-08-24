@@ -1,4 +1,4 @@
-import { ITimerList, IUser } from "../services/Store.ts";
+import { ITimerList } from "../utilities/interfaces.ts";
 
 export const clearScreen = ():void => {
   while (_timesUpApp.store.container.children[0]) {
@@ -77,7 +77,7 @@ export const counter = (program: ITimerList[], element: HTMLElement, index: numb
         }
         //        console.log(element, `is running at ${runningTotal}`);
       }
-      element.dataset.runningTotal = runningTotal;
+      element.dataset.runningTotal = runningTotal.toString();
       element.innerHTML = fillOutZeros(minutes, seconds);
     }, 1000);
 

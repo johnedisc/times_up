@@ -36,7 +36,7 @@ export class LogIn extends HTMLElement {
 //      this.#user.email = 'fljsd@lkjsdfkjdf.com';
 //      console.log(this.#user.email)
     } catch (error) {
-      window._timesUpApp.router.go('/error');
+      _timesUpApp.router.go('/error');
       console.error('didn\'t find the form.', error);
     }
   }
@@ -49,7 +49,7 @@ export class LogIn extends HTMLElement {
         
         // todo, grab user data from DB
 
-        window._timesUpApp.router.go(`/start`);
+        _timesUpApp.router.go(`/start`);
       });
 
       this.#user = new Proxy(this.#user, {
@@ -77,7 +77,7 @@ export class LogIn extends HTMLElement {
       };
 
     } catch (error) {
-      window._timesUpApp.router.go('/error');
+      _timesUpApp.router.go('/error');
       console.error(error);
     }
   }
