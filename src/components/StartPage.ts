@@ -8,8 +8,8 @@ export class StartPage extends HTMLElement {
   constructor() {
     super();
 
-    this.div.appendChild(this.h5);
     this.div.appendChild(this.h1);
+    this.div.appendChild(this.h5);
   }
 
   
@@ -17,6 +17,7 @@ export class StartPage extends HTMLElement {
     this.h1.innerHTML = `hi, ${user}`;
     this.h5.innerHTML = 'select your interval sequence';
     this.div.classList.add('flex-down', 'start-screen');
+    this.h1.classList.add('h2');
 
     this.h5.addEventListener('click', () => {
       _timesUpApp.router.go('/menu');

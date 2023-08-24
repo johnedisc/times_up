@@ -42,7 +42,6 @@ export function fillOutZeros(minutes:number, seconds:number):string {
 }
 
 export const counter = (program: ITimerList[], element: HTMLElement, index: number):number => {
-    console.log('counter funct');
 
     let runningTotal = program[index].total;
     let minutes = Math.round(runningTotal / 60);

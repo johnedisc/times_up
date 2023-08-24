@@ -44,7 +44,6 @@ export class Interval extends HTMLElement {
   }
 
   renderInterval(programNameProp: string, index: number):void {
-    console.log('renderInterval')
     //    console.log('this is the intervalProgram', this.intervalProgram);
     if (_timesUpApp.store.backgroundColors[this.backgroundColorIndex]) {
       this.divContainer.style.backgroundColor = _timesUpApp.store.backgroundColors[this.backgroundColorIndex];
@@ -62,7 +61,6 @@ export class Interval extends HTMLElement {
   }
 
   completeSequence() {
-    console.log('complete')
     clearInterval(this.intervalID);
     clearSelf(this.categoryHeader);
 //    clearSelf(this.timerHeader);
@@ -83,26 +81,22 @@ export class Interval extends HTMLElement {
       if (!this.dataset.programName) {
         throw new Error('this program can\'t be accessed');
       }
-      console.log('callback')
       this.intervalProgram = _timesUpApp.store.user.timerList.filter(item => item['name'] === this.dataset.programName)[0].list;
       this.renderInterval(this.dataset.programName, 0);
       this.loadCSS('Interval.css.text');
 
       // add event listeners
       this.divContainer.addEventListener('click', event => {
-        console.log('start')
         this.intervalID = counter(this.intervalProgram, this.timerHeader, _timesUpApp.store.currentIndex);
 
         this.nextButton.addEventListener('click', event => {
-          console.log('nextButton')
           this.timerHeader.removeAttribute('id');
-          console.log(this.intervalProgram[_timesUpApp.store.currentIndex].name, this.timerHeader.dataset.runningTotal);
+//          console.log(this.intervalProgram[_timesUpApp.store.currentIndex].name, this.timerHeader.dataset.runningTotal);
           clearInterval(this.intervalID);
           //      this.divContainer.removeChild(this.timerHeader);
           if (_timesUpApp.store.currentIndex < this.intervalProgram?.length - 1) {
             _timesUpApp.store.currentIndex++;
             this.intervalID = counter(this.intervalProgram, this.timerHeader, _timesUpApp.store.currentIndex);
-            console.log('current index', _timesUpApp.store.currentIndex);
           } else if (_timesUpApp.store.currentIndex === this.intervalProgram?.length - 1) {
             _timesUpApp.store.currentIndex++;
           }       
@@ -112,7 +106,6 @@ export class Interval extends HTMLElement {
 
       window.addEventListener("indexchanged", () => {
         if (_timesUpApp.store.currentIndex > 0) {
-          console.log('index event')
           if (_timesUpApp.store.currentIndex < this.intervalProgram.length) {
             this.renderInterval(this.dataset.programName, _timesUpApp.store.currentIndex);
           } else {

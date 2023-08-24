@@ -1,6 +1,6 @@
 export class ProgramForm extends HTMLElement {
 
-  #newProgram = {
+  #newProgram: Record<string | symbol, string> = {
     name: ""
   }
   #newListItem = {
@@ -25,9 +25,9 @@ export class ProgramForm extends HTMLElement {
     `;
 
     const programForm = document.querySelector('form');
-    programForm.classList.add('flex-down', 'start-screen');
+    programForm?.classList.add('flex-down', 'start-screen');
 
-    this.setFormBindings(programForm);
+    if (programForm) this.setFormBindings(programForm);
   }
 
   setFormBindings(form: HTMLFormElement) {
@@ -50,9 +50,9 @@ export class ProgramForm extends HTMLElement {
       },
     })
     for (let i = 0; i < form.elements.length; i++) {
-      let el = form.elements[i];
+      let el = form.elements[i] as HTMLInputElement;
 //      console.log(el.name);
-      el.addEventListener('change', (event) => {
+      el.addEventListener('change', () => {
 //        console.log(el, el.value);
         let tempVal = el.value;
         this.#newProgram[el.name] = tempVal;
