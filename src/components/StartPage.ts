@@ -1,4 +1,4 @@
-import { _timesUpApp } from "../main.ts";
+import { _timesUpApp } from "../main.js";
 
 export class StartPage extends HTMLElement {
   h1: HTMLElement = document.createElement('h1');

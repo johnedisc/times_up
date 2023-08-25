@@ -2,10 +2,6 @@
   "compilerOptions": {
     "outDir": "dist",
     "target": "es6",
-
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    "strict": true
   },
   "include": ["src"]
 }

@@ -1,5 +1,5 @@
-import { _timesUpApp } from "../main.ts";
-import { clearScreen } from "../utilities/utilities.ts";
+import { _timesUpApp } from "../main.js";
+import { clearScreen } from "../utilities/utilities.js";
 
 export const Router = {
   init: () => {

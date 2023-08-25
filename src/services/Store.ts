@@ -1,5 +1,5 @@
-import { _timesUpApp } from "../main.ts";
-import { IStore } from "../utilities/interfaces.ts";
+import { _timesUpApp } from "../main.js";
+import { IStore } from "../utilities/interfaces.js";
 
 const Store: IStore = {
   user: null,

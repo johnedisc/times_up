@@ -1,6 +1,6 @@
-import { _timesUpApp } from "../main.ts";
-import { ITimerList } from '../utilities/interfaces.ts';
-import {clearSelf, convertSeconds2Time, counter} from '../utilities/utilities.ts';
+import { _timesUpApp } from "../main.js";
+import { ITimerList } from '../utilities/interfaces.js';
+import {clearSelf, convertSeconds2Time, counter} from '../utilities/utilities.js';
 
 export class Interval extends HTMLElement {
 
@@ -86,7 +86,7 @@ export class Interval extends HTMLElement {
         item.name === this.dataset.programName
       })[0].list;
       this.renderInterval(0);
-      this.loadCSS('Interval.css.text');
+      this.loadCSS('Interval.css');
 
       // add event listeners
       this.divContainer.addEventListener('click', () => {

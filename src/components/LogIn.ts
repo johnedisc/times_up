@@ -1,4 +1,4 @@
-import { _timesUpApp } from "../main.ts";
+import { _timesUpApp } from "../main.js";
 
 export class LogIn extends HTMLElement {
   #user: Record<string | symbol, string> = {
