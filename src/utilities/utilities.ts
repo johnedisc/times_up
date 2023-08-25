@@ -1,7 +1,7 @@
 export const clearScreen = ():void => {
-  if (window._timesUpApp.store.container.children) {
-    while (window._timesUpApp.store.container.children[0]) {
-      window._timesUpApp.store.container.removeChild(window._timesUpApp.store.container.children[0]);
+  if (_timesUpApp.store.container.children) {
+    while (_timesUpApp.store.container.children[0]) {
+      _timesUpApp.store.container.removeChild(_timesUpApp.store.container.children[0]);
     }
   }
 }

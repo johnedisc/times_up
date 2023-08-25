@@ -18,13 +18,13 @@ export class StartPage extends HTMLElement {
     this.h1.classList.add('h2');
 
     this.h5.addEventListener('click', () => {
-      window._timesUpApp.router.go('/menu');
+      _timesUpApp.router.go('/menu');
     })
   }
 
   connectedCallback() {
     this.appendChild(this.div);
-    this.startScreen(window._timesUpApp.store.user.name);
+    this.startScreen(_timesUpApp.store.user.name);
   }
 }
 

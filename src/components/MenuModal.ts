@@ -9,11 +9,11 @@ export class MenuModal extends HTMLElement {
     const div: HTMLDivElement = document.createElement('div');
     const ul: HTMLUListElement = document.createElement('ul');
 
-    for (let i=0; i < window._timesUpApp.store.user.timerList.length; i++) {
+    for (let i=0; i < _timesUpApp.store.user.timerList.length; i++) {
       const li: HTMLLIElement = document.createElement('li');
-      li.innerHTML = window._timesUpApp.store.user.timerList[i].name;
+      li.innerHTML = _timesUpApp.store.user.timerList[i].name;
       li.addEventListener('click', event => {
-        window._timesUpApp.router.go(`/interval/${event.target.innerHTML}`)
+        _timesUpApp.router.go(`/interval/${event.target.innerHTML}`)
       });
       ul.appendChild(li);
 

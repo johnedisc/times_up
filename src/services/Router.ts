@@ -73,7 +73,7 @@ export const Router = {
         pageElement = document.createElement('error-page');
     }
 
-    window._timesUpApp.store.container.appendChild(pageElement);
+    _timesUpApp.store.container.appendChild(pageElement);
 //    window.scrollX = 0;
 //    window.scrollY = 0;
   }

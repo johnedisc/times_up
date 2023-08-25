@@ -13,7 +13,7 @@ export const StoreProxy = new Proxy(Store, {
   get(target, p, receiver) {
     console.log('hi proxy getter');
     console.log('target', target,'\npara', p, '\nreceiver', receiver);
-    return target;
+    return target[p as keyof IStore];
   },
   set(target, property, value, _) {
     console.log('hi proxy setter');
