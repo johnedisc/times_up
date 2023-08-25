@@ -1,3 +1,4 @@
+import { _timesUpApp } from "../main.ts";
 import { clearScreen } from "../utilities/utilities.ts";
 
 export const Router = {

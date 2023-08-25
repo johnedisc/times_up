@@ -1,3 +1,4 @@
+import { _timesUpApp } from "../main.ts";
 import { ITimerList } from '../utilities/interfaces.ts';
 import {clearSelf, convertSeconds2Time, counter} from '../utilities/utilities.ts';
 
@@ -81,7 +82,9 @@ export class Interval extends HTMLElement {
       if (!this.dataset.programName) {
         throw new Error('this program can\'t be accessed');
       }
-      this.intervalProgram = _timesUpApp.store.user.timerList.filter(item => item['name'] === this.dataset.programName)[0].list;
+      this.intervalProgram = _timesUpApp.store.user.timerList.filter((item: ITimerList) => {
+        item.name === this.dataset.programName
+      })[0].list;
       this.renderInterval(0);
       this.loadCSS('Interval.css.text');
 

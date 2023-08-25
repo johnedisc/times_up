@@ -8,12 +8,10 @@
   "author": "johnedisc",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev": "tsc --watch --preserveWatchOutput",
+    "build": "tsc"
   },
   "devDependencies": {
-    "typescript": "^5.0.2",
-    "vite": "^4.4.0"
+    "typescript": "^5.0.2"
   }
 }

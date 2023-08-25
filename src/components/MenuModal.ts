@@ -1,3 +1,5 @@
+import { _timesUpApp } from "../main.ts";
+
 export class MenuModal extends HTMLElement {
   constructor() {
     super();
@@ -13,7 +15,7 @@ export class MenuModal extends HTMLElement {
       const li: HTMLLIElement = document.createElement('li');
       li.innerHTML = _timesUpApp.store.user.timerList[i].name;
       li.addEventListener('click', event => {
-        _timesUpApp.router.go(`/interval/${event.target.innerHTML}`)
+        _timesUpApp.router.go(`/interval/${(event.target as HTMLLIElement).innerText}`)
       });
       ul.appendChild(li);
 

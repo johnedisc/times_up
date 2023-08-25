@@ -1,12 +1,14 @@
+import { _timesUpApp } from "../main.ts";
+
 export class ProgramForm extends HTMLElement {
 
   #newProgram: Record<string | symbol, string> = {
     name: ""
   }
-  #newListItem = {
-    name: "",
-    total: 0
-  }
+//  #newListItem = {
+//    name: "",
+//    total: 0
+//  }
 
   constructor() {
     super();
@@ -44,7 +46,8 @@ export class ProgramForm extends HTMLElement {
       set(target, property, value) {
 //          console.log('target', target, 'property', property, 'value', value);
           target[property] = value;
-          form.elements[property].value = value;
+          const formInputElement = form.elements.namedItem(property.toString());
+          if (formInputElement) (formInputElement as HTMLInputElement).value = value;
 //          console.log(form.elements[property].value);
           return true;
       },

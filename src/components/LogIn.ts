@@ -1,3 +1,5 @@
+import { _timesUpApp } from "../main.ts";
+
 export class LogIn extends HTMLElement {
   #user: Record<string | symbol, string> = {
     email: '',

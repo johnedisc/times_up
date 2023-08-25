@@ -1,3 +1,5 @@
+import { _timesUpApp } from "../main.ts";
+
 export class StartPage extends HTMLElement {
   h1: HTMLElement = document.createElement('h1');
   div: HTMLElement = document.createElement('div');

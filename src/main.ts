@@ -20,13 +20,13 @@ customElements.define('menu-modal', MenuModal);
 customElements.define('start-page', StartPage);
 customElements.define('log-in', LogIn);
 
-declare global {
-  interface Window {
-    _timesUpApp: any;
-  }
-}
+//declare global {
+//  interface Window {
+//    _timesUpApp: any;
+//  }
+//}
 
-window._timesUpApp = {};
+export let _timesUpApp: any = { };
 _timesUpApp.store = StoreProxy;
 _timesUpApp.router = Router;
 _timesUpApp.store.container = document.getElementById('container');

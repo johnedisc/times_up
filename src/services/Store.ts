@@ -1,3 +1,4 @@
+import { _timesUpApp } from "../main.ts";
 import { IStore } from "../utilities/interfaces.ts";
 
 const Store: IStore = {

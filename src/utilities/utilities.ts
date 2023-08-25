@@ -1,3 +1,6 @@
+import { _timesUpApp } from "../main.ts";
+import { ITimerList } from "./interfaces.ts";
+
 export const clearScreen = ():void => {
   if (_timesUpApp.store.container.children) {
     while (_timesUpApp.store.container.children[0]) {
