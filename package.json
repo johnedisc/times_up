@@ -8,8 +8,11 @@
   "author": "johnedisc",
   "license": "MIT",
   "scripts": {
+    "start": "node server/dist/server.js",
+    "build:client": "tsc -p server/client",
+    "build:server": "tsc -p server",
+    "build": "yarn build:client && yarn build:server"
     "dev": "tsc -b --watch --preserveWatchOutput",
-    "build": "tsc"
   },
   "devDependencies": {
     "typescript": "^5.0.2"
