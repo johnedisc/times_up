@@ -40,7 +40,7 @@ export const counter = (program, element, index) => {
     let runningTotal = program[index].total;
     let minutes = Math.round(runningTotal / 60);
     let seconds = runningTotal % 60;
-    return setInterval(() => {
+    return window.setInterval(() => {
         //      console.log(runningTotal, minutes, seconds);
         if (runningTotal <= 0) {
             element.setAttribute('id', 'warning');

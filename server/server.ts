@@ -5,8 +5,10 @@ import * as fsPromises from 'fs/promises';
 
 
 const PORT: number | string = process.env.PORT || 3300;
+let serverHits: number = 0;
 
-const serveFile = async (filePath, contentType, httpResponse) => {
+const serveFile = async (filePath: any, contentType: any, httpResponse: any) => {
+  console.log('line 10', filePath, contentType);
   try {
     const data = await fsPromises.readFile(filePath, 'utf8');
     httpResponse.writeHead(200, { 'Content-Type': contentType });
@@ -19,9 +21,9 @@ const serveFile = async (filePath, contentType, httpResponse) => {
 }
 
 const server = http.createServer((request, response) => {
+  console.log(`hit number: ${serverHits}, ${request.url} ${request.method}`);
+  serverHits++;
   if (request.url) {
-    console.log(request.url, request.method);
-
     const extension: any  = path.extname(request.url);
 
     let contentType: string;
@@ -29,9 +31,6 @@ const server = http.createServer((request, response) => {
     switch (extension) {
       case '.css':
         contentType = 'text/css';
-      break;
-      case '.ts':
-        contentType = 'text/typescript';
       break;
       case '.js':
         contentType = 'text/javascript';
@@ -54,23 +53,27 @@ const server = http.createServer((request, response) => {
 
     let filePath = 
       contentType === 'text/html' && request.url === '/'
-        ? path.join(__dirname, 'src', 'views', 'index.html')
+        ? path.join(__dirname, '..', '..', 'client', 'index.html')
           : contentType === 'text/html' && request.url === '/index.html'
-            ? path.join(__dirname, 'src', 'views', 'index.html')
-              : path.join(__dirname, 'src/views', request.url);
+            ? path.join(__dirname, '..', '..', 'client', 'index.html')
+              : contentType === 'text/css'
+                ? path.join(__dirname, '..', '..', 'client', request.url)
+                  : path.join(__dirname, '..', '..', 'client', request.url);
 
         //  in case we add a bunch of paths, this will tack html on the end
     if (!extension && request.url?.slice(-1) !== '/') filePath += '.html';
 
+//    console.log('check file path', filePath);
     // check if file exists
     const fileExists = fs.existsSync(filePath);
 
     if (fileExists) {
       // serve file
-      console.log('congrats');
+      console.log(`congrats, we will serve the file: ${filePath}`);
       serveFile(filePath, contentType, response);
 
     } else {
+      console.log(`file didn't exist`);
       // 301 redirect
       switch(path.parse(filePath).base) {
         case 'unused-url.html':
@@ -83,11 +86,12 @@ const server = http.createServer((request, response) => {
           break;
         default:
           //serve a 404
-          serveFile(path.join(__dirname, 'src', 'views', '404.html'), 'text/html', response);
+          console.log('trouble at the mill');
+//          serveFile(path.join(__dirname, 'src', 'views', '404.html'), 'text/html', response);
       };
     };
 
-    console.log(`contentType: ${contentType}, extension: ${extension}, filePath ${filePath}, request.url: ${request.url}`);
+//    console.log(`line 94: contentType: ${contentType}, extension: ${extension}, filePath ${filePath}, request.url: ${request.url}`);
   }
 }); 
 

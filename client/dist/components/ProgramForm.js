@@ -37,7 +37,7 @@ export class ProgramForm extends HTMLElement {
       </form>
     `;
         const programForm = document.querySelector('form');
-        programForm === null || programForm === void 0 ? void 0 : programForm.classList.add('flex-down', 'start-screen');
+        programForm?.classList.add('flex-down', 'start-screen');
         if (programForm)
             this.setFormBindings(programForm);
     }

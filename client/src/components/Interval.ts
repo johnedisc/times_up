@@ -37,7 +37,7 @@ export class Interval extends HTMLElement {
   // methods
 
   async loadCSS(url: string) {
-    const cssRequest = await fetch(`/src/components/${url}`);
+    const cssRequest = await fetch(`/src/css/${url}`);
     const parsedCSS = await cssRequest.text();
     const styleTag = document.createElement('style');
     this.root.appendChild(styleTag);
@@ -56,6 +56,7 @@ export class Interval extends HTMLElement {
 
     // print the time
     if (this.intervalProgram) {
+      console.log(this.intervalProgram[index]);
       this.timerHeader.innerHTML = convertSeconds2Time(this.intervalProgram[index].total);
       this.categoryHeader.innerHTML = this.intervalProgram[index].name;
     }
@@ -82,9 +83,16 @@ export class Interval extends HTMLElement {
       if (!this.dataset.programName) {
         throw new Error('this program can\'t be accessed');
       }
-      this.intervalProgram = _timesUpApp.store.user.timerList.filter((item: ITimerList) => {
-        item.name === this.dataset.programName
-      })[0].list;
+      for (let i = 0; i < _timesUpApp.store.user.timerList.length; i++) {
+        if (_timesUpApp.store.user.timerList[i].name === this.dataset.programName) {
+          this.intervalProgram = _timesUpApp.store.user.timerList[i].list;
+          console.log(this.intervalProgram);
+          break;
+        }
+      }
+//      this.intervalProgram = _timesUpApp.store.user.timerList.filter((item: ITimerList) => {
+//        item.name === this.dataset.programName
+//      })[0].list;
       this.renderInterval(0);
       this.loadCSS('Interval.css');
 

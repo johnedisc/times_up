@@ -22,11 +22,11 @@ export class LogIn extends HTMLElement {
         <label for='email'>
           email
         </label>
-        <input name='email' type='email' required />
+        <input name='email' type='email' />
         <label for='password'>
           password
         </label>
-        <input name='password' type='password' required />
+        <input name='password' type='password' />
         <button type='submit'>go</button>
       </form>
     `;

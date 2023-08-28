@@ -3,18 +3,18 @@
   "private": true,
   "version": "1.0.0",
   "description": "multi-timer sequencer for keeping track of time data for multiple sequential tasks.",
-  "type": "module",
   "repository": "https://github.com/johnedisc/times_up.git",
   "author": "johnedisc",
   "license": "MIT",
   "scripts": {
-    "start": "node server/dist/server.js",
-    "build:client": "tsc -p server/client",
-    "build:server": "tsc -p server",
-    "build": "yarn build:client && yarn build:server"
-    "dev": "tsc -b --watch --preserveWatchOutput",
+    "start": "nodemon server/dist/server.js",
+    "build:client": "pushd client && tsc -p .",
+    "build:server": "pushd server/ && tsc --watch --preserveWatchOutput",
+    "build": "tsc",
+    "dev": "tsc -b --watch --preserveWatchOutput"
   },
   "devDependencies": {
+    "@types/node": "^20.5.6",
     "typescript": "^5.0.2"
   }
 }

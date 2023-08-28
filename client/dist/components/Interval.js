@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import { _timesUpApp } from "../main.js";
 import { clearSelf, convertSeconds2Time, counter } from '../utilities/utilities.js';
 export class Interval extends HTMLElement {
@@ -32,14 +23,12 @@ export class Interval extends HTMLElement {
         this.root.appendChild(this.divContainer);
     }
     // methods
-    loadCSS(url) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const cssRequest = yield fetch(`/src/components/${url}`);
-            const parsedCSS = yield cssRequest.text();
-            const styleTag = document.createElement('style');
-            this.root.appendChild(styleTag);
-            styleTag.textContent = parsedCSS;
-        });
+    async loadCSS(url) {
+        const cssRequest = await fetch(`/src/css/${url}`);
+        const parsedCSS = await cssRequest.text();
+        const styleTag = document.createElement('style');
+        this.root.appendChild(styleTag);
+        styleTag.textContent = parsedCSS;
     }
     renderInterval(index) {
         //    console.log('this is the intervalProgram', this.intervalProgram);
@@ -53,6 +42,7 @@ export class Interval extends HTMLElement {
         }
         // print the time
         if (this.intervalProgram) {
+            console.log(this.intervalProgram[index]);
             this.timerHeader.innerHTML = convertSeconds2Time(this.intervalProgram[index].total);
             this.categoryHeader.innerHTML = this.intervalProgram[index].name;
         }
@@ -76,9 +66,16 @@ export class Interval extends HTMLElement {
             if (!this.dataset.programName) {
                 throw new Error('this program can\'t be accessed');
             }
-            this.intervalProgram = _timesUpApp.store.user.timerList.filter((item) => {
-                item.name === this.dataset.programName;
-            })[0].list;
+            for (let i = 0; i < _timesUpApp.store.user.timerList.length; i++) {
+                if (_timesUpApp.store.user.timerList[i].name === this.dataset.programName) {
+                    this.intervalProgram = _timesUpApp.store.user.timerList[i].list;
+                    console.log(this.intervalProgram);
+                    break;
+                }
+            }
+            //      this.intervalProgram = _timesUpApp.store.user.timerList.filter((item: ITimerList) => {
+            //        item.name === this.dataset.programName
+            //      })[0].list;
             this.renderInterval(0);
             this.loadCSS('Interval.css');
             // add event listeners
