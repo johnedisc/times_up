@@ -76,15 +76,42 @@ export const counter = (program, element, index) => {
         element.innerHTML = fillOutZeros(minutes, seconds);
     }, 1000);
 };
-export const grabColors = () => {
-    const ruleArray = document.styleSheets[0].cssRules[1].cssText.split(';');
-    const regExp = /--bg-\d+/;
-    const backgroundColors = [];
-    for (let i = 0; i < ruleArray.length; i++) {
-        if (regExp.test(ruleArray[i])) {
-            const ruleString = ruleArray[i].split(': ');
-            backgroundColors.push(ruleString[1]);
+const findRootStyleSheet = (styleSheets) => {
+    let foundRule = null;
+    for (let i = 0; i < styleSheets.length; i++) {
+        for (let j = 0; j < styleSheets[i].cssRules.length; j++) {
+            const rule = styleSheets[i].cssRules[j];
+            if (rule.selectorText === ':root') {
+                foundRule = rule;
+            }
         }
     }
-    return backgroundColors;
+    if (foundRule) {
+        return foundRule;
+    }
+    else
+        return null;
+};
+export const grabColors = () => {
+    let styleSheets = document.styleSheets;
+    let guess = styleSheets[1].cssRules[1];
+    if (guess.selectorText !== ':root') {
+        console.log('not find sheet');
+        guess = findRootStyleSheet(styleSheets);
+    }
+    if (guess) {
+        const ruleArray = guess.cssText.split(';');
+        const regExp = /--bg-\d+/;
+        const backgroundColors = [];
+        for (let i = 0; i < ruleArray.length; i++) {
+            if (regExp.test(ruleArray[i])) {
+                const ruleString = ruleArray[i].split(': ');
+                backgroundColors.push(ruleString[1]);
+            }
+        }
+        return backgroundColors;
+    }
+    else {
+        throw new Error('stylesheet could not be found');
+    }
 };

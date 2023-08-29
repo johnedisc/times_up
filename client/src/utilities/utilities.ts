@@ -86,18 +86,44 @@ export const counter = (program: ITimerList[], element: HTMLElement, index: numb
 
   }
 
-  export const grabColors = ():string[] => {
-
-    const ruleArray = document.styleSheets[0].cssRules[1].cssText.split(';');
-    const regExp:RegExp = /--bg-\d+/;
-    const backgroundColors:string[] = [];
-
-    for (let i=0; i < ruleArray.length; i++) {
-      if (regExp.test(ruleArray[i])) {
-        const ruleString = ruleArray[i].split(': ');
-        backgroundColors.push(ruleString[1]);
+  const findRootStyleSheet = (styleSheets: StyleSheetList):CSSStyleRule | null => {
+    let foundRule = null;
+    for (let i = 0; i < styleSheets.length; i++) {
+      for (let j = 0; j < styleSheets[i].cssRules.length; j++) {
+        const rule = styleSheets[i].cssRules[j] as CSSStyleRule;
+        if (rule.selectorText === ':root') {
+          foundRule = rule;
+        }
       }
     }
+    if (foundRule) {
+      return foundRule;
+    } else return null;
+  }
+
+  export const grabColors = ():string[] | null => {
+
+    let styleSheets = document.styleSheets;
+    let guess: CSSStyleRule | null = styleSheets[1].cssRules[1] as CSSStyleRule;
+    if (guess.selectorText !== ':root') {
+      console.log('not find sheet');
+      guess = findRootStyleSheet(styleSheets);
+    }
+    if (guess) {
+      const ruleArray = guess.cssText.split(';');
+      const regExp:RegExp = /--bg-\d+/;
+      const backgroundColors:string[] = [];
+
+      for (let i=0; i < ruleArray.length; i++) {
+        if (regExp.test(ruleArray[i])) {
+          const ruleString = ruleArray[i].split(': ');
+          backgroundColors.push(ruleString[1]);
+        }
+      }
+      return backgroundColors;
+
+    } else {
+      throw new Error('stylesheet could not be found');
+    }
     
-    return backgroundColors;
   }
