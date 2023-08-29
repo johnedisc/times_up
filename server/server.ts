@@ -57,13 +57,13 @@ const server = http.createServer((request, response) => {
           : contentType === 'text/html' && request.url === '/index.html'
             ? path.join(__dirname, '..', '..', 'client', 'index.html')
               : contentType === 'text/css'
-                ? path.join(__dirname, '..', '..', 'client', request.url)
+                ? path.join(__dirname, '..', '..', 'client', 'src', 'css', path.basename(request.url))
                   : path.join(__dirname, '..', '..', 'client', request.url);
 
         //  in case we add a bunch of paths, this will tack html on the end
     if (!extension && request.url?.slice(-1) !== '/') filePath += '.html';
 
-//    console.log('check file path', filePath);
+    console.log('check file path', filePath);
     // check if file exists
     const fileExists = fs.existsSync(filePath);
 

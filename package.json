@@ -11,7 +11,7 @@
     "build:client": "pushd client && tsc -p .",
     "build:server": "pushd server/ && tsc --watch --preserveWatchOutput",
     "build": "tsc",
-    "dev": "tsc -b --watch --preserveWatchOutput"
+    "dev": "yarn build:client && yarn build:server"
   },
   "devDependencies": {
     "@types/node": "^20.5.6",

@@ -8,23 +8,24 @@ export class Interval extends HTMLElement {
         this.backgroundColorIndex = 0;
         this.remainder = 0;
         this.root = this.attachShadow({ mode: 'open' });
+        this.loadCSS('Interval.css');
         this.timerHeader = document.createElement('h1');
         this.categoryHeader = document.createElement('h4');
+        this.categoryHeader.classList.add('h3');
         this.divContainer = document.createElement('div');
+        this.divContainer.classList.add('flex-down');
+        this.divContainer.setAttribute('id', 'interval-container');
         this.nextButton = document.createElement('p');
         this.nextButton.setAttribute('id', 'next-button');
         this.nextButton.innerText = 'next';
         this.divContainer.appendChild(this.categoryHeader);
         this.divContainer.appendChild(this.timerHeader);
         this.divContainer.appendChild(this.nextButton);
-        this.divContainer.classList.add('flex-down');
-        this.categoryHeader.classList.add('h3');
-        this.divContainer.setAttribute('id', 'interval-container');
         this.root.appendChild(this.divContainer);
     }
     // methods
     async loadCSS(url) {
-        const cssRequest = await fetch(`/src/css/${url}`);
+        const cssRequest = await fetch(`../../src/css/${url}`);
         const parsedCSS = await cssRequest.text();
         const styleTag = document.createElement('style');
         this.root.appendChild(styleTag);
@@ -77,7 +78,6 @@ export class Interval extends HTMLElement {
             //        item.name === this.dataset.programName
             //      })[0].list;
             this.renderInterval(0);
-            this.loadCSS('Interval.css');
             // add event listeners
             this.divContainer.addEventListener('click', () => {
                 if (this.intervalProgram) {
