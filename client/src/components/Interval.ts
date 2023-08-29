@@ -58,7 +58,13 @@ export class Interval extends HTMLElement {
     // print the time
     if (this.intervalProgram) {
       console.log(this.intervalProgram[index]);
-      this.timerHeader.innerHTML = convertSeconds2Time(this.intervalProgram[index].total);
+      let timeMS = convertSeconds2Time(this.intervalProgram[index].total);
+      timeMS.length === 5
+        ? this.timerHeader.style.fontSize = 'calc(var(--vh) * .29)'
+          : timeMS.length > 5
+            ? this.timerHeader.style.fontSize = 'calc(var(--vh) * .26)'
+              : this.timerHeader.style.removeProperty('font-size');
+      this.timerHeader.innerHTML = timeMS;
       this.categoryHeader.innerHTML = this.intervalProgram[index].name;
     }
   }
