@@ -9,5 +9,5 @@ auto-save.lua
 !.yarn/sdks
 !.yarn/versions
 
-./client/dist/**/*
-./server/dist/**/*
+client/dist/
+server/dist/
