@@ -7,8 +7,8 @@ import * as fsPromises from 'fs/promises';
 const PORT: number | string = process.env.PORT || 3300;
 let serverHits: number = 0;
 
-const serveFile = async (filePath: any, contentType: any, httpResponse: any) => {
-  console.log('line 10', filePath, contentType);
+const serveFile = async (filePath: string, contentType: string, httpResponse: http.ServerResponse): Promise<void> => {
+//  console.log('line 10', filePath, contentType);
   try {
     const data = await fsPromises.readFile(filePath, 'utf8');
     httpResponse.writeHead(200, { 'Content-Type': contentType });
@@ -20,8 +20,10 @@ const serveFile = async (filePath: any, contentType: any, httpResponse: any) => 
   }
 }
 
-const server = http.createServer((request, response) => {
-  console.log(`hit number: ${serverHits}, ${request.url} ${request.method}`);
+//const server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
+const parseRequest = (request: http.IncomingMessage, response: http.ServerResponse): void => {
+  console.log(`this is parse ${request.url}`);
+//  console.log(`hit number: ${serverHits}, ${request.url} ${request.method}`);
   serverHits++;
   if (request.url) {
     const extension: any  = path.extname(request.url);
@@ -63,17 +65,17 @@ const server = http.createServer((request, response) => {
         //  in case we add a bunch of paths, this will tack html on the end
     if (!extension && request.url?.slice(-1) !== '/') filePath += '.html';
 
-    console.log('check file path', filePath);
+//    console.log('check file path', filePath);
     // check if file exists
     const fileExists = fs.existsSync(filePath);
 
     if (fileExists) {
       // serve file
-      console.log(`congrats, we will serve the file: ${filePath}`);
+//      console.log(`congrats, we will serve the file: ${filePath}`);
       serveFile(filePath, contentType, response);
 
     } else {
-      console.log(`file didn't exist`);
+//      console.log(`file didn't exist`);
       // 301 redirect
       switch(path.parse(filePath).base) {
         case 'unused-url.html':
@@ -86,13 +88,14 @@ const server = http.createServer((request, response) => {
           break;
         default:
           //serve a 404
-          console.log('trouble at the mill');
+//          console.log('trouble at the mill');
 //          serveFile(path.join(__dirname, 'src', 'views', '404.html'), 'text/html', response);
       };
     };
 
 //    console.log(`line 94: contentType: ${contentType}, extension: ${extension}, filePath ${filePath}, request.url: ${request.url}`);
   }
-}); 
+} 
 
+const server = http.createServer(parseRequest);
 server.listen(PORT, () => console.log(`server is running on ${PORT}`));
