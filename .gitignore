@@ -8,3 +8,5 @@ auto-save.lua
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+dist/**/*
