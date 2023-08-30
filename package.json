@@ -7,10 +7,11 @@
   "author": "johnedisc",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server/dist/server.js",
-    "build:client": "pushd client && tsc -p .",
-    "build:server": "pushd server/ && tsc --watch --preserveWatchOutput",
-    "build": "tsc",
+    "startDev": "nodemon server/dist/server.js",
+    "start": "node server/dist/server.js",
+    "build:client": "tsc -p client/",
+    "build:server": "tsc -p server/",
+    "build": "yarn build:client && yarn build:server",
     "dev": "yarn build:client && yarn build:server"
   },
   "devDependencies": {

@@ -45,6 +45,8 @@ export class Interval extends HTMLElement {
         if (this.intervalProgram) {
             console.log(this.intervalProgram[index]);
             let timeMS = convertSeconds2Time(this.intervalProgram[index].total);
+            // check length and resize.
+            // TODO. limit timer length in creatation. 
             timeMS.length === 5
                 ? this.timerHeader.style.fontSize = 'calc(var(--vh) * .29)'
                 : timeMS.length > 5
