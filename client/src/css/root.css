@@ -83,6 +83,7 @@
   li {
     list-style-type: none;
     font-size: var(--h5);
+    text-align: center;
   }
 
   form {
