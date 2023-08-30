@@ -4,7 +4,7 @@ import { Router } from './services/Router.js';
 
 // link web components
 import { Interval } from './components/Interval.js';
-import { HelpModal } from './components/HelpModal.js';
+import { IntervalProgramList } from './components/IntervalProgramList.js';
 import { MenuModal } from './components/MenuModal.js';
 import { StartPage } from './components/StartPage.js';
 import { ProgramForm } from './components/ProgramForm.js';
@@ -12,7 +12,7 @@ import { LogIn } from './components/LogIn.js';
 import { ErrorPage } from './components/ErrorPage.js';
 import { grabColors } from './utilities/utilities.js';
 customElements.define('interval-page', Interval);
-customElements.define('help-modal', HelpModal);
+customElements.define('interval-program-list', IntervalProgramList);
 customElements.define('error-page', ErrorPage);
 customElements.define('program-form', ProgramForm);
 customElements.define('menu-modal', MenuModal);

@@ -10,6 +10,11 @@ export class MenuModal extends HTMLElement {
 //    const h5: HTMLDivElement = document.createElement('h5');
     const div: HTMLDivElement = document.createElement('div');
     const ul: HTMLUListElement = document.createElement('ul');
+    const programList: HTMLLIElement = document.createElement('li');
+
+    programList.innerText = 'new interval program';
+    programList.addEventListener('click', () => _timesUpApp.router.go('/program-form'));
+    ul.appendChild(programList);
 
     for (let i=0; i < _timesUpApp.store.user.timerList.length; i++) {
       const li: HTMLLIElement = document.createElement('li');
@@ -18,7 +23,6 @@ export class MenuModal extends HTMLElement {
         _timesUpApp.router.go(`/interval/${(event.target as HTMLLIElement).innerText}`)
       });
       ul.appendChild(li);
-
     }
 
     ul.classList.add('flex-down');

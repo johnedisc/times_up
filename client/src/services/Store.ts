@@ -12,12 +12,12 @@ const Store: IStore = {
 
 export const StoreProxy = new Proxy(Store, {
   get(target, p, receiver) {
-    console.log('hi proxy getter');
-    console.log('target', target,'\npara', p, '\nreceiver', receiver);
+//    console.log('hi proxy getter');
+//    console.log('target', target,'\npara', p, '\nreceiver', receiver);
     return target[p as keyof IStore];
   },
   set(target, property, value, _) {
-    console.log('hi proxy setter');
+//    console.log('hi proxy setter');
     try {
       if (target.hasOwnProperty(property)) {
         target[property as keyof IStore] = value;
@@ -25,7 +25,6 @@ export const StoreProxy = new Proxy(Store, {
           window.dispatchEvent(new Event('programchanged'));
         } else if (property === 'currentIndex') {
           window.dispatchEvent(new Event('indexchanged'));
-          console.log('it is happening again');
         } else if (property === 'user') {
           window.dispatchEvent(new Event('userchanged'));
         }

@@ -20,8 +20,8 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: ht
   }
 }
 
-//const server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
 const parseRequest = (request: http.IncomingMessage, response: http.ServerResponse): void => {
+  if (serverHits === 0) console.log(request);
   console.log(`this is parse ${request.url}`);
 //  console.log(`hit number: ${serverHits}, ${request.url} ${request.method}`);
   serverHits++;
