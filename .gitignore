@@ -9,7 +9,8 @@ auto-save.lua
 !.yarn/sdks
 !.yarn/versions
 
-*/dist/*
+client/dist/
+server/dist/
 */dist/*
 *.js.*
 
