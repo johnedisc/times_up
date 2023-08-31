@@ -36,12 +36,14 @@ h4 {
 
   #interval-container {
     transform: rotate(-90deg);
-    transform-origin: left top;
-    height: 100vw;
     width: 100vh;
+    height: 100vw;
+    /*
+    transform-origin: left top;
     position: fixed;
     top: 100%;
     bottom: 0;
+    */
   }
 
   h1 {

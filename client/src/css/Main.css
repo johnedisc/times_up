@@ -34,11 +34,15 @@
 
   .start-screen {
     transform: rotate(-90deg);
+    width: 100vh;
+    /*
     transform-origin: left top;
     height: 100vw;
-    width: 100vh;
     position: fixed;
     top: 100%;
     bottom: 0;
+    */
   }
+
+  .start-screen > * { text-align: center; }
 }

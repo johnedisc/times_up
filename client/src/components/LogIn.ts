@@ -43,15 +43,38 @@ export class LogIn extends HTMLElement {
     }
   }
 
+  badCredentialsModal():void {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    const messageBox = document.createElement('div');
+    messageBox.classList.add('message-box', 'flex-down');
+    messageBox.innerHTML =  `
+        <p style='color: red'>incorrect login</p>
+        <button id='modal-button' type='button'>try again</button>
+    `;
+    _timesUpApp.store.container.appendChild(modal);
+    _timesUpApp.store.container.appendChild(messageBox);
+    document.getElementById('modal-button')?.addEventListener('click', () => {
+      _timesUpApp.store.container.removeChild(messageBox);
+      _timesUpApp.store.container.removeChild(modal);
+    });
+  }
+
 
   setFormBindings(form: HTMLFormElement): void {
     try {
       form.addEventListener('submit', (event) => {
         event.preventDefault();
         
-        // todo, grab user data from DB
+        // todo, check login credentials
+        const bad = false;
+        if (bad) {
+          this.badCredentialsModal();
+        } else {
+          // todo, grab user data from DB
 
-        _timesUpApp.router.go(`/start`);
+          _timesUpApp.router.go(`/start`);
+        }
       });
 
       this.#user = new Proxy(this.#user, {
@@ -62,7 +85,7 @@ export class LogIn extends HTMLElement {
             target[property] = value;
             const formInputElement = form.elements.namedItem(property.toString());
             if (formInputElement) (formInputElement as HTMLInputElement).value = value;
-            console.log(target, target[property]);
+//            console.log(target, target[property]);
             }
           } catch (error) {
             console.error(error);

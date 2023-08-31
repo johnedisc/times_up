@@ -33,6 +33,7 @@ const parseRequest = (request: http.IncomingMessage, response: http.ServerRespon
 
   serverHit.emit('hit', request);
 
+  console.log(request.url);
   if (request.url) {
     const extension: any  = path.extname(request.url);
 

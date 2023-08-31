@@ -23,23 +23,9 @@
   --h1: calc(var(--h2) * var(--scale));
   --p: calc(var(--base-font-size));
   --small: calc(var(--p) / var(--scale));
-  --x-small: calv(var(--small) / var(--scale));
+  --x-small: calc(var(--small) / var(--scale));
   --base-line-height: 1; 
   }
-
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--bg-start-screen);
-    color: var(--primary-font-color);
-    font-family: var(--primary-font);
-    font-size: var(--base-font-size);
-    line-height: var(--base-line-height);
-  }
-
 
   h1, h2, h3, h4, h5 {
     margin: 1rem;
@@ -90,7 +76,28 @@
     gap: var(--form-gutter);
   }
 
+  button {
+    font-family: var(--primary-font);
+    font-size: var(--small);
+  }
+
+  * { box-sizing: border-box; }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-start-screen);
+    color: var(--primary-font-color);
+    font-family: var(--primary-font);
+    font-size: var(--base-font-size);
+    line-height: var(--base-line-height);
+  }
+
   #container {
+    position: relative;
     width: 100%;
     height: 100%;
   }
@@ -108,3 +115,35 @@
     align-items: center;
   }
 
+  .message-box {
+    background-color: black;
+    position: absolute;
+    width: 60%;
+    max-width: 25rem;
+    height: 10rem;
+    text-align: center;
+  }
+
+  .modal {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    text-align: center;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    opacity: .3;
+  }
+
+  /*
+  .modal::after {
+    background-color: blue;
+    position: absolute;
+    content: 'jimi hendrix';
+    width: 15rem;
+    height: 15rem;
+    top: 25%;
+    left: 25%;
+    border: pink 3px dotted;
+  }
+  */

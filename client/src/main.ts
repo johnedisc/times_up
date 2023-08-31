@@ -28,6 +28,7 @@ customElements.define('log-in', LogIn);
 export let _timesUpApp: any = { };
 _timesUpApp.store = StoreProxy;
 _timesUpApp.router = Router;
+document.getElementById('container')?.classList.add('flex-down');
 _timesUpApp.store.container = document.getElementById('container');
 _timesUpApp.store.currentIndex = 0;
 _timesUpApp.store.backgroundColors = grabColors();
