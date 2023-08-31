@@ -9,7 +9,7 @@ const PORT: number | string = process.env.PORT || 3300;
 let serverHits: number = 0;
 
 const serveFile = async (filePath: string, contentType: string, httpResponse: http.ServerResponse): Promise<void> => {
-//  console.log('line 10', filePath, contentType);
+  console.log('line 10', filePath, contentType);
   try {
     const data = await fsPromises.readFile(filePath, 'utf8');
     httpResponse.writeHead(200, { 'Content-Type': contentType });
@@ -33,10 +33,10 @@ const parseRequest = (request: http.IncomingMessage, response: http.ServerRespon
 
   serverHit.emit('hit', request);
 
-  console.log(request.url);
+//  console.log('incoming url', request.url);
+//  console.log(request.headers);
   if (request.url) {
     const extension: any  = path.extname(request.url);
-
     let contentType: string;
 
     switch (extension) {
@@ -71,12 +71,15 @@ const parseRequest = (request: http.IncomingMessage, response: http.ServerRespon
                 ? path.join(__dirname, '..', '..', 'client', 'src', 'css', path.basename(request.url))
                   : path.join(__dirname, '..', '..', 'client', request.url);
 
-        //  in case we add a bunch of paths, this will tack html on the end
-    if (!extension && request.url?.slice(-1) !== '/') filePath += '.html';
+    // ensures spa won't try to reload to the current spot
+    if (!extension && request.url?.slice(-1) !== '/') {
+      filePath = path.join(__dirname, '..', '..', 'client', 'index.html');
+    }
 
-//    console.log('check file path', filePath);
+    console.log('check file path', filePath);
     // check if file exists
-    const fileExists = fs.existsSync(filePath);
+    let fileExists = fs.existsSync(filePath);
+
 
     if (fileExists) {
       // serve file
@@ -96,9 +99,9 @@ const parseRequest = (request: http.IncomingMessage, response: http.ServerRespon
           response.end();
           break;
         default:
-          //serve a 404
+////          serve a 404
 //          console.log('trouble at the mill');
-//          serveFile(path.join(__dirname, 'src', 'views', '404.html'), 'text/html', response);
+//          serveFile(path.join(__dirname, '..', '..', 'client', 'src', '404.html'), 'text/html', response);
       };
     };
 
