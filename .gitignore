@@ -11,3 +11,6 @@ auto-save.lua
 
 */dist/*
 */dist/*
+*.js.*
+
+log.txt
