@@ -18,11 +18,12 @@ export class Interval extends HTMLElement {
     super();
 
     this.root = this.attachShadow({ mode: 'open' });
+
     this.loadCSS('Interval.css');
 
     this.timerHeader = document.createElement('h1');
     this.categoryHeader = document.createElement('h4');
-    this.categoryHeader.classList.add('h3');
+    this.categoryHeader.classList.add('h4');
     this.divContainer = document.createElement('div');
     this.divContainer.classList.add('flex-down');
     this.divContainer.setAttribute('id', 'interval-container');
@@ -48,11 +49,11 @@ export class Interval extends HTMLElement {
   renderInterval(index: number):void {
     //    console.log('this is the intervalProgram', this.intervalProgram);
     if (_timesUpApp.store.backgroundColors[this.backgroundColorIndex]) {
-      this.divContainer.style.backgroundColor = _timesUpApp.store.backgroundColors[this.backgroundColorIndex];
+      document.body.style.backgroundColor = _timesUpApp.store.backgroundColors[this.backgroundColorIndex];
       this.backgroundColorIndex++;
     } else {
       this.backgroundColorIndex = 0;
-      this.divContainer.style.backgroundColor = _timesUpApp.store.backgroundColors[this.backgroundColorIndex];
+      document.body.style.backgroundColor = _timesUpApp.store.backgroundColors[this.backgroundColorIndex];
     }
 
     // print the time
@@ -63,9 +64,9 @@ export class Interval extends HTMLElement {
       // check length and resize.
       // TODO. limit timer length in creatation. 
       timeMS.length === 5
-        ? this.timerHeader.style.fontSize = 'calc(var(--vh) * .29)'
+        ? this.timerHeader.style.fontSize = 'calc(var(--vh) * .27)'
           : timeMS.length > 5
-            ? this.timerHeader.style.fontSize = 'calc(var(--vh) * .26)'
+            ? this.timerHeader.style.fontSize = 'calc(var(--vh) * .23)'
               : this.timerHeader.style.removeProperty('font-size');
       this.timerHeader.innerHTML = timeMS;
       this.categoryHeader.innerHTML = this.intervalProgram[index].name;
@@ -141,6 +142,11 @@ export class Interval extends HTMLElement {
     } catch (error) {
       console.error(error);
     }
+
+
+//    this.style.height =  '100%'; 
+//    this.style.width =  '100%'; 
+
   }
 }
 

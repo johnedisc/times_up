@@ -6,6 +6,8 @@ export class LogIn extends HTMLElement {
     password: ''
   }
 
+  bad: boolean = true;
+
   constructor() {
     super();
 
@@ -67,9 +69,9 @@ export class LogIn extends HTMLElement {
         event.preventDefault();
         
         // todo, check login credentials
-        const bad = false;
-        if (bad) {
+        if (this.bad) {
           this.badCredentialsModal();
+          this.bad = false;
         } else {
           // todo, grab user data from DB
 

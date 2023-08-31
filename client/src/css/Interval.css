@@ -16,7 +16,6 @@ h4 {
 #interval-container {
   width: 100%;
   height: 100%;
-  background-color: var(--bg-1);
   font-weight: 400;
 }
 
@@ -36,8 +35,8 @@ h4 {
 
   #interval-container {
     transform: rotate(-90deg);
-    width: 100vh;
-    height: 100vw;
+    width: 90vh;
+    height: 90vw;
     /*
     transform-origin: left top;
     position: fixed;
@@ -47,7 +46,7 @@ h4 {
   }
 
   h1 {
-    font-size: calc(var(--vh) * .38);
+    font-size: calc(var(--vh) * .35);
     font-weight: 100;
     margin: 0;
     line-height: .9;

@@ -95,7 +95,9 @@
     padding: 0;
     width: 100%;
     height: 100%;
+    /*
     background-color: var(--bg-start-screen);
+    */
     color: var(--primary-font-color);
     font-family: var(--primary-font);
     font-size: var(--base-font-size);
@@ -126,19 +128,20 @@
     position: absolute;
     width: 60%;
     max-width: 25rem;
-    height: 10rem;
+    height: 20rem;
     text-align: center;
   }
 
   .modal {
-    position: absolute;
+    /* fixed is less sure than absolute with old devices */
+    position: fixed;
     top: 0%;
     left: 0%;
     text-align: center;
-    background-color: white;
+    background-color: pink;
     width: 100%;
     height: 100%;
-    opacity: .3;
+    opacity: .4;
   }
 
   /*
