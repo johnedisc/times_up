@@ -72,6 +72,11 @@
     text-align: center;
   }
 
+  a, a:visited, :-webkit-any(link) {
+    text-decoration: none;
+    color: none
+  }
+
   form {
     gap: var(--form-gutter);
   }

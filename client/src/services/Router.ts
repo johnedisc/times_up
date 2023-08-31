@@ -3,17 +3,6 @@ import { clearScreen } from "../utilities/utilities.js";
 
 export const Router = {
   init: () => {
-    const links = document.querySelectorAll('a');
-    if (links) {
-      for (let i = 0; i < links.length; i++) {
-        links[i].addEventListener('click', (event) => {
-          console.log('copiaste?');
-          event.preventDefault();
-          const url = links[i].href;
-          Router.go(url);
-        });
-      };
-    }
 
     // event handler for changes popstate
     window.addEventListener('popstate', (event) => {

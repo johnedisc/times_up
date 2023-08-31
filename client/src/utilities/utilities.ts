@@ -127,3 +127,19 @@ export const counter = (program: ITimerList[], element: HTMLElement, index: numb
     }
     
   }
+
+export const addLinkListener = (parent: HTMLElement):void => {
+  const links = parent.querySelectorAll('a');
+  if (links) {
+    for (let i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', (event) => {
+        event.preventDefault();
+        const url = links[i].getAttribute('href');
+//        const url = (event.target as HTMLAnchorElement).href;
+//        const url = links[i].href;
+//        const trimmedUrl = url.slice(url.lastIndexOf('/'));
+        _timesUpApp.router.go(url);
+      });
+    };
+  }
+}

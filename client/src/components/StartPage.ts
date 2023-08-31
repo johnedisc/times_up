@@ -1,4 +1,5 @@
 import { _timesUpApp } from "../main.js";
+import { addLinkListener } from "../utilities/utilities.js";
 
 export class StartPage extends HTMLElement {
   h1: HTMLElement = document.createElement('h1');
@@ -14,14 +15,15 @@ export class StartPage extends HTMLElement {
 
   
   startScreen(user: string):void {
-    this.h1.innerHTML = `hi, ${user}`;
-    this.h5.innerHTML = 'select your interval sequence';
+    this.h1.innerHTML = `<a href='/menu'>hi, ${user}</a>`;
+    this.h5.innerHTML = `<a href='/menu'>select your interval sequence</a>`;
     this.div.classList.add('flex-down', 'start-screen');
     this.h1.classList.add('h2');
-
-    this.h5.addEventListener('click', () => {
-      _timesUpApp.router.go('/menu');
-    })
+    
+    addLinkListener(this.div);
+//    this.h5.addEventListener('click', () => {
+//      _timesUpApp.router.go('/menu');
+//    })
   }
 
   connectedCallback() {
