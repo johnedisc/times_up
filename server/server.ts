@@ -2,8 +2,9 @@ import * as http from 'http';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as fsPromises from 'fs/promises';
+import EventEmitter from 'events';
 
-
+const serverHit = new EventEmitter();
 const PORT: number | string = process.env.PORT || 3300;
 let serverHits: number = 0;
 
@@ -20,11 +21,19 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: ht
   }
 }
 
+serverHit.on('hit', (request: http.IncomingMessage) => {
+  console.log('hit');
+  const time = new Date();
+  fs.appendFileSync(path.join(__dirname, '..', 'log.txt'),
+  `host: ${request.headers.host}\turl: ${request.url}\tmethod: ${request.method}\tdate: ${time}\n`);
+});
+
 const parseRequest = (request: http.IncomingMessage, response: http.ServerResponse): void => {
-  if (serverHits === 0) console.log(request);
-  console.log(`this is parse ${request.url}`);
 //  console.log(`hit number: ${serverHits}, ${request.url} ${request.method}`);
   serverHits++;
+
+  serverHit.emit('hit', request);
+
   if (request.url) {
     const extension: any  = path.extname(request.url);
 
