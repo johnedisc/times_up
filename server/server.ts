@@ -22,10 +22,11 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: ht
 }
 
 serverHit.on('hit', (request: http.IncomingMessage) => {
-  console.log('hit');
+  console.log(request.headers.origin);
+  console.log(request.headers.referer);
   const time = new Date();
   fs.appendFileSync(path.join(__dirname, '..', 'log.txt'),
-  `host: ${request.headers.host}\turl: ${request.url}\tmethod: ${request.method}\tdate: ${time}\n`);
+  `host: ${request.headers.host}\turl: ${request.url}\n\tmethod: ${request.method}\n\tdate: ${time}\n`);
 });
 
 const parseRequest = (request: http.IncomingMessage, response: http.ServerResponse): void => {
