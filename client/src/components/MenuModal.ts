@@ -1,4 +1,5 @@
 import { _timesUpApp } from "../main.js";
+import { addLinkListener } from "../utilities/utilities.js";
 
 export class MenuModal extends HTMLElement {
   constructor() {
@@ -18,13 +19,14 @@ export class MenuModal extends HTMLElement {
 
     for (let i=0; i < _timesUpApp.store.user.timerList.length; i++) {
       const li: HTMLLIElement = document.createElement('li');
-      li.innerHTML = _timesUpApp.store.user.timerList[i].name;
-      li.addEventListener('click', event => {
-        _timesUpApp.router.go(`/interval/${(event.target as HTMLLIElement).innerText}`)
-      });
+      const programName = _timesUpApp.store.user.timerList[i].name;
+      li.innerHTML = `<a href='/interval/${programName}'>
+      ${programName}
+      </a>`;
       ul.appendChild(li);
     }
 
+    addLinkListener(ul);
     ul.classList.add('flex-down');
     ul.style.paddingInlineStart = '0';
     div.appendChild(ul);
