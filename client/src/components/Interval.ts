@@ -1,13 +1,12 @@
 import { _timesUpApp } from "../main.js";
 import { ITimerList } from '../utilities/interfaces.js';
-import {clearSelf, convertSeconds2Time, counter} from '../utilities/utilities.js';
+import {addLinkListener, clearSelf, convertSeconds2Time, counter} from '../utilities/utilities.js';
 
 export class Interval extends HTMLElement {
 
   timerHeader: HTMLElement;
   categoryHeader: HTMLElement;
   divContainer: HTMLDivElement;
-  nextButton: HTMLParagraphElement;
   intervalID: number = 0;
   intervalProgram: ITimerList[] | null = null;
   backgroundColorIndex: number = 0;
@@ -20,12 +19,9 @@ export class Interval extends HTMLElement {
     this.categoryHeader.classList.add('h4');
     this.divContainer = document.createElement('div');
     this.divContainer.classList.add('flex-down');
-    this.nextButton = document.createElement('p');
-    this.nextButton.setAttribute('id', 'next-button');
-    this.nextButton.innerText = 'next';
     this.divContainer.appendChild(this.categoryHeader);
     this.divContainer.appendChild(this.timerHeader);
-    this.divContainer.appendChild(this.nextButton);
+
     //    no shadow required here
 //    this.root = this.attachShadow({ mode: 'open' });
 //    this.loadCSS('Interval.css');
@@ -43,6 +39,8 @@ export class Interval extends HTMLElement {
 
   renderInterval(index: number):void {
     //    console.log('this is the intervalProgram', this.intervalProgram);
+
+    //    advance the backgroundColor
     if (_timesUpApp.store.backgroundColors[this.backgroundColorIndex]) {
       document.body.style.backgroundColor = _timesUpApp.store.backgroundColors[this.backgroundColorIndex];
       this.backgroundColorIndex++;
@@ -73,12 +71,15 @@ export class Interval extends HTMLElement {
     clearSelf(this.categoryHeader);
 //    clearSelf(this.timerHeader);
 //    this.divContainer.appendChild(this.timerHeader);
-    this.nextButton.innerText = 'menu';
-    this.nextButton.addEventListener('click', () => {
+    const menuButton = document.createElement('p');
+    menuButton.setAttribute('id', 'menu-button');
+    menuButton.innerHTML = `<a href='/menu'>menu</a>`;    menuButton.addEventListener('click', () => {
       _timesUpApp.router.go('/menu');
-      clearSelf(this.nextButton);
+      clearSelf(menuButton);
     });
-    this.timerHeader.innerText = 'all done.';
+    addLinkListener(this.divContainer);
+    this.divContainer.appendChild(menuButton);
+    this.timerHeader.innerHTML = `all done`;
     this.timerHeader.style.fontSize = '4rem';
     _timesUpApp.store.currentIndex = 0;
   }
@@ -109,7 +110,7 @@ export class Interval extends HTMLElement {
         if (this.intervalProgram) {
           this.intervalID = counter(this.intervalProgram, this.timerHeader, _timesUpApp.store.currentIndex);
 
-          this.nextButton.addEventListener('click', () => {
+          this.divContainer.addEventListener('click', () => {
             this.timerHeader.removeAttribute('id');
             //          console.log(this.intervalProgram[_timesUpApp.store.currentIndex].name, this.timerHeader.dataset.runningTotal);
             clearInterval(this.intervalID);

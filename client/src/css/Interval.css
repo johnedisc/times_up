@@ -19,14 +19,12 @@ interval-page {
   font-weight: 400;
 }
 
-#next-button {
+#menu-button {
   position: absolute;
   margin: 0;
   right: var(--gutter);
   top: var(--gutter);
   font-size: var(--h5);
-  color: white;
-
 }
 
 #warning { color: var(--warning-text) }
