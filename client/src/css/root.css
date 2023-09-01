@@ -143,16 +143,3 @@
     height: 100%;
     opacity: .4;
   }
-
-  /*
-  .modal::after {
-    background-color: blue;
-    position: absolute;
-    content: 'jimi hendrix';
-    width: 15rem;
-    height: 15rem;
-    top: 25%;
-    left: 25%;
-    border: pink 3px dotted;
-  }
-  */

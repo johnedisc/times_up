@@ -34,11 +34,14 @@
 
   .start-screen {
     transform: rotate(-90deg);
-    width: 100vh;
+    white-space: nowrap;
     /*
+    width: 100vh;
+    position: fixed;
+    top: 0%;
+    left: 0%;
     transform-origin: left top;
     height: 100vw;
-    position: fixed;
     top: 100%;
     bottom: 0;
     */
