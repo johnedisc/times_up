@@ -32,7 +32,7 @@
     margin: auto;
   }
 
-  .start-screen {
+  start-page {
     transform: rotate(-90deg);
     white-space: nowrap;
     /*
@@ -44,8 +44,10 @@
     height: 100vw;
     top: 100%;
     bottom: 0;
-    */
+     */
   }
 
-  .start-screen > * { text-align: center; }
+  start-page > * { 
+    text-align: center; 
+  }
 }
