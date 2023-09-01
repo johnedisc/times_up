@@ -8,9 +8,11 @@ h1 {
 
 h4 {
   margin: 0;
+  /*
   justify-self: flex-end;
   align-self: flex-start;
   padding: 0 0 var(--gutter) var(--gutter);
+  */
 }
 
 interval-page {
@@ -36,6 +38,11 @@ interval-page {
     height: 90vw;
   }
 
+  .inner-container,
+  .inner-container h1 {
+    width: 100%;
+  }
+
   /*
   interval-page > *,
   interval-page div > * {
@@ -44,7 +51,7 @@ interval-page {
   */
 
   h1 {
-    font-size: calc(var(--vh) * .35);
+    font-size: calc(var(--vh) * .39);
     font-weight: 100;
     margin: 0;
     line-height: .9;

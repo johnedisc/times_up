@@ -16,9 +16,9 @@ export class Interval extends HTMLElement {
     super();
     this.timerHeader = document.createElement('h1');
     this.categoryHeader = document.createElement('h4');
-    this.categoryHeader.classList.add('h4');
+    this.categoryHeader.classList.add('h3');
     this.divContainer = document.createElement('div');
-    this.divContainer.classList.add('flex-down');
+    this.divContainer.classList.add('flex-down', 'inner-container');
     this.divContainer.appendChild(this.categoryHeader);
     this.divContainer.appendChild(this.timerHeader);
 
