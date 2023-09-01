@@ -13,8 +13,7 @@ export class MenuModal extends HTMLElement {
     const ul: HTMLUListElement = document.createElement('ul');
     const programList: HTMLLIElement = document.createElement('li');
 
-    programList.innerText = 'new interval program';
-    programList.addEventListener('click', () => _timesUpApp.router.go('/program-form'));
+    programList.innerHTML = `<a href='/program-form'>new interval program</a>`;
     ul.appendChild(programList);
 
     for (let i=0; i < _timesUpApp.store.user.timerList.length; i++) {
