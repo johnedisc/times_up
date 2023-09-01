@@ -4,7 +4,6 @@ import {clearSelf, convertSeconds2Time, counter} from '../utilities/utilities.js
 
 export class Interval extends HTMLElement {
 
-  root;
   timerHeader: HTMLElement;
   categoryHeader: HTMLElement;
   divContainer: HTMLDivElement;
@@ -16,24 +15,20 @@ export class Interval extends HTMLElement {
 
   constructor() {
     super();
-
-    this.root = this.attachShadow({ mode: 'open' });
-
-    this.loadCSS('Interval.css');
-
     this.timerHeader = document.createElement('h1');
     this.categoryHeader = document.createElement('h4');
     this.categoryHeader.classList.add('h4');
     this.divContainer = document.createElement('div');
     this.divContainer.classList.add('flex-down');
-    this.divContainer.setAttribute('id', 'interval-container');
     this.nextButton = document.createElement('p');
     this.nextButton.setAttribute('id', 'next-button');
     this.nextButton.innerText = 'next';
     this.divContainer.appendChild(this.categoryHeader);
     this.divContainer.appendChild(this.timerHeader);
     this.divContainer.appendChild(this.nextButton);
-    this.root.appendChild(this.divContainer);
+    //    no shadow required here
+//    this.root = this.attachShadow({ mode: 'open' });
+//    this.loadCSS('Interval.css');
   }
 
   // methods
@@ -42,7 +37,7 @@ export class Interval extends HTMLElement {
     const cssRequest = await fetch(`../../src/css/${url}`);
     const parsedCSS = await cssRequest.text();
     const styleTag = document.createElement('style');
-    this.root.appendChild(styleTag);
+    this.appendChild(styleTag);
     styleTag.textContent = parsedCSS;
   }
 
@@ -90,6 +85,8 @@ export class Interval extends HTMLElement {
 
 
   connectedCallback() {
+
+    this.appendChild(this.divContainer);
     try {
       if (!this.dataset.programName) {
         throw new Error('this program can\'t be accessed');
@@ -143,9 +140,6 @@ export class Interval extends HTMLElement {
       console.error(error);
     }
 
-
-//    this.style.height =  '100%'; 
-//    this.style.width =  '100%'; 
 
   }
 }

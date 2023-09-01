@@ -30,24 +30,17 @@
   .log-in {
     max-width: 90%;
     margin: auto;
+    white-space: nowrap;
   }
 
   start-page {
-    transform: rotate(-90deg);
     white-space: nowrap;
-    /*
-    width: 100vh;
-    position: fixed;
-    top: 0%;
-    left: 0%;
-    transform-origin: left top;
-    height: 100vw;
-    top: 100%;
-    bottom: 0;
-     */
   }
 
-  start-page > * { 
-    text-align: center; 
+} 
+
+@media (orientation: portrait) {
+  start-page {
+    transform: rotate(-90deg);
   }
 }
