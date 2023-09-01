@@ -116,8 +116,5 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
 //  }
 } 
 
-const server = https.createServer(certs, (req,res) => {
-  console.log('hi');
-  console.log(req);
-});
+const server = https.createServer(certs, parseRequest);
 server.listen(PORT, () => console.log(`server is running on ${PORT}`));
