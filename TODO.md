@@ -8,3 +8,9 @@
 * create program screen
 * flowchart
 
+
+* blue or maybe white text added to next interval
+* yellow text subtracts from next interval when runnning behind
+    * this feature is toggled
+* learning mode that adjusts time globally on a daily basis
+    * this feature is toggled
