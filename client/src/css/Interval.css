@@ -36,8 +36,14 @@ interval-page {
   interval-page {
     width: 90vh;
     height: 90vw;
-    background-color: maroon;
   }
+
+  /*
+  interval-page > *,
+  interval-page div > * {
+    border: blue 1px solid;
+  }
+  */
 
   h1 {
     font-size: calc(var(--vh) * .35);
@@ -49,7 +55,6 @@ interval-page {
 
 @media (orientation: portrait) {
   interval-page {
-    background-color: gold;
     transform: rotate(-90deg);
   }
 }

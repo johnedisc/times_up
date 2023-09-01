@@ -87,6 +87,7 @@ export class Interval extends HTMLElement {
   connectedCallback() {
 
     this.appendChild(this.divContainer);
+    this.classList.add('flex-down');
     try {
       if (!this.dataset.programName) {
         throw new Error('this program can\'t be accessed');
