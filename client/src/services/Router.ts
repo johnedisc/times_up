@@ -32,6 +32,7 @@ export const Router = {
       purePath = path;
     }
 
+    console.log(purePath);
     switch (purePath) {
       case "/":
         clearScreen();
