@@ -26,19 +26,18 @@ const certs = {
 //  }
 //}
 
-//serverHit.on('hit', (request: https.ServerOptions) => {
-//  const time = new Date();
-//  fs.appendFileSync(path.join(__dirname, '..', 'log.txt'),
-//  `host: ${request.headers.host}\turl: ${request.url}\n\tmethod: ${request.method}\n\tdate: ${time}\n`);
-//});
+serverHit.on('hit', (request: IncomingMessage) => {
+  const time = new Date();
+  fs.appendFileSync(path.join(__dirname, '..', 'log.txt'),
+  `host: ${request.headers.host}\turl: ${request.url}\n\tmethod: ${request.method}\n\tdate: ${time}\n`);
+});
 
 const parseRequest = (request: IncomingMessage, response: ServerResponse): void => {
-  console.log('hi');
   console.log(request.headers);
 //  console.log(`hit number: ${serverHits}, ${request.url} ${request.method}`);
   serverHits++;
 
-//  serverHit.emit('hit', request);
+  serverHit.emit('hit', request);
 
 //  console.log('incoming url', request.url);
 //  console.log(request.headers);
