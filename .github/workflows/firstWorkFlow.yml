@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: ciIntro
+name: deployment pipeline
 
 # Controls when the workflow will run
 on:
@@ -24,14 +24,18 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      # - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with: 
+          node-version: '18'
 
       # Runs a single command using the runners shell
-      - name: Run hello, print the date, and list out dir
-        run: |
-          echo Hello, world!
-          ls -la
-          date
+      - name: install dependencies
+        run: yarn install
+      - name: now it is
+        run: date
+      - name: docker contents
+        run: ls -la --color
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
