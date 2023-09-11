@@ -7,6 +7,7 @@ export class Interval extends HTMLElement {
   timerHeader: HTMLElement;
   categoryHeader: HTMLElement;
   divContainer: HTMLDivElement;
+  instruction: HTMLElement;
   intervalID: number = 0;
   intervalProgram: ITimerList[] | null = null;
   backgroundColorIndex: number = 0;
@@ -19,8 +20,11 @@ export class Interval extends HTMLElement {
     this.categoryHeader.classList.add('h3');
     this.divContainer = document.createElement('div');
     this.divContainer.classList.add('flex-down', 'inner-container');
+    this.instruction = document.createElement('p');
+    this.instruction.innerHTML = 'tap to advance to the next interval';
     this.divContainer.appendChild(this.categoryHeader);
     this.divContainer.appendChild(this.timerHeader);
+    this.divContainer.appendChild(this.instruction);
 
     //    no shadow required here
 //    this.root = this.attachShadow({ mode: 'open' });
@@ -78,6 +82,7 @@ export class Interval extends HTMLElement {
     this.divContainer.appendChild(menuButton);
     this.timerHeader.innerHTML = `all done`;
     this.timerHeader.style.fontSize = '4rem';
+    this.instruction.innerHTML = '';
     _timesUpApp.store.currentIndex = 0;
     menuButton?.querySelector('a')?.addEventListener('click', () => {
       clearSelf(menuButton);
