@@ -15,7 +15,7 @@ export class ProgramForm extends HTMLElement {
 
   }
 
-  connectedCallback() {
+  formName():void {
     this.innerHTML = `
       <form>
         <label for='name'>
@@ -30,6 +30,10 @@ export class ProgramForm extends HTMLElement {
     programForm?.classList.add('flex-down', 'start-screen');
 
     if (programForm) this.setFormBindings(programForm);
+  }
+
+  connectedCallback() {
+    this.formName();
   }
 
   setFormBindings(form: HTMLFormElement) {
