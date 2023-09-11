@@ -59,7 +59,7 @@
     font-size: var(--p);
   }
 
-  small, .text_small {font-size: var(--small)}
+  small, .text-small {font-size: var(--small)}
 
   .x-small {font-size: var(--x-small)}
 

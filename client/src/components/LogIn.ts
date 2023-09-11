@@ -6,7 +6,7 @@ export class LogIn extends HTMLElement {
     password: ''
   }
 
-  bad: boolean = true;
+  bad: boolean = false;
 
   constructor() {
     super();
@@ -19,6 +19,10 @@ export class LogIn extends HTMLElement {
 
   logIn():void {
     this.innerHTML = `
+      <div class='login-header'>
+        <h1 class='h3'>timer app</h1>
+        <p class='text-small'>this app is in development. the login does not create a real user. feel free to supply a fake email and password. this is just here to give us an idea of how the program will be laid out. thank you for checking it out.</p>
+      </div>
       <form class='flex-down log-in'>
         <h5>sign in.</h5>
         <label for='email'>
