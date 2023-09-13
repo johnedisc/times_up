@@ -1,10 +1,19 @@
-# times-up.
-## an interval timer app
+## [an interval timer app](https://timer.chrisjohnedis.com)
+
+this app is striving to provide a solution to the situation where a user has a series of predefined tasks that the user plans to do where time is a concern. if the user is a restaurant owner seeks to create a base timeline for how long daily prep should take, the user would program a series of intervals with this app. for example, picking basil might take 10 minutes, grating cheese 15 minutes, and dough 20 minutes. the app will inform the user the next task and start counting down as soon as the user taps to advance the screen.
+
+at the conclusion of the sequence, data is stored about how long over or under time each task was for further analysis. users can use the app both as an individual or as a member of team. these roles are similar to user/admin roles.
+
+### technologies
+
+- vanilla typescript single page app
+- served by nodejs http server
+- run manually on an AWS EC2 instance
+- an nginx server on the instance handles the ssl certficates and binds requests to the appropriate ports
+- postgreSQL
+- future plans involve finishing a testing and building pipeline with github actions and codedeploy
 
 ### screens
-
-
-
 
 <img src='./client/public/Interval Timer TAP 0.0 START SCREEN.jpg' />
 Tap 0.0 is the screen before start. The name of the interval sequence is displayed (I accidentally gave the full sequence the same name as the first interval, which is confusing).
@@ -21,8 +30,15 @@ Tap 1.1 illustrates the automatic transition to counting up in red numerals if t
 
 ---
 
+
+
+
+<!---
+---
+
 <img src='./client/public/Interval Timer TAP 2.0 COUNTDOWN.jpg' />
 Tap 2.0 illustrates the PLUS/MINUS option deselected: finishing the preceding interval over/under time does not add or subtract time from the following interval.
+
 
 ---
 
@@ -107,4 +123,31 @@ BUT…
 Probability of user error high
 This functionality not useful for me, although it would likely broaden utility / marketability
 
+--->
 
+### license
+
+- some information: [no_vibing_please](chrisjohnedis.com)
+- feel free to ask [questions](christopher.johnedis@gmail.com)
+
+MIT License
+
+Copyright (c) [2023] [christopher johnedis]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
