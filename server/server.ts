@@ -7,7 +7,6 @@ import { IncomingMessage, ServerResponse } from 'http';
 
 const serverHit = new EventEmitter();
 const PORT: number | string = process.env.PORT || 3300;
-let serverHits: number = 0;
 //const certs = {
 //  key: fs.readFileSync('/etc/ssl/sslTime/privateKey.pem'),
 //  cert: fs.readFileSync('/etc/ssl/sslTime/originCert.pem'),
@@ -38,15 +37,37 @@ serverHit.on('hit', (request: IncomingMessage) => {
 });
 
 const parseRequest = (request: IncomingMessage, response: ServerResponse): void => {
-  console.log(request.headers);
-//  console.log(`hit number: ${serverHits}, ${request.url} ${request.method}`);
-  serverHits++;
+  console.log(request.url);
 
   serverHit.emit('hit', request);
 
 //  console.log('incoming url', request.url);
 //  console.log(request.headers);
-  if (request.url) {
+  if (request.url?.includes('auth')) {
+
+    let body:any = [];
+    let bodyString:string;
+    let bodyJSON:any;
+
+    request
+      .on('error', err => {
+        console.error(err);
+      })
+      .on('data', chunk => {
+        body.push(chunk);
+      })
+      .on('end', () => {
+        console.log(1,'end');
+        bodyString = Buffer.concat(body).toString();
+        bodyJSON = JSON.parse(bodyString);
+//        console.log(body);
+      });
+
+    if (request.url === '/auth/register' && request.method === 'POST') {
+      console.log(2,bodyJSON);
+      response.end('done');
+    }
+  } else if (request.url) {
     const extension: any  = path.extname(request.url);
     let contentType: string;
 
