@@ -24,15 +24,19 @@ export class LogIn extends HTMLElement {
     this.innerHTML = '';
     this.innerHTML = `
       <form class='flex-down log-in'>
-        <h5>sign in.</h5>
-        <label for='email'>
+        <h5>create account</h5>
+        <label for='register-name'>
+          your name
+        </label>
+        <input id='register-name' name='register-name' required autocomplete='name' />
+        <label for='register-email'>
           email
         </label>
-        <input id='email' name='email' type='email' required autocomplete='username' />
-        <label for='password'>
+        <input id='register-email' name='register-email' type='email' required autocomplete='username' />
+        <label for='register-password'>
           password
         </label>
-        <input id='password' name='password' type='password' required autocomplete='password' />
+        <input id='register-password' name='register-password' type='password' required autocomplete='new-password' />
         <button type='submit'>go</button>
       </form>
       <p 
@@ -63,7 +67,7 @@ export class LogIn extends HTMLElement {
         <label for='password'>
           password
         </label>
-        <input id='password' name='password' type='password' required autocomplete='password' />
+        <input id='password' name='password' type='password' required autocomplete='current-password' />
         <button type='submit'>go</button>
       </form>
       <p 
