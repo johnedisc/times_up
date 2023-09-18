@@ -1,4 +1,5 @@
 import { _timesUpApp } from "../main.js";
+import { clearElementChildren } from "../utilities/utilities.js";
 
 export class LogIn extends HTMLElement {
   #user: Record<string | symbol, string> = {
@@ -10,6 +11,7 @@ export class LogIn extends HTMLElement {
 
   constructor() {
     super();
+    console.log(this);
 
   }
 
@@ -17,7 +19,36 @@ export class LogIn extends HTMLElement {
     this.logIn();
   }
 
+  createAccount():void {
+    document.getElementById('newAccount')?.removeEventListener('click', () => { this.createAccount() });
+    this.innerHTML = '';
+    this.innerHTML = `
+      <form class='flex-down log-in'>
+        <h5>sign in.</h5>
+        <label for='email'>
+          email
+        </label>
+        <input id='email' name='email' type='email' required autocomplete='username' />
+        <label for='password'>
+          password
+        </label>
+        <input id='password' name='password' type='password' required autocomplete='password' />
+        <button type='submit'>go</button>
+      </form>
+      <p 
+        style='margin: var(--gutter);'
+        ><em><a id='sign-in'>
+        have an account? go sign in.
+        </a></em>
+      </p>
+    `;
+    document.getElementById('sign-in')?.addEventListener('click', () => { this.logIn() });
+  }
+
+
   logIn():void {
+    document.getElementById('log-in')?.removeEventListener('click', () => { this.logIn() });
+    this.innerHTML = '';
     this.innerHTML = `
       <div class='login-header'>
         <h1 class='h3'>timer app</h1>
@@ -28,14 +59,23 @@ export class LogIn extends HTMLElement {
         <label for='email'>
           email
         </label>
-        <input name='email' type='email' />
+        <input id='email' name='email' type='email' required autocomplete='username' />
         <label for='password'>
           password
         </label>
-        <input name='password' type='password' />
+        <input id='password' name='password' type='password' required autocomplete='password' />
         <button type='submit'>go</button>
       </form>
+      <p 
+        style='margin: var(--gutter);'
+        ><em><a id='newAccount'>
+        create new account
+        </a></em>
+      </p>
     `;
+
+    document.getElementById('newAccount')?.addEventListener('click', () => { this.createAccount() });
+
     try {
       const form: HTMLFormElement | null = this.querySelector('form');
       if (form) this.setFormBindings(form);
