@@ -18,5 +18,9 @@
     "@types/node": "^20.5.6",
     "nodemon": "^3.0.1",
     "typescript": "^5.0.2"
+  },
+  "dependencies": {
+    "@types/pg": "^8.10.2",
+    "pg": "^8.11.3"
   }
 }
