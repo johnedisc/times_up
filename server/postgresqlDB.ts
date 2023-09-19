@@ -39,16 +39,15 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000,
 })
 
-pool.on('error', (err, client) => {
-  console.error('Unexpected error on idle client', err);
-  process.exit(-1);
-})
+//pool.on('error', (err, client) => {
+//  console.error('Unexpected error on idle client', err);
+//  process.exit(-1);
+//})
 
 export const findUsers = async (email: string): Promise<undefined | QueryResultRow> => {
   const text = 'SELECT * FROM userinfo WHERE email = $1';
   const values = [email];
   const result:QueryResultRow = await pool.query(text, values);
-  console.log('search result', result.rows);
   if (result.rows.length === 0) return undefined;
   else return result.rows[0];
 }
@@ -58,8 +57,7 @@ export const registerUser = async (email: string, name: string, password: string
     const text = 'INSERT INTO userinfo(email,name,password) VALUES ($1,$2,$3) RETURNING *';
     const values = [email,name,password];
     const returnValue = await pool.query(text, values);
-    console.log(returnValue);
-    return returnValue;
+    return returnValue.rows[0];
   } catch (error) {
     console.error(error);
   }

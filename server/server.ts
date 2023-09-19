@@ -4,10 +4,11 @@ import * as fs from 'fs';
 import * as fsPromises from 'fs/promises';
 import EventEmitter from 'events';
 import { IncomingMessage, ServerResponse } from 'http';
-import { findUsers, registerUser } from './postgresqlDB';
+import { handleAPI } from './auth.js';
 
 export const serverHit = new EventEmitter();
 const PORT: number | string = process.env.PORT || 3300;
+
 //const certs = {
 //  key: fs.readFileSync('/etc/ssl/sslTime/privateKey.pem'),
 //  cert: fs.readFileSync('/etc/ssl/sslTime/originCert.pem'),
@@ -32,46 +33,11 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: an
 }
 
 const parseRequest = (request: IncomingMessage, response: ServerResponse): void => {
-  console.log(request.url);
 
   serverHit.emit('hit', request);
 
   if (request.url?.includes('auth')) {
-
-    let body:any = [];
-    let bodyString:string;
-    let bodyJSON:any;
-
-    request
-      .on('error', err => {
-        console.error(err);
-      })
-      .on('data', chunk => {
-        body.push(chunk);
-      })
-      .on('end', () => {
-        bodyString = Buffer.concat(body).toString();
-        bodyJSON = JSON.parse(bodyString);
-        const userLogInData = {
-          userName: bodyJSON.email,
-          password: bodyJSON.password,
-          name: bodyJSON.name
-        }
-
-        if (request.url === '/auth/register' && request.method === 'POST') {
-          try {
-            if (findUsers(userLogInData.userName) !== undefined) throw new Error('user already exists');
-            const dbResponse = registerUser('ralph@bob.net','ralph','masks');
-            response.writeHead(201, { 'Content-Type': 'text/plain' });
-            response.end(dbResponse);
-          } catch (error) {
-            console.error(error);
-            response.writeHead(418, { 'Content-Type': 'text/plain' });
-            response.end('trouble');
-          }
-        }
-      });
-
+    handleAPI(request, response);
   } else if (request.url) {
     const extension: any  = path.extname(request.url);
     let contentType: string;
