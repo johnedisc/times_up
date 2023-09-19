@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as fsPromises from 'fs/promises';
 import EventEmitter from 'events';
 import { IncomingMessage, ServerResponse } from 'http';
+import { findUsers } from './postgresqlDB';
 
 const serverHit = new EventEmitter();
 const PORT: number | string = process.env.PORT || 3300;
@@ -60,13 +61,19 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
         console.log(1,'end');
         bodyString = Buffer.concat(body).toString();
         bodyJSON = JSON.parse(bodyString);
-//        console.log(body);
+        const userLogInData = {
+          userName: bodyJSON.email,
+          password: bodyJSON.password,
+          name: bodyJSON.name
+        }
+
+        if (request.url === '/auth/register' && request.method === 'POST') {
+          findUsers(userLogInData.userName);
+          console.log(2,userLogInData);
+          response.end('done');
+        }
       });
 
-    if (request.url === '/auth/register' && request.method === 'POST') {
-      console.log(2,bodyJSON);
-      response.end('done');
-    }
   } else if (request.url) {
     const extension: any  = path.extname(request.url);
     let contentType: string;
