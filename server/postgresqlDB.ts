@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool, QueryResult, QueryResultRow } from 'pg';
 
 type Config = {
   // all valid client config options are also valid here
@@ -39,10 +39,10 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000,
 })
 
-export const findUsers = async (email: string): Promise<void> => {
-  console.log('hi', email);
+export const findUsers = async (email: string): Promise<null | QueryResultRow> => {
   const text = 'SELECT * FROM userinfo WHERE email = $1';
   const values = [email];
-  const result = await pool.query(text, values);
-  console.log(result.rows[0]);
+  const result:QueryResultRow = await pool.query(text, values);
+  if (result.length === 0) return null;
+  else return result.rows[0];
 }

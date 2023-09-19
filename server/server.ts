@@ -58,7 +58,6 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
         body.push(chunk);
       })
       .on('end', () => {
-        console.log(1,'end');
         bodyString = Buffer.concat(body).toString();
         bodyJSON = JSON.parse(bodyString);
         const userLogInData = {
@@ -68,8 +67,11 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
         }
 
         if (request.url === '/auth/register' && request.method === 'POST') {
-          findUsers(userLogInData.userName);
-          console.log(2,userLogInData);
+          try {
+            if (findUsers(userLogInData.userName) !== null) throw new Error('user already exists');
+          } catch (error) {
+            console.error(error);
+          }
           response.end('done');
         }
       });
