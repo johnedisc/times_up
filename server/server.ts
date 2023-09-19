@@ -4,9 +4,9 @@ import * as fs from 'fs';
 import * as fsPromises from 'fs/promises';
 import EventEmitter from 'events';
 import { IncomingMessage, ServerResponse } from 'http';
-import { findUsers } from './postgresqlDB';
+import { findUsers, registerUser } from './postgresqlDB';
 
-const serverHit = new EventEmitter();
+export const serverHit = new EventEmitter();
 const PORT: number | string = process.env.PORT || 3300;
 //const certs = {
 //  key: fs.readFileSync('/etc/ssl/sslTime/privateKey.pem'),
@@ -31,19 +31,11 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: an
   }
 }
 
-serverHit.on('hit', (request: IncomingMessage) => {
-  const time = new Date();
-  fs.appendFileSync(path.join(__dirname, '..', 'log.txt'),
-  `host: ${request.headers.host}\turl: ${request.url}\n\tmethod: ${request.method}\n\tdate: ${time}\n`);
-});
-
 const parseRequest = (request: IncomingMessage, response: ServerResponse): void => {
   console.log(request.url);
 
   serverHit.emit('hit', request);
 
-//  console.log('incoming url', request.url);
-//  console.log(request.headers);
   if (request.url?.includes('auth')) {
 
     let body:any = [];
@@ -68,11 +60,15 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
 
         if (request.url === '/auth/register' && request.method === 'POST') {
           try {
-            if (findUsers(userLogInData.userName) !== null) throw new Error('user already exists');
+            if (findUsers(userLogInData.userName) !== undefined) throw new Error('user already exists');
+            const dbResponse = registerUser('ralph@bob.net','ralph','masks');
+            response.writeHead(201, { 'Content-Type': 'text/plain' });
+            response.end(dbResponse);
           } catch (error) {
             console.error(error);
+            response.writeHead(418, { 'Content-Type': 'text/plain' });
+            response.end('trouble');
           }
-          response.end('done');
         }
       });
 
@@ -117,18 +113,15 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
       filePath = path.join(__dirname, '..', '..', 'client', 'index.html');
     }
 
-//    console.log('check file path', filePath);
-//    // check if file exists
+    // check if file exists
     let fileExists = fs.existsSync(filePath);
 
 
     if (fileExists) {
       // serve file
-//      console.log(`congrats, we will serve the file: ${filePath}`);
       serveFile(filePath, contentType, response);
 
     } else {
-//      console.log(`file didn't exist`);
       // 301 redirect
       switch(path.parse(filePath).base) {
         case 'unused-url.html':
@@ -141,12 +134,10 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
           break;
         default:
 ////          serve a 404
-//          console.log('trouble at the mill');
+          console.log('trouble at the mill');
 //          serveFile(path.join(__dirname, '..', '..', 'client', 'src', '404.html'), 'text/html', response);
       };
     };
-
-//    console.log(`line 94: contentType: ${contentType}, extension: ${extension}, filePath ${filePath}, request.url: ${request.url}`);
   }
 } 
 
