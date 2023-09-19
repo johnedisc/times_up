@@ -44,5 +44,5 @@ export const findUsers = async (email: string): Promise<void> => {
   const text = 'SELECT * FROM userinfo WHERE email = $1';
   const values = [email];
   const result = await pool.query(text, values);
-  console.log(result);
+  console.log(result.rows[0]);
 }
