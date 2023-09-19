@@ -40,8 +40,12 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
       })
       .catch((error) => {
         console.log('catch statement', error);
-        response.writeHead(418, { 'Content-Type': 'text/plain' });
-        response.end('invalid insertion');
+        response
+          .writeHead(400, { 
+            'Content-Type': 'text/plain', 
+            'ok': 'false' 
+          })
+          .end('invalid insertion\n');
       });
 
     }
