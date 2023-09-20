@@ -1,4 +1,5 @@
 ## [an interval timer app](https://timer.chrisjohnedis.com)
+### [check out the site at timer.chrisjohnedis.com](https://timer.chrisjohnedis.com)
 
 this app is striving to provide a solution to the situation where a user has a series of predefined tasks that the user plans to do where time is a concern. if the user is a restaurant owner seeks to create a base timeline for how long daily prep should take, the user would program a series of intervals with this app. for example, picking basil might take 10 minutes, grating cheese 15 minutes, and dough 20 minutes. the app will inform the user the next task and start counting down as soon as the user taps to advance the screen.
 
