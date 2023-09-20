@@ -20,7 +20,9 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/pg": "^8.10.2",
+    "bcrypt": "^5.1.1",
     "pg": "^8.11.3"
   }
 }

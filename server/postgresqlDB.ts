@@ -44,7 +44,7 @@ const pool = new Pool({
 //  process.exit(-1);
 //})
 
-export const findUsers = async (email: string): Promise<undefined | QueryResultRow> => {
+export const findUsers = async (email: string): Promise<undefined | string | any> => {
   const text = 'SELECT * FROM userinfo WHERE email = $1';
   const values = [email];
   const result:QueryResultRow = await pool.query(text, values);
