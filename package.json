@@ -9,10 +9,9 @@
   "scripts": {
     "startDev": "nodemon server/dist/server.js",
     "start": "node server/dist/server.js",
-    "build:client": "tsc -p client/",
-    "build:server": "tsc -p server/",
-    "build": "yarn build:client && yarn build:server",
-    "dev": "yarn build:client && yarn build:server"
+    "build:clientDev": "pushd client/ && npx tsc -w",
+    "build:serverDev": "pushd server/ && npx tsc -w",
+    "build": "tsc -p server/ && tsc -p client/",
   },
   "devDependencies": {
     "@types/node": "^20.5.6",
