@@ -1,4 +1,5 @@
 import { _timesUpApp } from "../main.js";
+import { API } from "../services/UserDataAPI.js";
 import { clearElementChildren } from "../utilities/utilities.js";
 
 export class LogIn extends HTMLElement {
@@ -11,7 +12,6 @@ export class LogIn extends HTMLElement {
 
   constructor() {
     super();
-    console.log(this);
 
   }
 
@@ -115,16 +115,29 @@ export class LogIn extends HTMLElement {
     try {
       form.addEventListener('submit', (event) => {
         event.preventDefault();
-        
-        // todo, check login credentials
-        if (this.bad) {
-          this.badCredentialsModal();
-          this.bad = false;
-        } else {
-          // todo, grab user data from DB
 
-          _timesUpApp.router.go(`/start`);
+        const userInput = {
+          'email': this.#user.email,
+          'password': this.#user.password
         }
+
+        const credentialsFromDB = API.login(userInput);
+        credentialsFromDB
+          .then((response) => {
+
+            // todo, check login credentials
+            if (this.bad) {
+              this.badCredentialsModal();
+              this.bad = false;
+            } else {
+              // todo, grab user data from DB
+
+              _timesUpApp.router.go(`/start`);
+            }
+          })
+          .catch((error) => {
+            console.error('this is crendential error', error);
+          })
       });
 
       this.#user = new Proxy(this.#user, {

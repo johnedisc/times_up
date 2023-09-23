@@ -33,6 +33,7 @@ const pool = new Pool({
   host: 'localhost',
   port: 5432,
   user: 'johnedisc',
+  password: '1(Egbdf78',
   database: 'intervaltimer',
   max: 20,
   idleTimeoutMillis: 30000,

@@ -20,7 +20,7 @@ const PORT: number | string = process.env.PORT || 3300;
 //};
 
 const serveFile = async (filePath: string, contentType: string, httpResponse: any): Promise<void> => {
-  console.log('line 10', filePath, contentType);
+//  console.log('line 10', filePath, contentType);
   try {
     const data = await fsPromises.readFile(filePath, 'utf8');
     httpResponse.writeHead(200, { 'Content-Type': contentType });
@@ -79,6 +79,7 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
       filePath = path.join(__dirname, '..', '..', 'client', 'index.html');
     }
 
+//    console.log(filePath);
     // check if file exists
     let fileExists = fs.existsSync(filePath);
 
@@ -100,7 +101,7 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
           break;
         default:
 ////          serve a 404
-          console.log('trouble at the mill');
+          console.log('trouble at the mill', request.url);
 //          serveFile(path.join(__dirname, '..', '..', 'client', 'src', '404.html'), 'text/html', response);
       };
     };

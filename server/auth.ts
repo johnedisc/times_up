@@ -17,18 +17,30 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
     body.push(chunk);
   })
   .on('end', () => {
+
+    // if there is no body
+    if (body.length === 0) {
+      response.end('you didn\'t send anything');
+      return 0;
+    }
+
+
     bodyString = Buffer.concat(body).toString();
     bodyJSON = JSON.parse(bodyString);
+    console.log('server auth',request.url, bodyJSON);
 
     if (request.url === '/auth/login') {
 
       const searchResults = findUsers(bodyJSON.email);
       searchResults
         .then((returnedValue) => {
+          console.log(returnedValue);
+          console.log('hi');
           if (returnedValue === undefined) {
             throw new Error('this email/password combination does not exist')
           };
           bcrypt.compare(bodyJSON.password, returnedValue.password as any).then(function(result) {
+            console.log('bcrypt', result);
             response.writeHead(400, { 
               'Content-Type': 'text/plain', 
               'ok': 'true' 
