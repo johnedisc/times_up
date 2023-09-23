@@ -122,9 +122,9 @@ export class LogIn extends HTMLElement {
         }
 
         const credentialsFromDB = await API.login(userInput);
-        console.log(credentialsFromDB);
         // todo, check login credentials
-        if (this.bad) {
+        console.log(credentialsFromDB);
+        if (credentialsFromDB === false) {
           this.badCredentialsModal();
           this.bad = false;
         } else {

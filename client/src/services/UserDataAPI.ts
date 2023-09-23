@@ -12,17 +12,16 @@ export const UserDataAPI = {
 
 export const API = {
   url: "/auth",
-  login: async (userInput: any = {}) => {
+  login: async (userInput: any = {}): Promise<Boolean | undefined> => {
     try {
-      console.log('hello?', userInput);
-      const response = await fetch(API.url + '/login', {
+      const response: Response = await fetch(API.url + '/login', {
         method: 'POST',
         body: JSON.stringify(userInput)
       });
-      return response.text();
+      return response.ok;
     } catch (error) {
       console.error('this is a fetch error\n', error);
-      return error;
+      return undefined;
     }
   },
   register: async (userInput: any) => {

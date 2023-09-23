@@ -27,31 +27,36 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
 
     bodyString = Buffer.concat(body).toString();
     bodyJSON = JSON.parse(bodyString);
-    console.log('server auth',request.url, bodyJSON);
 
     if (request.url === '/auth/login') {
 
       const searchResults = findUsers(bodyJSON.email);
       searchResults
         .then((returnedValue) => {
-          console.log(returnedValue);
-          console.log('hi');
           if (returnedValue === undefined) {
-            throw new Error('this email/password combination does not exist')
+            throw new Error('log in error')
           };
           bcrypt.compare(bodyJSON.password, returnedValue.password as any).then(function(result) {
-            console.log('bcrypt', result);
-            response.writeHead(200, { 
+            if (result) {
+              response.writeHead(200, { 
+                'Content-Type': 'text/plain', 
+                'ok': 'true',
+                'message': 'successful login'
+              })
+              response.end('successful login\n');
+              return 0;
+            }
+            response.writeHead(400, { 
               'Content-Type': 'text/plain', 
-              'ok': 'true',
-              'message': 'successful login'
+              'ok': 'false' 
             })
-            response.end('successful login\n');
+            .end('bad login credentials\n');
             return 0;
+
           });
         })
         .catch((error) => {
-          console.log('log in error',error);
+          console.log(error);
           response.writeHead(400, { 
             'Content-Type': 'text/plain', 
             'ok': 'false' 
