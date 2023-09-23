@@ -41,11 +41,12 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
           };
           bcrypt.compare(bodyJSON.password, returnedValue.password as any).then(function(result) {
             console.log('bcrypt', result);
-            response.writeHead(400, { 
+            response.writeHead(200, { 
               'Content-Type': 'text/plain', 
-              'ok': 'true' 
+              'ok': 'true',
+              'message': 'successful login'
             })
-            .end('successful login\n');
+            response.end('successful login\n');
             return 0;
           });
         })

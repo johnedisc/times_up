@@ -113,7 +113,7 @@ export class LogIn extends HTMLElement {
 
   setFormBindings(form: HTMLFormElement): void {
     try {
-      form.addEventListener('submit', (event) => {
+      form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const userInput = {
@@ -121,23 +121,17 @@ export class LogIn extends HTMLElement {
           'password': this.#user.password
         }
 
-        const credentialsFromDB = API.login(userInput);
-        credentialsFromDB
-          .then((response) => {
+        const credentialsFromDB = await API.login(userInput);
+        console.log(credentialsFromDB);
+        // todo, check login credentials
+        if (this.bad) {
+          this.badCredentialsModal();
+          this.bad = false;
+        } else {
+          // todo, grab user data from DB
 
-            // todo, check login credentials
-            if (this.bad) {
-              this.badCredentialsModal();
-              this.bad = false;
-            } else {
-              // todo, grab user data from DB
-
-              _timesUpApp.router.go(`/start`);
-            }
-          })
-          .catch((error) => {
-            console.error('this is crendential error', error);
-          })
+          _timesUpApp.router.go(`/start`);
+        }
       });
 
       this.#user = new Proxy(this.#user, {
