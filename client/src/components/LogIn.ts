@@ -132,6 +132,11 @@ export class LogIn extends HTMLElement {
 
           _timesUpApp.router.go(`/start`);
         }
+
+        for (let i = 0; i < form.elements.length; i++) {
+          (form.elements[i] as HTMLInputElement).value = '';
+        };
+
       });
 
       this.#user = new Proxy(this.#user, {
