@@ -26,6 +26,7 @@ export const API = {
   },
   register: async (userInput: any) => {
     try {
+      console.log(userInput);
       const result = await fetch(API.url + '/register', userInput);
       console.log('result',result);
       return await result.json();
@@ -34,3 +35,4 @@ export const API = {
     }
   }
 }
+

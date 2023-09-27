@@ -5,7 +5,8 @@ import { clearElementChildren } from "../utilities/utilities.js";
 export class LogIn extends HTMLElement {
   #user: Record<string | symbol, string> = {
     email: '',
-    password: ''
+    password: '',
+    name: ''
   }
 
   bad: boolean = false;
@@ -47,6 +48,18 @@ export class LogIn extends HTMLElement {
       </p>
     `;
     document.getElementById('sign-in')?.addEventListener('click', () => { this.logIn() });
+
+    try {
+      const form: HTMLFormElement | null = this.querySelector('form');
+      if (form) this.setFormBindings(form, 'register');
+
+      // test out the 2-way binding
+//      this.#user.email = 'fljsd@lkjsdfkjdf.com';
+//      console.log(this.#user.email)
+    } catch (error) {
+      _timesUpApp.router.go('/error');
+      console.error('didn\'t find the form.', error);
+    }
   }
 
 
@@ -111,17 +124,33 @@ export class LogIn extends HTMLElement {
   }
 
 
-  setFormBindings(form: HTMLFormElement): void {
+  setFormBindings(form: HTMLFormElement, screen: string = 'login'): void {
+    console.log(this.#user);
     try {
+
       form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        const userInput = {
-          'email': this.#user.email,
-          'password': this.#user.password
+        let credentialsFromDB;
+
+        if (screen === 'login') {
+          const userInput = {
+            'email': this.#user.email,
+            'password': this.#user.password
+          }
+
+          credentialsFromDB = await API.login(userInput);
+
+        } else {
+          const userInput = {
+            'email': this.#user.email,
+            'password': this.#user.password,
+            'name': this.#user.name
+          }
+
+          credentialsFromDB = await API.register(userInput);
         }
 
-        const credentialsFromDB = await API.login(userInput);
         // todo, check login credentials
         console.log(credentialsFromDB);
         if (credentialsFromDB === false) {
@@ -147,7 +176,7 @@ export class LogIn extends HTMLElement {
             target[property] = value;
             const formInputElement = form.elements.namedItem(property.toString());
             if (formInputElement) (formInputElement as HTMLInputElement).value = value;
-//            console.log(target, target[property]);
+            console.log(target, target[property]);
             }
           } catch (error) {
             console.error(error);
