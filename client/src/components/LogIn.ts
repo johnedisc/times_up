@@ -99,8 +99,8 @@ export class LogIn extends HTMLElement {
           this.badCredentialsModal();
           this.bad = false;
         } else {
-          // todo, grab user data from DB
 
+//          await LoadData();
           _timesUpApp.router.go(`/start`);
         }
 

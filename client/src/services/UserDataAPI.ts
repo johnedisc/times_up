@@ -20,14 +20,19 @@ export const API = {
         method: 'POST',
         body: JSON.stringify(userInput)
       });
-      const jsonResponse = await response.json();
-      console.log(jsonResponse);
-      if (response.ok) {
-        await LoadData();
-      }
+
+      let apiResponse;
+
+      response.ok ? apiResponse = await response.json()
+        : apiResponse = await response.text() 
+      console.log(apiResponse);
+
+      // todo populate user data
+
       return response.ok;
+
     } catch (error) {
-      console.error('this is a fetch error\n', error);
+      console.log('this is a fetch error\n', error);
       return undefined;
     }
   },

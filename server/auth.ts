@@ -69,9 +69,11 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
               response.end(JSON.stringify(userDataFromDB));
               return 0;
             }
-            response.writeHead(400, { 
+
+            response.writeHead(401, { 
               'Content-Type': 'text/plain', 
-              'ok': 'false' 
+              'ok': 'false',
+              'message': 'bad login credentials'
             })
             .end('bad login credentials\n');
             return 0;
@@ -80,11 +82,12 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
         })
         .catch((error) => {
           console.log(error);
-          response.writeHead(400, { 
+          response.writeHead(501, { 
             'Content-Type': 'text/plain', 
-            'ok': 'false' 
+            'ok': 'false',
+            'message': 'server error'
           })
-          .end('bad login credentials\n');
+          .end('server error');
           return 0;
         });
 
