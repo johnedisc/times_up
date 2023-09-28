@@ -1,3 +1,5 @@
+import { LoadData } from "./LoadData.js";
+
 export const UserDataAPI = {
   url: "../../src/data/UserData.json",
   fetchUser: async () => {
@@ -18,6 +20,11 @@ export const API = {
         method: 'POST',
         body: JSON.stringify(userInput)
       });
+      const jsonResponse = await response.json();
+      console.log(jsonResponse);
+      if (response.ok) {
+        await LoadData();
+      }
       return response.ok;
     } catch (error) {
       console.error('this is a fetch error\n', error);

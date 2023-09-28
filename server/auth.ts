@@ -5,9 +5,14 @@ import { QueryResultRow } from "pg";
 
 
 export function handleAPI(request: IncomingMessage, response: ServerResponse): void {
+
+  // initialize the request body stream variables
   let body:any = [];
   let bodyString:string;
   let bodyJSON:any;
+
+  // parse out the request info
+  const { headers, method, url } = request;
 
   request
   .on('error', err => {
@@ -25,25 +30,43 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
     }
 
 
+    // parse out the body from string to JS object
     bodyString = Buffer.concat(body).toString();
     bodyJSON = JSON.parse(bodyString);
 
-    if (request.url === '/auth/login') {
+    if (url === '/auth/login') {
 
+      // check that email exists in DB
       const searchResults = findUsers(bodyJSON.email);
       searchResults
         .then((returnedValue) => {
+
+          // no exist 
           if (returnedValue === undefined) {
             throw new Error('log in error')
           };
+
+          // exist
           bcrypt.compare(bodyJSON.password, returnedValue.password as any).then(function(result) {
+
+            // email/password correct
             if (result) {
+
+              response.on('error', err => {
+                console.error(err);
+              });
+
               response.writeHead(200, { 
-                'Content-Type': 'text/plain', 
+                'Content-Type': 'application/json', 
                 'ok': 'true',
-                'message': 'successful login'
-              })
-              response.end('successful login\n');
+                'message': 'successful login',
+              });
+
+              const userDataFromDB = { 
+                name: returnedValue.name, 
+                email: returnedValue.email 
+              };
+              response.end(JSON.stringify(userDataFromDB));
               return 0;
             }
             response.writeHead(400, { 

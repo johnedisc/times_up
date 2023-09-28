@@ -38,7 +38,6 @@ const vh = window.innerHeight;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await LoadData();
   _timesUpApp.router.init();
 });
 
