@@ -4,9 +4,9 @@ import { clearElementChildren } from "../utilities/utilities.js";
 
 export class Register extends HTMLElement {
   #user: Record<string | symbol, string> = {
-    email: '',
-    password: '',
-    name: ''
+    'register-email': '',
+    'register-password': '',
+    'register-name': ''
   }
 
   bad: boolean = false;
@@ -17,7 +17,7 @@ export class Register extends HTMLElement {
   }
 
   connectedCallback() {
-    this.logIn();
+    this.createAccount();
   }
 
   createAccount():void {
@@ -47,7 +47,7 @@ export class Register extends HTMLElement {
         </a></em>
       </p>
     `;
-    document.getElementById('sign-in')?.addEventListener('click', () => { this.logIn() });
+    document.getElementById('sign-in')?.addEventListener('click', () => { _timesUpApp.router.go('/') });
 
     try {
       const form: HTMLFormElement | null = this.querySelector('form');
@@ -62,49 +62,6 @@ export class Register extends HTMLElement {
     }
   }
 
-
-  logIn():void {
-    document.getElementById('log-in')?.removeEventListener('click', () => { this.logIn() });
-    this.innerHTML = '';
-    this.innerHTML = `
-      <div class='login-header'>
-        <h1 class='h3'>timer app</h1>
-        <p class='text-small'>this app is in development. the login does not create a real user. feel free to supply a fake email and password. this is just here to give us an idea of how the program will be laid out. thank you for checking it out.</p>
-      </div>
-      <form class='flex-down log-in'>
-        <h5>sign in.</h5>
-        <label for='email'>
-          email
-        </label>
-        <input id='email' name='email' type='email' required autocomplete='username' />
-        <label for='password'>
-          password
-        </label>
-        <input id='password' name='password' type='password' required autocomplete='current-password' />
-        <button type='submit'>go</button>
-      </form>
-      <p 
-        style='margin: var(--gutter);'
-        ><em><a id='newAccount'>
-        create new account
-        </a></em>
-      </p>
-    `;
-
-    document.getElementById('newAccount')?.addEventListener('click', () => { this.createAccount() });
-
-    try {
-      const form: HTMLFormElement | null = this.querySelector('form');
-      if (form) this.setFormBindings(form);
-
-      // test out the 2-way binding
-//      this.#user.email = 'fljsd@lkjsdfkjdf.com';
-//      console.log(this.#user.email)
-    } catch (error) {
-      _timesUpApp.router.go('/error');
-      console.error('didn\'t find the form.', error);
-    }
-  }
 
   badCredentialsModal():void {
     const modal = document.createElement('div');
@@ -125,31 +82,18 @@ export class Register extends HTMLElement {
 
 
   setFormBindings(form: HTMLFormElement, screen: string = 'login'): void {
-    console.log(this.#user);
     try {
 
       form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        let credentialsFromDB;
-
-        if (screen === 'login') {
-          const userInput = {
-            'email': this.#user.email,
-            'password': this.#user.password
-          }
-
-          credentialsFromDB = await API.login(userInput);
-
-        } else {
-          const userInput = {
-            'email': this.#user.email,
-            'password': this.#user.password,
-            'name': this.#user.name
-          }
-
-          credentialsFromDB = await API.register(userInput);
+        const userInput = {
+          'email': this.#user['register-email'],
+          'password': this.#user['register-password'],
+          'name': this.#user['register-name']
         }
+
+        const credentialsFromDB = await API.register(userInput);
 
         // todo, check login credentials
         console.log(credentialsFromDB);
@@ -176,7 +120,7 @@ export class Register extends HTMLElement {
             target[property] = value;
             const formInputElement = form.elements.namedItem(property.toString());
             if (formInputElement) (formInputElement as HTMLInputElement).value = value;
-            console.log(target, target[property]);
+            // console.log(target, target[property]);
             }
           } catch (error) {
             console.error(error);

@@ -81,7 +81,6 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
           });
         })
         .catch((error) => {
-          console.log(error);
           response.writeHead(501, { 
             'Content-Type': 'text/plain', 
             'ok': 'false',

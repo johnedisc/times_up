@@ -23,6 +23,7 @@ export const API = {
 
       let apiResponse;
 
+      console.log(response.ok);
       response.ok ? apiResponse = await response.json()
         : apiResponse = await response.text() 
       console.log(apiResponse);
@@ -38,7 +39,7 @@ export const API = {
   },
   register: async (userInput: any) => {
     try {
-      console.log(userInput);
+      console.log('user data: ', userInput);
       const result = await fetch(API.url + '/register', userInput);
       console.log('result',result);
       return await result.json();

@@ -9,6 +9,7 @@ import { MenuModal } from './components/MenuModal.js';
 import { StartPage } from './components/StartPage.js';
 import { ProgramForm } from './components/ProgramForm.js';
 import { LogIn } from './components/LogIn.js';
+import { Register } from './components/Register.js';
 import { ErrorPage } from './components/ErrorPage.js';
 import { grabColors } from './utilities/utilities.js';
 customElements.define('interval-page', Interval);
@@ -17,6 +18,7 @@ customElements.define('error-page', ErrorPage);
 customElements.define('program-form', ProgramForm);
 customElements.define('menu-modal', MenuModal);
 customElements.define('start-page', StartPage);
+customElements.define('register-user', Register);
 customElements.define('log-in', LogIn);
 
 //declare global {
@@ -38,6 +40,7 @@ const vh = window.innerHeight;
 document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 document.addEventListener('DOMContentLoaded', async () => {
+  await LoadData();
   _timesUpApp.router.init();
 });
 
