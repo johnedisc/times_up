@@ -39,12 +39,20 @@ export const API = {
   },
   register: async (userInput: any) => {
     try {
-      console.log('user data: ', userInput);
-      const result = await fetch(API.url + '/register', userInput);
-      console.log('result',result);
-      return await result.json();
+      const response = await fetch(API.url + '/register', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userInput)
+      });
+      
+      const apiResponse = await response.text();
+
+      return response.ok;
+
     } catch (error) {
-      console.error('this is a fetch error\n', error);
+//      console.error('this is a fetch error\n', error);
     }
   }
 }

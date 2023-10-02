@@ -13,6 +13,7 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
 
   // parse out the request info
   const { headers, method, url } = request;
+  console.log(url, method);
 
   request
   .on('error', err => {
@@ -23,6 +24,7 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
   })
   .on('end', () => {
 
+    console.log(body.length);
     // if there is no body
     if (body.length === 0) {
       response.end('you didn\'t send anything');
@@ -93,12 +95,12 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
     }
 
     // REGISTER USER
-    if (request.url === '/auth/register' && request.method === 'POST') {
+    if (url === '/auth/register' && method === 'POST') {
 
       // data validation
       if (!bodyJSON.email || !bodyJSON.password || !bodyJSON.name) {
 
-        response.writeHead(400, { 
+        response.writeHead(201, { 
           'Content-Type': 'text/plain',
           'ok': 'false'
         });
@@ -127,10 +129,10 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
           dbResponse.then((returnedValue) => {
             response.writeHead(201, { 
               'Content-Type': 'text/plain',
-              'ok': 'true'
+              'ok': 'true',
+              'message': 'successful insertion'
             });
-            response.write(JSON.stringify(returnedValue));
-            response.end('\nsuccessful insertion!');
+            response.end();
           });
         })
         .catch((error) => {
@@ -138,9 +140,10 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
           response
           .writeHead(400, { 
             'Content-Type': 'text/plain', 
-            'ok': 'false' 
+            'ok': 'false',
+            'message': error
           })
-          .end('invalid insertion\n');
+          .end(error.toString());
         });
 
       });

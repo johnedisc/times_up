@@ -69,7 +69,7 @@ export class Register extends HTMLElement {
     const messageBox = document.createElement('div');
     messageBox.classList.add('message-box', 'flex-down');
     messageBox.innerHTML =  `
-        <p style='color: red'>incorrect login</p>
+        <p style='color: red'>user already exists</p>
         <button id='modal-button' type='button'>try again</button>
     `;
     _timesUpApp.store.container.appendChild(modal);
