@@ -46,7 +46,7 @@ const pool = new Pool({
 //})
 
 export const findUsers = async (email: string): Promise<undefined | string | any> => {
-  const text = 'SELECT * FROM userinfo WHERE email = $1';
+  const text = 'SELECT * FROM user_info WHERE email = $1';
   const values = [email];
   const result:QueryResultRow = await pool.query(text, values);
   if (result.rows.length === 0) return undefined;
@@ -55,7 +55,7 @@ export const findUsers = async (email: string): Promise<undefined | string | any
 
 export const registerUser = async (email: string, name: string, password: string): Promise<any> => {
   try {
-    const text = 'INSERT INTO userinfo(email,name,password) VALUES ($1,$2,$3) RETURNING *';
+    const text = 'INSERT INTO user_info(email,name,password) VALUES ($1,$2,$3) RETURNING *';
     const values = [email,name,password];
     const returnValue = await pool.query(text, values);
     return returnValue.rows[0];

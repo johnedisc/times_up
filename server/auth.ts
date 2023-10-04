@@ -13,7 +13,7 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
 
   // parse out the request info
   const { headers, method, url } = request;
-  console.log(url, method);
+  console.log(url, method, request.headers);
 
   request
   .on('error', err => {
@@ -24,7 +24,6 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
   })
   .on('end', () => {
 
-    console.log(body.length);
     // if there is no body
     if (body.length === 0) {
       response.end('you didn\'t send anything');
