@@ -13,7 +13,7 @@ export interface IUsageData {
 }
 
 export interface IStore {
-  user: IUser | null,
+  user: any | null,
   container: HTMLElement | null,
   currentProgram: ITimerList | null,
   currentIndex: number | null,

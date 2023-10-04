@@ -1,14 +1,21 @@
+import { _timesUpApp } from "../main.js";
 import { LoadData } from "./LoadData.js";
 
 export const UserDataAPI = {
-  url: "../../src/data/UserData.json",
-  fetchUser: async (userCredentials) => {
-    try {
-      const result = await fetch(UserDataAPI.url);
-      return await result.json();
-    } catch (error) {
-      console.error(error);
-    }
+  url: "/",
+  grabPrograms: async () => {
+      const response: Response = await fetch(UserDataAPI.url, {
+        method: 'POST',
+        body: JSON.stringify(_timesUpApp.user)
+      });
+      console.log(response);
+
+//    try {
+//      const result = await fetch(UserDataAPI.url);
+//      return await result.json();
+//    } catch (error) {
+//      console.error(error);
+//    }
   },
 }
 
@@ -24,13 +31,14 @@ export const API = {
       let apiResponse;
 
       console.log(response.ok);
-      response.ok ? apiResponse = await response.json()
-        : apiResponse = await response.text() 
+
+      if (response.ok) {
+        apiResponse = await response.json();
+        _timesUpApp.store.user = apiResponse;
+      }
+      
+      apiResponse = await response.text();
       console.log(apiResponse);
-
-      // todo populate user data
-
-      await UserDataAPI.fetchUser(apiResponse);
 
       return response.ok;
 

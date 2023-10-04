@@ -9,6 +9,7 @@ export class StartPage extends HTMLElement {
   constructor() {
     super();
 
+    console.log(_timesUpApp);
     this.div.appendChild(this.h1);
     this.div.appendChild(this.h5);
   }

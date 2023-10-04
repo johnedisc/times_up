@@ -35,6 +35,7 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: an
 }
 
 const parseRequest = (request: IncomingMessage, response: ServerResponse): void => {
+  console.log(request.headers);
 
   serverHit.emit('hit', request);
 
