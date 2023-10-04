@@ -70,6 +70,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/dotenv@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "@types/dotenv@npm:8.2.0"
+  dependencies:
+    dotenv: "*"
+  checksum: a1f524da7dc18b09bdb6c2613b9abbbe8ca575621cce4625efc7f98daf2ba07c7dbab622c9bb394507a12c5c515f9cbbbba4aeec17b801c88faeb8e8e656d460
+  languageName: node
+  linkType: hard
+
 "@types/jsonwebtoken@npm:^9.0.3":
   version: 9.0.3
   resolution: "@types/jsonwebtoken@npm:9.0.3"
@@ -407,6 +416,13 @@ __metadata:
   version: 2.0.2
   resolution: "detect-libc@npm:2.0.2"
   checksum: 2b2cd3649b83d576f4be7cc37eb3b1815c79969c8b1a03a40a4d55d83bc74d010753485753448eacb98784abf22f7dbd3911fd3b60e29fda28fed2d1a997944d
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:*, dotenv@npm:^16.3.1":
+  version: 16.3.1
+  resolution: "dotenv@npm:16.3.1"
+  checksum: 15d75e7279018f4bafd0ee9706593dd14455ddb71b3bcba9c52574460b7ccaf67d5cf8b2c08a5af1a9da6db36c956a04a1192b101ee102a3e0cf8817bbcf3dfd
   languageName: node
   linkType: hard
 
@@ -1683,10 +1699,12 @@ __metadata:
   resolution: "times-up@workspace:."
   dependencies:
     "@types/bcrypt": ^5.0.0
+    "@types/dotenv": ^8.2.0
     "@types/jsonwebtoken": ^9.0.3
     "@types/node": ^20.5.6
     "@types/pg": ^8.10.2
     bcrypt: ^5.1.1
+    dotenv: ^16.3.1
     jsonwebtoken: ^9.0.2
     nodemon: ^3.0.1
     pg: ^8.11.3

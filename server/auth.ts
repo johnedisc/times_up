@@ -1,6 +1,7 @@
 import { IncomingMessage, ServerResponse } from "http";
 import { registerUser, findUsers } from "./postgresqlDB";
 import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken";
 import { QueryResultRow } from "pg";
 
 
@@ -13,7 +14,7 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
 
   // parse out the request info
   const { headers, method, url } = request;
-  console.log(url, method, request.headers);
+  console.log(url, method);
 
   request
   .on('error', err => {
@@ -65,8 +66,13 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
 
               const userDataFromDB = { 
                 name: returnedValue.name, 
-                email: returnedValue.email 
+                email: returnedValue.email,
+                id: returnedValue.id,
+                token: ''
               };
+              const token = jwt.sign(userDataFromDB, process.env.JWT_PASSWORD as jwt.Secret);
+              userDataFromDB.token = token;
+
               response.end(JSON.stringify(userDataFromDB));
               return 0;
             }

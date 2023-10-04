@@ -2,7 +2,7 @@ import { LoadData } from "./LoadData.js";
 
 export const UserDataAPI = {
   url: "../../src/data/UserData.json",
-  fetchUser: async () => {
+  fetchUser: async (userCredentials) => {
     try {
       const result = await fetch(UserDataAPI.url);
       return await result.json();
@@ -29,6 +29,8 @@ export const API = {
       console.log(apiResponse);
 
       // todo populate user data
+
+      await UserDataAPI.fetchUser(apiResponse);
 
       return response.ok;
 

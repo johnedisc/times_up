@@ -5,6 +5,8 @@ import * as fsPromises from 'fs/promises';
 import EventEmitter from 'events';
 import { IncomingMessage, ServerResponse } from 'http';
 import { handleAPI } from './auth.js';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export const serverHit = new EventEmitter();
 const PORT: number | string = process.env.PORT || 3300;
