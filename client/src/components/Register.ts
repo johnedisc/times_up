@@ -103,7 +103,7 @@ export class Register extends HTMLElement {
         } else {
           // todo, grab user data from DB
 
-          _timesUpApp.router.go(`/start`);
+          _timesUpApp.router.go(`/`);
         }
 
         for (let i = 0; i < form.elements.length; i++) {

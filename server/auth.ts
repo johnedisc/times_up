@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { registerUser, findUsers } from "./postgresqlDB";
+import { registerUser, findUsers, createGroup } from "./postgresqlDB.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { QueryResultRow } from "pg";
@@ -132,6 +132,7 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
           };
           const dbResponse = registerUser(userLogInData.userName, userLogInData.name, userLogInData.password);
           dbResponse.then((returnedValue) => {
+            const dbResponse2 = createGroup(returnedValue.id, userLogInData.name);
             response.writeHead(201, { 
               'Content-Type': 'text/plain',
               'ok': 'true',

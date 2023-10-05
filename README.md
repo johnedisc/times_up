@@ -13,6 +13,37 @@ at the conclusion of the sequence, data is stored about how long over or under t
 - postgreSQL
 - future plans involve finishing a testing and building pipeline with github actions and codedeploy
 
+### database
+```mermaid
+    erDiagram
+        user_info ||--|| interval_programs : contains
+        user_info {
+            int id PK
+            varchar name
+            varchar password
+            varchar email
+        }
+        groups ||--o{ interval_programs : owns
+        groups {
+            int id PK
+            varchar group_name
+            int owner_id FK
+        }
+        interval_programs {
+            int id PK
+            int user_id FK
+            int group_id FK
+        }
+        interval_programs ||--o{ intervals : contains
+        intervals {
+            int id PK
+            int time_seconds
+            varchar interval_name
+            smallint sequence_number
+            int interval_program_id FK
+        }
+```
+
 ### screens
 
 <img src='./client/public/Interval Timer TAP 0.0 START SCREEN.jpg' />

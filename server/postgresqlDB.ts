@@ -63,3 +63,20 @@ export const registerUser = async (email: string, name: string, password: string
     console.error(error);
   }
 }
+
+export const createGroup = async (id: number, name: string): Promise<undefined | string | any> => {
+  const text = 'INSERT INTO groups(group_name, owner_id) VALUES ($1,$2)';
+  const values = [name, id];
+  const result:QueryResultRow = await pool.query(text, values);
+  console.log(result.rows);
+  if (result.rows.length === 0) return undefined;
+  else return result.rows[0];
+}
+
+export const grabPrograms = async (id: number): Promise<undefined | string | any> => {
+  const text = 'SELECT * FROM user_info WHERE email = $1';
+  const values = [email];
+  const result:QueryResultRow = await pool.query(text, values);
+  if (result.rows.length === 0) return undefined;
+  else return result.rows[0];
+}
