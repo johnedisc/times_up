@@ -35,11 +35,11 @@ export const API = {
       if (response.ok) {
         apiResponse = await response.json();
         _timesUpApp.store.user = apiResponse;
+        return response.ok;
       }
       
       apiResponse = await response.text();
       console.log(apiResponse);
-
       return response.ok;
 
     } catch (error) {
