@@ -1,3 +1,4 @@
+import { UserDataAPI } from "../services/UserDataAPI.js";
 import { _timesUpApp } from "../main.js";
 import { addLinkListener } from "../utilities/utilities.js";
 
@@ -33,8 +34,12 @@ export class MenuModal extends HTMLElement {
     return div;
   }
 
-  connectedCallback() {
-    this.appendChild(this.renderMenu());
+  async connectedCallback() {
+    if (_timesUpApp.store.user) {
+      await UserDataAPI.grabPrograms();
+      this.appendChild(this.renderMenu());
+    }
+    _timesUpApp.router.go('/error');
   }
 }
 

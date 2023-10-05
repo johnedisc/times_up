@@ -2,7 +2,7 @@ import { _timesUpApp } from "../main.js";
 import { LoadData } from "./LoadData.js";
 
 export const UserDataAPI = {
-  url: "/",
+  url: "/programs",
   grabPrograms: async () => {
       const response: Response = await fetch(UserDataAPI.url, {
         method: 'POST',
@@ -29,9 +29,6 @@ export const API = {
       });
 
       let apiResponse;
-
-      console.log(response.ok);
-
       if (response.ok) {
         apiResponse = await response.json();
         _timesUpApp.store.user = apiResponse;
@@ -39,7 +36,6 @@ export const API = {
       }
       
       apiResponse = await response.text();
-      console.log(apiResponse);
       return response.ok;
 
     } catch (error) {
