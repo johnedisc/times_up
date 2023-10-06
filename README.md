@@ -32,6 +32,7 @@ at the conclusion of the sequence, data is stored about how long over or under t
         interval_programs {
             int id PK
             int user_id FK
+            varchar program_name
             int group_id FK
         }
         interval_programs ||--o{ intervals : contains
