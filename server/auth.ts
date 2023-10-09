@@ -33,8 +33,7 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
 
 
     // parse out the body from string to JS object
-    bodyString = Buffer.concat(body).toString();
-    bodyJSON = JSON.parse(bodyString);
+    bodyString = Buffer.concat(body).toString(); bodyJSON = JSON.parse(bodyString);
 
     if (url === '/auth/login') {
 
@@ -70,7 +69,11 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
                 id: returnedValue.id,
                 token: ''
               };
-              const token = jwt.sign(userDataFromDB, process.env.JWT_PASSWORD as jwt.Secret);
+              const token = jwt.sign(
+                userDataFromDB, 
+                process.env.JWT_PASSWORD as jwt.Secret,
+                { expiresIn: '1hr' }
+              );
               userDataFromDB.token = token;
 
               response.end(JSON.stringify(userDataFromDB));

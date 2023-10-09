@@ -17,9 +17,9 @@ export class MenuModal extends HTMLElement {
     programList.innerHTML = `<a href='/program-form'>new interval program</a>`;
     ul.appendChild(programList);
 
-    for (let i=0; i < _timesUpApp.store.user.timerList.length; i++) {
+    for (let i=0; i < _timesUpApp.store.user.programs.length; i++) {
       const li: HTMLLIElement = document.createElement('li');
-      const programName = _timesUpApp.store.user.timerList[i].name;
+      const programName = _timesUpApp.store.user.programs[i].program_name;
       li.innerHTML = `<a href='/interval/${programName}'>
       ${programName}
       </a>`;
@@ -38,8 +38,9 @@ export class MenuModal extends HTMLElement {
     if (_timesUpApp.store.user) {
       await UserDataAPI.grabPrograms();
       this.appendChild(this.renderMenu());
+    } else {
+      _timesUpApp.router.go('/error');
     }
-    _timesUpApp.router.go('/error');
   }
 }
 

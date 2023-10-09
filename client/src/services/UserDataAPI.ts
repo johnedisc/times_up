@@ -4,18 +4,20 @@ import { LoadData } from "./LoadData.js";
 export const UserDataAPI = {
   url: "/programs",
   grabPrograms: async () => {
+    try {
       const response: Response = await fetch(UserDataAPI.url, {
         method: 'POST',
-        body: JSON.stringify(_timesUpApp.user)
+        body: JSON.stringify(_timesUpApp.store.user)
       });
       console.log(response);
 
-//    try {
-//      const result = await fetch(UserDataAPI.url);
-//      return await result.json();
-//    } catch (error) {
-//      console.error(error);
-//    }
+      let apiResponse = await response.json();
+      _timesUpApp.store.user.programs = apiResponse;
+      console.log(_timesUpApp.store);
+      console.log(apiResponse);
+    } catch (error) {
+      console.log(error);
+    }
   },
 }
 

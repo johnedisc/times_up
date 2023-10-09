@@ -5,6 +5,7 @@ import * as fsPromises from 'fs/promises';
 import EventEmitter from 'events';
 import { IncomingMessage, ServerResponse } from 'http';
 import { handleAPI } from './auth.js';
+import { programs } from './programs.js';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -35,12 +36,16 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: an
 }
 
 const parseRequest = (request: IncomingMessage, response: ServerResponse): void => {
-  console.log(request.headers);
+  console.log(request.url);
 
   serverHit.emit('hit', request);
 
   if (request.url?.includes('auth')) {
     handleAPI(request, response);
+    return;
+  } else if (request.url?.includes('programs')) {
+    programs(request, response);
+    return;
   } else if (request.url) {
     const extension: any  = path.extname(request.url);
     let contentType: string;

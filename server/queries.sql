@@ -15,6 +15,7 @@ CREATE TABLE groups (
 
 CREATE TABLE interval_programs (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  program_name VARCHAR(255) NOT NULL,
   user_id INT REFERENCES user_info(id) ON DELETE CASCADE,
   group_id INT REFERENCES groups(id) ON DELETE CASCADE
 );

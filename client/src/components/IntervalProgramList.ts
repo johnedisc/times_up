@@ -18,6 +18,7 @@ export class IntervalProgramList extends HTMLElement {
   }
 
   connectedCallback() {
+    console.log('IntervalProgramList');
     this.renderList();
   }
 

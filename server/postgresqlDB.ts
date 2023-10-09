@@ -68,14 +68,21 @@ export const createGroup = async (id: number, name: string): Promise<undefined |
   const text = 'INSERT INTO groups(group_name, owner_id) VALUES ($1,$2)';
   const values = [name, id];
   const result:QueryResultRow = await pool.query(text, values);
-  console.log(result.rows);
   if (result.rows.length === 0) return undefined;
   else return result.rows[0];
 }
 
 export const grabPrograms = async (id: number): Promise<undefined | string | any> => {
-  const text = 'SELECT * FROM user_info WHERE email = $1';
-  const values = [email];
+  const text = 'SELECT * FROM interval_programs WHERE user_id = $1';
+  const values = [id];
+  const result:QueryResultRow = await pool.query(text, values);
+  if (result.rows.length === 0) return undefined;
+  else return result.rows;
+}
+
+export const grabProgramIntervals = async (id: number): Promise<undefined | string | any> => {
+  const text = 'SELECT * FROM intervals WHERE interval_program_id = $1';
+  const values = [id];
   const result:QueryResultRow = await pool.query(text, values);
   if (result.rows.length === 0) return undefined;
   else return result.rows[0];
