@@ -11,12 +11,25 @@
 
 .menu {
   position: absolute;
-  background-color: white;
-  width: 70%;
-  height: 70%;
+  background-color: var(--bg-start-screen);
+  width: 100%;
+  height: 100%;
+  padding: 0 10%;
   font-weight: 600;
-  top: 15%;
-  left: 15%;
+  top: 0%;
+  left: 0%;
+}
+
+.menu li {
+  border: 1px solid var(--primary-font-color);
+  border-radius: 2rem;
+  width: 85%;
+  padding: .75rem 0;
+  background-color: var(--bg-count-down);
+}
+
+.menu ul:nth-child {
+  background-color: var(--bg-2);
 }
 
 .login-header {
