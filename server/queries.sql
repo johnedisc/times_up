@@ -62,7 +62,10 @@ INNER JOIN
   interval_programs
 
 ON
-  interval_programs.group_id = group_members.group_id;
+  interval_programs.group_id = group_members.group_id
+
+WHERE
+  interval_programs.user_id = 31 AND group_members.user_id = 31;
 
 INSERT INTO group_members (
   group_id,

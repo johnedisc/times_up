@@ -16,19 +16,24 @@ at the conclusion of the sequence, data is stored about how long over or under t
 ### database
 ```mermaid
     erDiagram
-        user_info ||--|| interval_programs : contains
+        user_info ||--o{ group_members : belongs
         user_info {
             int id PK
             varchar name
             varchar password
             varchar email
         }
-        groups ||--o{ interval_programs : owns
+        group_members {
+            int group_id
+            int user_id
+        }
+        groups ||--o{ group_members : belongs
         groups {
             int id PK
             varchar group_name
             int owner_id FK
         }
+        group_members }o--o{ interval_programs : access
         interval_programs {
             int id PK
             int user_id FK
@@ -42,6 +47,14 @@ at the conclusion of the sequence, data is stored about how long over or under t
             varchar interval_name
             smallint sequence_number
             int interval_program_id FK
+        }
+        transactions {
+            int id PK
+            int start_time
+            int end_time
+            int interval_program_id FK
+            int interval_id FK
+            int user_id FK
         }
 ```
 

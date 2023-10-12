@@ -81,3 +81,38 @@ export const getTable = async (id: number, table: string, foreignKeyName: string
   else return result.rows;
 }
 
+export const getIntervals = async (id: number): Promise<undefined | string | any> => {
+  const text = 
+  `
+    SELECT 
+    groups.id AS group_id,
+    groups.group_name AS group_name,
+    group_members.user_id AS user_id,
+    interval_programs.id AS program_id,
+    interval_programs.program_name AS program_name
+
+    FROM
+    groups
+
+    INNER JOIN 
+    group_members
+
+    ON 
+    group_members.group_id = groups.id
+
+    INNER JOIN
+    interval_programs
+
+    ON
+    interval_programs.group_id = group_members.group_id
+
+    WHERE
+    interval_programs.user_id = $1 AND group_members.user_id = $1;
+
+  `;
+  const values = [id];
+  const result:QueryResultRow = await pool.query(text, values);
+  console.log(result.rows);
+  if (result.rows.length === 0) return undefined;
+  else return result.rows;
+}
