@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { registerUser, findUsers, createGroup, grabPrograms } from "./postgresqlDB.js";
+import { getTable } from "./postgresqlDB.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { QueryResultRow } from "pg";
@@ -39,20 +39,38 @@ export function programs(request: IncomingMessage, response: ServerResponse): vo
     let decoded = jwt.verify(bodyJSON.token, process.env.JWT_PASSWORD as jwt.Secret);
 
     if (decoded) {
-      const programs = grabPrograms(bodyJSON.id);
+      const programs = getTable(bodyJSON.id, 'interval_programs', 'user_id');
       programs
-        .then((returnedResult) => {
-          if (returnedResult === undefined) {
-            response.writeHead(401, 'no programs found');
-            response.end();
-            return 1;
-          }
-          response.writeHead(200, { 
-            'Content-Type': 'application/json',
-            'ok': 'true',
-            'message': 'program found'
-          });
-          response.end(JSON.stringify(returnedResult));
+        .then((programNamesFromSQL) => {
+          const intervals = getTable(programNamesFromSQL.id, 'intervals', 'interval_program_id');
+          intervals
+            .then((intervalNamesFromSQL) => {
+              console.log(intervalNamesFromSQL);
+
+              if (programNamesFromSQL === undefined) {
+                response.writeHead(401, {
+                  'message': 'program not found',
+                  'programs': 'false'
+                });
+                response.end();
+                return 1;
+              } else if (intervalNamesFromSQL === undefined) {
+                response.writeHead(200, { 
+                  'Content-Type': 'application/json',
+                  'ok': 'true',
+                  'message': 'programs exist but have no intervals',
+                  'programs': 'true',
+                  'intervals': 'false'
+                });
+              } else {
+                response.writeHead(200, { 
+                  'Content-Type': 'application/json',
+                  'ok': 'true',
+                  'message': 'program found'
+                });
+              }
+              response.end(JSON.stringify(programNamesFromSQL));
+            });
         });
     } else {
       response.writeHead(401, 'token expired');

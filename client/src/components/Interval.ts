@@ -98,9 +98,9 @@ export class Interval extends HTMLElement {
       if (!this.dataset.programName) {
         throw new Error('this program can\'t be accessed');
       }
-      for (let i = 0; i < _timesUpApp.store.user.timerList.length; i++) {
-        if (_timesUpApp.store.user.timerList[i].name === this.dataset.programName) {
-          this.intervalProgram = _timesUpApp.store.user.timerList[i].list;
+      for (let i = 0; i < _timesUpApp.store.user.programs.length; i++) {
+        if (_timesUpApp.store.user.programs[i].program_name === this.dataset.programName) {
+          this.intervalProgram = _timesUpApp.store.user.programs[i];
           console.log(this.intervalProgram);
           break;
         }
@@ -144,7 +144,7 @@ export class Interval extends HTMLElement {
         }
       });
     } catch (error) {
-      console.error(error);
+      console.error('interval page error ', error);
     }
 
 

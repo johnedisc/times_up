@@ -9,12 +9,11 @@ export const UserDataAPI = {
         method: 'POST',
         body: JSON.stringify(_timesUpApp.store.user)
       });
-      console.log(response);
 
       let apiResponse = await response.json();
+
       _timesUpApp.store.user.programs = apiResponse;
       console.log(_timesUpApp.store);
-      console.log(apiResponse);
     } catch (error) {
       console.log(error);
     }

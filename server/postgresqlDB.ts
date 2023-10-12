@@ -72,18 +72,12 @@ export const createGroup = async (id: number, name: string): Promise<undefined |
   else return result.rows[0];
 }
 
-export const grabPrograms = async (id: number): Promise<undefined | string | any> => {
-  const text = 'SELECT * FROM interval_programs WHERE user_id = $1';
+export const getTable = async (id: number, table: string, foreignKeyName: string): Promise<undefined | string | any> => {
+  const text = `SELECT * FROM ${table} WHERE ${foreignKeyName} = $1`;
   const values = [id];
   const result:QueryResultRow = await pool.query(text, values);
+  console.log(result.rows);
   if (result.rows.length === 0) return undefined;
   else return result.rows;
 }
 
-export const grabProgramIntervals = async (id: number): Promise<undefined | string | any> => {
-  const text = 'SELECT * FROM intervals WHERE interval_program_id = $1';
-  const values = [id];
-  const result:QueryResultRow = await pool.query(text, values);
-  if (result.rows.length === 0) return undefined;
-  else return result.rows[0];
-}

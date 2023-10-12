@@ -10,7 +10,13 @@ CREATE TABLE user_info (
 CREATE TABLE groups (
   id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   group_name VARCHAR(255) NOT NULL,
-  owner_id INT REFERENCES user_info(id) ON DELETE CASCADE
+  owner_id INT REFERENCES user_info(id)
+);
+
+CREATE TABLE group_members (
+  group_id INT REFERENCES groups(id),
+  user_id INT REFERENCES user_info(id),
+  CONSTRAINT group_members_pk PRIMARY KEY (group_id, user_id)
 );
 
 CREATE TABLE interval_programs (
@@ -32,3 +38,21 @@ CREATE TABLE intervals (
   interval_program_id INT REFERENCES interval_programs(id) ON DELETE CASCADE
 );
 
+
+
+
+
+SELECT 
+  groups.id AS group_id,
+  groups.name AS group_name,
+  interval_programs.id AS interval_id,
+  interval_programs.program_name AS program_name
+
+FROM
+  group_members
+
+INNER JOIN 
+  interval_programs
+
+ON 
+  group_members.group_id = interval_programs.group_id;
