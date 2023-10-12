@@ -44,15 +44,35 @@ CREATE TABLE intervals (
 
 SELECT 
   groups.id AS group_id,
-  groups.name AS group_name,
-  interval_programs.id AS interval_id,
+  groups.group_name AS group_name,
+  group_members.user_id AS user_id,
+  interval_programs.id AS program_id,
   interval_programs.program_name AS program_name
 
 FROM
-  group_members
+  groups
 
 INNER JOIN 
-  interval_programs
+  group_members
 
 ON 
-  group_members.group_id = interval_programs.group_id;
+  group_members.group_id = groups.id
+
+INNER JOIN
+  interval_programs
+
+ON
+  interval_programs.group_id = group_members.group_id;
+
+INSERT INTO group_members (
+  group_id,
+  user_id
+) VALUES 
+  (5, 31),
+  (5, 42),
+  (5, 43),
+  (1, 42),
+  (2, 43),
+  (4, 31),
+  (6, 31),
+  (6, 40);
