@@ -76,7 +76,6 @@ export const getTable = async (id: number, table: string, foreignKeyName: string
   const text = `SELECT * FROM ${table} WHERE ${foreignKeyName} = $1`;
   const values = [id];
   const result:QueryResultRow = await pool.query(text, values);
-  console.log(result.rows);
   if (result.rows.length === 0) return undefined;
   else return result.rows;
 }
@@ -112,7 +111,13 @@ export const getIntervals = async (id: number): Promise<undefined | string | any
   `;
   const values = [id];
   const result:QueryResultRow = await pool.query(text, values);
-  console.log(result.rows);
-  if (result.rows.length === 0) return undefined;
-  else return result.rows;
+
+  if (result.rows.length === 0) {
+    return undefined;
+  } else {
+    for (let i = 0; i < result.rows.length; i++) {
+      result.rows[i].intervals = await getTable(result.rows[i].program_id, 'intervals', 'interval_program_id');
+    }
+    return result.rows;
+  }
 }

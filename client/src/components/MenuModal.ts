@@ -17,13 +17,15 @@ export class MenuModal extends HTMLElement {
     programList.innerHTML = `<a href='/program-form'>new interval program</a>`;
     ul.appendChild(programList);
 
-    for (let i=0; i < _timesUpApp.store.user.programs.length; i++) {
-      const li: HTMLLIElement = document.createElement('li');
-      const programName = _timesUpApp.store.user.programs[i].program_name;
-      li.innerHTML = `<a href='/interval/${programName}'>
-      ${programName}
-      </a>`;
-      ul.appendChild(li);
+    if(_timesUpApp.store.user.programs) {
+      for (let i=0; i < _timesUpApp.store.user.programs.length; i++) {
+        const li: HTMLLIElement = document.createElement('li');
+        const programName = _timesUpApp.store.user.programs[i].program_name;
+        li.innerHTML = `<a href='/interval/${programName}'>
+        ${programName}
+        </a>`;
+        ul.appendChild(li);
+      }
     }
 
     addLinkListener(ul);

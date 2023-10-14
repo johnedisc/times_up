@@ -42,31 +42,23 @@ export function programs(request: IncomingMessage, response: ServerResponse): vo
       const programs = getIntervals(bodyJSON.id);
       programs
         .then((programNamesFromSQL) => {
-              console.log(programNamesFromSQL);
 
-//              if (programNamesFromSQL === undefined) {
-//                response.writeHead(401, {
-//                  'message': 'program not found',
-//                  'programs': 'false'
-//                });
-//                response.end();
-//                return 1;
-//              } else if (intervalNamesFromSQL === undefined) {
-//                response.writeHead(200, { 
-//                  'Content-Type': 'application/json',
-//                  'ok': 'true',
-//                  'message': 'programs exist but have no intervals',
-//                  'programs': 'true',
-//                  'intervals': 'false'
-//                });
-//              } else {
-//                response.writeHead(200, { 
-//                  'Content-Type': 'application/json',
-//                  'ok': 'true',
-//                  'message': 'program found'
-//                });
-//              }
-//              response.end(JSON.stringify(programNamesFromSQL));
+              if (programNamesFromSQL === undefined) {
+                response.writeHead(401, {
+                  'message': 'program not found',
+                  'ok': 'false',
+                  'programs': 'false'
+                });
+                response.end();
+                return 1;
+              } else {
+                response.writeHead(200, { 
+                  'Content-Type': 'application/json',
+                  'ok': 'true',
+                  'message': 'program found'
+                });
+                response.end(JSON.stringify(programNamesFromSQL));
+              }
         });
     } else {
       response.writeHead(401, 'token expired');

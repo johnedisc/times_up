@@ -47,7 +47,11 @@ SELECT
   groups.group_name AS group_name,
   group_members.user_id AS user_id,
   interval_programs.id AS program_id,
-  interval_programs.program_name AS program_name
+  interval_programs.program_name AS program_name,
+  intervals.interval_name,
+  intervals.time_seconds,
+  intervals.sequence_number,
+  intervals.id AS interval_id
 
 FROM
   groups

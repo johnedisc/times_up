@@ -10,9 +10,15 @@ export const UserDataAPI = {
         body: JSON.stringify(_timesUpApp.store.user)
       });
 
-      let apiResponse = await response.json();
-
-      _timesUpApp.store.user.programs = apiResponse;
+      let apiResponse;
+      let headers: any = {};
+      for (let item of response.headers) {
+        headers[item[0]] = item[1];
+      }
+      if (headers.ok) {
+        apiResponse = await response.json();
+        _timesUpApp.store.user.programs = apiResponse;
+      } 
       console.log(_timesUpApp.store);
     } catch (error) {
       console.log(error);
