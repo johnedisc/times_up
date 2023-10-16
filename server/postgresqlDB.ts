@@ -50,7 +50,11 @@ export const findUsers = async (email: string): Promise<undefined | string | any
   const values = [email];
   const result:QueryResultRow = await pool.query(text, values);
   if (result.rows.length === 0) return undefined;
-  else return result.rows[0];
+  else {
+    const temp = await getTable(result.rows[0].id, 'group_members', 'user_id');
+    console.log(temp);
+    return result.rows[0];
+  }
 }
 
 export const registerUser = async (email: string, name: string, password: string): Promise<any> => {
@@ -76,6 +80,7 @@ export const getTable = async (id: number, table: string, foreignKeyName: string
   const text = `SELECT * FROM ${table} WHERE ${foreignKeyName} = $1`;
   const values = [id];
   const result:QueryResultRow = await pool.query(text, values);
+  console.log(result.rows);
   if (result.rows.length === 0) return undefined;
   else return result.rows;
 }

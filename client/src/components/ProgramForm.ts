@@ -15,13 +15,26 @@ export class ProgramForm extends HTMLElement {
 
   }
 
+
+  importGroupNames():void {
+    console.log(_timesUpApp.store);
+  }
+
   formName():void {
+    const groups = this.importGroupNames();
     this.innerHTML = `
       <form>
         <label for='name'>
           program name
         </label>
         <input name='name' type='text' required />
+
+        <label for='group-select'>
+          group name
+        </label>
+        <select name='groups' id='group-select'>
+        </select>
+
         <button type='submit'>go</button>
       </form>
     `;
@@ -40,8 +53,8 @@ export class ProgramForm extends HTMLElement {
 
     form.addEventListener('submit', (event) => {
       event.preventDefault();
-//      console.log(`${this.#newProgram.name} submitted`);
-      this.#newProgram.name = '';
+      console.log(`${this.#newProgram.name} submitted`);
+//      this.#newProgram.name = '';
 
     });
 
