@@ -51,8 +51,9 @@ export const findUsers = async (email: string): Promise<undefined | string | any
   const result:QueryResultRow = await pool.query(text, values);
   if (result.rows.length === 0) return undefined;
   else {
-    const temp = await getTable(result.rows[0].id, 'group_members', 'user_id');
-    console.log(temp);
+//    const groups = await getTable(result.rows[0].id, 'group_members', 'user_id');
+    const groups = await getGroups(result.rows[0].id);
+    console.log(groups);
     return result.rows[0];
   }
 }
@@ -69,20 +70,62 @@ export const registerUser = async (email: string, name: string, password: string
 }
 
 export const createGroup = async (id: number, name: string): Promise<undefined | string | any> => {
-  const text = 'INSERT INTO groups(group_name, owner_id) VALUES ($1,$2)';
+  const text = 'INSERT INTO groups(group_name, owner_id) VALUES ($1,$2) RETURNING groups.id';
   const values = [name, id];
   const result:QueryResultRow = await pool.query(text, values);
+  console.log('createGroup', result.rows[0].id);
   if (result.rows.length === 0) return undefined;
-  else return result.rows[0];
+  else {
+    const group_membersText = 'INSERT INTO group_members(group_id, user_id) VALUES ($1,$2)';
+    const group_membersValues = [result.rows[0].id, id];
+    const group_membersResults:QueryResultRow = await pool.query(group_membersText, group_membersValues);
+    return result.rows[0];
+  }
 }
 
 export const getTable = async (id: number, table: string, foreignKeyName: string): Promise<undefined | string | any> => {
+  console.log('getTable ', id, table, foreignKeyName);
   const text = `SELECT * FROM ${table} WHERE ${foreignKeyName} = $1`;
   const values = [id];
   const result:QueryResultRow = await pool.query(text, values);
-  console.log(result.rows);
   if (result.rows.length === 0) return undefined;
   else return result.rows;
+}
+
+export const getGroups = async (id: number): Promise<undefined | string | any> => {
+  const text = 
+  `
+    SELECT 
+    groups.id AS group_id,
+    groups.group_name AS group_name,
+    group_members.user_id AS user_id,
+
+    FROM
+    groups
+
+    INNER JOIN 
+    group_members
+
+    ON 
+    group_members.group_id = groups.id
+
+    WHERE
+    interval_programs.user_id = $1 AND group_members.user_id = $1;
+
+  `;
+  const values = [id];
+  const result:QueryResultRow = await pool.query(text, values);
+
+  console.log('getIntervals ',result);
+  if (result.rows.length === 0) {
+    return undefined;
+  } else {
+//    console.log('getIntervals ',new Date());
+//    for (let i = 0; i < result.rows.length; i++) {
+//      result.rows[i].intervals = await getTable(result.rows[i].program_id, 'intervals', 'interval_program_id');
+//    }
+    return result.rows;
+  }
 }
 
 export const getIntervals = async (id: number): Promise<undefined | string | any> => {
@@ -117,9 +160,11 @@ export const getIntervals = async (id: number): Promise<undefined | string | any
   const values = [id];
   const result:QueryResultRow = await pool.query(text, values);
 
+  console.log('getIntervals ',result);
   if (result.rows.length === 0) {
     return undefined;
   } else {
+    console.log('getIntervals ',new Date());
     for (let i = 0; i < result.rows.length; i++) {
       result.rows[i].intervals = await getTable(result.rows[i].program_id, 'intervals', 'interval_program_id');
     }

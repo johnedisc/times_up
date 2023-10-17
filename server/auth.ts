@@ -63,6 +63,8 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
                 'message': 'successful login',
               });
 
+
+
               const userDataFromDB = { 
                 name: returnedValue.name, 
                 email: returnedValue.email,
@@ -136,6 +138,9 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
           const dbResponse = registerUser(userLogInData.userName, userLogInData.name, userLogInData.password);
           dbResponse.then((returnedValue) => {
             const dbResponse2 = createGroup(returnedValue.id, userLogInData.name);
+            dbResponse2.then((value) => {
+              console.log(value);
+            })
             response.writeHead(201, { 
               'Content-Type': 'text/plain',
               'ok': 'true',

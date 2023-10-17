@@ -17,6 +17,7 @@ export class ProgramForm extends HTMLElement {
 
 
   importGroupNames():void {
+    console.log('import groups');
     console.log(_timesUpApp.store);
   }
 
