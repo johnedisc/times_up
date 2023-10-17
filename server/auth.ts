@@ -33,7 +33,9 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
 
 
     // parse out the body from string to JS object
-    bodyString = Buffer.concat(body).toString(); bodyJSON = JSON.parse(bodyString);
+    bodyString = Buffer.concat(body).toString(); 
+    bodyJSON = JSON.parse(bodyString);
+
 
     if (url === '/auth/login') {
 
@@ -41,6 +43,8 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
       const searchResults = findUsers(bodyJSON.email);
       searchResults
         .then((returnedValue) => {
+
+          console.log(returnedValue);
 
           // no exist 
           if (returnedValue === undefined) {
@@ -63,12 +67,11 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
                 'message': 'successful login',
               });
 
-
-
               const userDataFromDB = { 
                 name: returnedValue.name, 
                 email: returnedValue.email,
                 id: returnedValue.id,
+                groups: returnedValue.groups,
                 token: ''
               };
               const token = jwt.sign(

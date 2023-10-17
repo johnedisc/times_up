@@ -36,7 +36,7 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: an
 }
 
 const parseRequest = (request: IncomingMessage, response: ServerResponse): void => {
-  console.log(request.url);
+  if (request.url?.includes('auth')) console.log(request.url);
 
   serverHit.emit('hit', request);
 

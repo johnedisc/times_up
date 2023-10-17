@@ -54,6 +54,7 @@ export const findUsers = async (email: string): Promise<undefined | string | any
 //    const groups = await getTable(result.rows[0].id, 'group_members', 'user_id');
     const groups = await getGroups(result.rows[0].id);
     console.log(groups);
+    result.rows[0].groups = groups;
     return result.rows[0];
   }
 }
@@ -98,7 +99,7 @@ export const getGroups = async (id: number): Promise<undefined | string | any> =
     SELECT 
     groups.id AS group_id,
     groups.group_name AS group_name,
-    group_members.user_id AS user_id,
+    group_members.user_id AS user_id
 
     FROM
     groups
@@ -110,15 +111,14 @@ export const getGroups = async (id: number): Promise<undefined | string | any> =
     group_members.group_id = groups.id
 
     WHERE
-    interval_programs.user_id = $1 AND group_members.user_id = $1;
+    group_members.user_id = $1;
 
   `;
   const values = [id];
   const result:QueryResultRow = await pool.query(text, values);
 
-  console.log('getIntervals ',result);
   if (result.rows.length === 0) {
-    return undefined;
+    return 1;
   } else {
 //    console.log('getIntervals ',new Date());
 //    for (let i = 0; i < result.rows.length; i++) {
@@ -160,7 +160,6 @@ export const getIntervals = async (id: number): Promise<undefined | string | any
   const values = [id];
   const result:QueryResultRow = await pool.query(text, values);
 
-  console.log('getIntervals ',result);
   if (result.rows.length === 0) {
     return undefined;
   } else {
@@ -168,6 +167,7 @@ export const getIntervals = async (id: number): Promise<undefined | string | any
     for (let i = 0; i < result.rows.length; i++) {
       result.rows[i].intervals = await getTable(result.rows[i].program_id, 'intervals', 'interval_program_id');
     }
+    console.log('getIntervals ',result.rows);
     return result.rows;
   }
 }
