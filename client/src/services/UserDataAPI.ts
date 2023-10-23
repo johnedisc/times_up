@@ -41,9 +41,10 @@ export const UserDataAPI = {
       }
       if (headers.ok) {
         apiResponse = await response.json();
-        _timesUpApp.store.user.programs = apiResponse;
+        _timesUpApp.store.user.programs.push(apiResponse);
+        return apiResponse;
       } 
-      console.log(_timesUpApp.store);
+      return undefined;
     } catch (error) {
       console.log(error);
     }

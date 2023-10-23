@@ -29,10 +29,15 @@ export class ProgramForm extends HTMLElement {
     return html;
   }
 
-  addIntervalElements():void {
+  addIntervalElements(programId: number):void {
     _timesUpApp.store.dataId++;
     const intervalForm = document.createElement('interval-form');
     intervalForm.dataset.id = _timesUpApp.store.dataId;
+    if (programId) {
+      intervalForm.dataset.interval_program_id = programId.toString();
+    }
+    console.log(intervalForm);
+//    intervalForm.dataset.interval_program_id = _timesUpApp.store.dataId;
     document.querySelector('button')?.before(intervalForm);
   }
 
@@ -64,7 +69,7 @@ export class ProgramForm extends HTMLElement {
     if (programForm) this.setFormBindings(programForm);
   }
 
-  intervals():void {
+  intervals(programId: number):void {
 //    clearSelf(this);
     this.innerHTML = `
       <h1 class='h4'>${this.#newProgram.name}</h1>
@@ -75,10 +80,10 @@ export class ProgramForm extends HTMLElement {
       <p id='add-interval'>add another interval</p>
     `;
 
-    this.addIntervalElements();
+    this.addIntervalElements(programId);
     document.getElementById('add-interval')?.addEventListener('click', () => {
 //      if (programForm) this.setIntervalBindings(programForm);
-      this.addIntervalElements();
+      this.addIntervalElements(programId);
     });
 
   }
@@ -87,9 +92,6 @@ export class ProgramForm extends HTMLElement {
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (document.getElementById('program-name')) {
-        this.intervals();
-      }
       if (this.#newProgram.name && this.#newProgram.groups && typeof this.#newProgram.groups === 'string') {
         const programName = {
           'program_name': this.#newProgram.name,
@@ -98,7 +100,12 @@ export class ProgramForm extends HTMLElement {
           'token': _timesUpApp.store.user.token
         }
 
-        await UserDataAPI.post('/programName', programName);
+        const programObject = await UserDataAPI.post('/programName', programName);
+
+        if (document.getElementById('program-name')) {
+          this.intervals(programObject.id);
+        }
+
       }
 
     });

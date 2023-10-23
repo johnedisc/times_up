@@ -1,4 +1,5 @@
 import { _timesUpApp } from "../main.js";
+import { UserDataAPI } from "../services/UserDataAPI.js";
 
 export class IntervalForm extends HTMLElement {
 
@@ -10,8 +11,8 @@ export class IntervalForm extends HTMLElement {
 
   constructor() {
     super();
-      console.log('constructor ', _timesUpApp.store.dataId);
-      this.#newListItem.id = parseInt(_timesUpApp.store.dataId);
+    console.log('constructor ', _timesUpApp.store.dataId);
+    this.#newListItem.id = parseInt(_timesUpApp.store.dataId);
   }
 
   intervals():void {
@@ -43,9 +44,20 @@ export class IntervalForm extends HTMLElement {
 
   setFormBindings(form: HTMLFormElement) {
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       console.log(`this is interval ${this.#newListItem.id}`);
+
+      if (this.dataset.interval_program_id) {
+        const intervalName = {
+          'interval_name': this.#newListItem.name,
+          'sequence_number': this.#newListItem.id,
+          'interval_program_id': parseInt(this.dataset.interval_program_id),
+          'time_seconds': this.#newListItem.total
+        }
+
+        await UserDataAPI.post('/intervalName', intervalName);
+      }
 
     });
 

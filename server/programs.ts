@@ -65,6 +65,7 @@ export function programs(request: IncomingMessage, response: ServerResponse): vo
       programs
         .then((programNamesFromSQL) => {
 
+          console.log(programNamesFromSQL);
               if (programNamesFromSQL === undefined) {
                 response.writeHead(401, {
                   'message': 'trouble with the create program function',
