@@ -100,7 +100,7 @@ export class Interval extends HTMLElement {
       }
       for (let i = 0; i < _timesUpApp.store.user.programs.length; i++) {
         if (_timesUpApp.store.user.programs[i].program_name === this.dataset.programName) {
-          this.intervalProgram = _timesUpApp.store.user.programs[i];
+          this.intervalProgram = _timesUpApp.store.user.programs[i].intervals;
           console.log(this.intervalProgram);
           break;
         }

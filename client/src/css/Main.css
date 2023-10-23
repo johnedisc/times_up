@@ -2,7 +2,8 @@
 
 .start-screen,
 .error-page,
-.log-in {
+.log-in,
+form#intervals {
   width: 100%;
   font-weight: 400;
   justify-content: center;
@@ -20,7 +21,7 @@
   left: 0%;
 }
 
-.menu li {
+.menu li, interval-form {
   border: 1px solid var(--primary-font-color);
   border-radius: 2rem;
   width: 85%;
@@ -30,6 +31,32 @@
 
 .menu ul:nth-child {
   background-color: var(--bg-2);
+}
+
+interval-form > input {
+  background-color: inherit;
+  width: 80%;
+  box-shadow: none;
+  border-width: 0 0 1px 0;
+  border-color: var(--primary-font-color);
+  border-style: solid;
+  text-align: center;
+}
+
+interval-form {
+  margin: auto;
+  padding: .75rem 0;
+}
+
+interval-form > * {
+  padding: .25rem .1rem;
+}
+
+program-form {
+  margin: auto;
+  padding: .75rem 0;
+  height: 100%;
+  gap: 1rem;
 }
 
 .login-header {

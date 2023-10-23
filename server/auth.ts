@@ -14,7 +14,7 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
 
   // parse out the request info
   const { headers, method, url } = request;
-  console.log(url, method);
+  console.log('auth: ', url, method);
 
   request
   .on('error', err => {
@@ -43,8 +43,6 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
       const searchResults = findUsers(bodyJSON.email);
       searchResults
         .then((returnedValue) => {
-
-          console.log(returnedValue);
 
           // no exist 
           if (returnedValue === undefined) {
@@ -80,6 +78,7 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
                 { expiresIn: '1hr' }
               );
               userDataFromDB.token = token;
+              console.log(token);
 
               response.end(JSON.stringify(userDataFromDB));
               return 0;
@@ -142,7 +141,6 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
           dbResponse.then((returnedValue) => {
             const dbResponse2 = createGroup(returnedValue.id, userLogInData.name);
             dbResponse2.then((value) => {
-              console.log(value);
             })
             response.writeHead(201, { 
               'Content-Type': 'text/plain',

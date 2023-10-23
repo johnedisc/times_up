@@ -17,6 +17,7 @@ export interface IStore {
   container: HTMLElement | null,
   currentProgram: ITimerList | null,
   currentIndex: number | null,
+  dataId: number | null,
   usageData: any | null,
   backgroundColors: string[] | null
 }

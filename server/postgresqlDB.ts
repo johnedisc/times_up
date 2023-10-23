@@ -53,7 +53,6 @@ export const findUsers = async (email: string): Promise<undefined | string | any
   else {
 //    const groups = await getTable(result.rows[0].id, 'group_members', 'user_id');
     const groups = await getGroups(result.rows[0].id);
-    console.log(groups);
     result.rows[0].groups = groups;
     return result.rows[0];
   }
@@ -74,7 +73,6 @@ export const createGroup = async (id: number, name: string): Promise<undefined |
   const text = 'INSERT INTO groups(group_name, owner_id) VALUES ($1,$2) RETURNING groups.id';
   const values = [name, id];
   const result:QueryResultRow = await pool.query(text, values);
-  console.log('createGroup', result.rows[0].id);
   if (result.rows.length === 0) return undefined;
   else {
     const group_membersText = 'INSERT INTO group_members(group_id, user_id) VALUES ($1,$2)';
@@ -84,8 +82,15 @@ export const createGroup = async (id: number, name: string): Promise<undefined |
   }
 }
 
+export const createProgram = async (userId: number, groupID: number, programName: string): Promise<undefined | string | any> => {
+  const text = 'INSERT INTO interval_programs(user_id, group_id, program_name) VALUES ($1,$2,$3) RETURNING *';
+  const values = [userId, groupID, programName];
+  const result:QueryResultRow = await pool.query(text, values);
+  if (result.rows.length === 0) return undefined;
+  return result.rows[0];
+}
+
 export const getTable = async (id: number, table: string, foreignKeyName: string): Promise<undefined | string | any> => {
-  console.log('getTable ', id, table, foreignKeyName);
   const text = `SELECT * FROM ${table} WHERE ${foreignKeyName} = $1`;
   const values = [id];
   const result:QueryResultRow = await pool.query(text, values);
@@ -161,13 +166,12 @@ export const getIntervals = async (id: number): Promise<undefined | string | any
   const result:QueryResultRow = await pool.query(text, values);
 
   if (result.rows.length === 0) {
+    console.log(result);
     return undefined;
   } else {
-    console.log('getIntervals ',new Date());
     for (let i = 0; i < result.rows.length; i++) {
       result.rows[i].intervals = await getTable(result.rows[i].program_id, 'intervals', 'interval_program_id');
     }
-    console.log('getIntervals ',result.rows);
     return result.rows;
   }
 }

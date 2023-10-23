@@ -6,6 +6,7 @@ const Store: IStore = {
   container: null,
   currentProgram: null,
   currentIndex: null,
+  dataId: null,
   usageData: null,
   backgroundColors: null
 }

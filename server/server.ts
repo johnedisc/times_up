@@ -36,14 +36,14 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: an
 }
 
 const parseRequest = (request: IncomingMessage, response: ServerResponse): void => {
-  if (request.url?.includes('auth')) console.log(request.url);
+  if (request.url?.includes('auth')) console.log('parse req: ', request.url);
 
   serverHit.emit('hit', request);
 
   if (request.url?.includes('auth')) {
     handleAPI(request, response);
     return;
-  } else if (request.url?.includes('programs')) {
+  } else if (request.url?.includes('program')) {
     programs(request, response);
     return;
   } else if (request.url) {
