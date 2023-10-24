@@ -1,5 +1,5 @@
 import { _timesUpApp } from "../main.js";
-import { API } from "../services/UserDataAPI.js";
+import { UserDataAPI, API } from "../services/UserDataAPI.js";
 import { clearElementChildren } from "../utilities/utilities.js";
 
 export class LogIn extends HTMLElement {
@@ -100,7 +100,7 @@ export class LogIn extends HTMLElement {
           this.bad = false;
         } else {
 
-//          await LoadData();
+          await UserDataAPI.grabPrograms();
           _timesUpApp.router.go(`/start`);
         }
 

@@ -1,7 +1,10 @@
 
 export interface ITimerList {
-  name: string,
-  total: number
+  id: number,
+  sequence_number: number,
+  interval_program_id: number,
+  interval_name: string,
+  time_seconds: number
 }
 
 export interface IUser {

@@ -82,6 +82,16 @@ export const createGroup = async (id: number, name: string): Promise<undefined |
   }
 }
 
+export const createInterval = async (intervalProgramId: number, intervalName: string, sequenceNumber: number, timeSeconds: number): Promise<undefined | string | any> => {
+  const text = 'INSERT INTO intervals(interval_program_id, interval_name, sequence_number, time_seconds) VALUES ($1,$2,$3,$4) RETURNING *';
+  const values = [intervalProgramId, intervalName, sequenceNumber, timeSeconds];
+  const result:QueryResultRow = await pool.query(text, values);
+  if (result.rows.length === 0) return undefined;
+  else {
+    return result.rows[0];
+  }
+}
+
 export const createProgram = async (userId: number, groupID: number, programName: string): Promise<undefined | string | any> => {
   const text = 'INSERT INTO interval_programs(user_id, group_id, program_name) VALUES ($1,$2,$3) RETURNING *';
   const values = [userId, groupID, programName];

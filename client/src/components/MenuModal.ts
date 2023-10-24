@@ -39,7 +39,6 @@ export class MenuModal extends HTMLElement {
   async connectedCallback() {
     if (_timesUpApp.store.user) {
       console.log(_timesUpApp.store.user);
-      await UserDataAPI.grabPrograms();
       this.appendChild(this.renderMenu());
     } else {
       _timesUpApp.router.go('/error');

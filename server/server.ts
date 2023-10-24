@@ -43,7 +43,7 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
   if (request.url?.includes('auth')) {
     handleAPI(request, response);
     return;
-  } else if (request.url?.includes('program')) {
+  } else if (request.url?.includes('program') || request.url?.includes('intervalName')) {
     programs(request, response);
     return;
   } else if (request.url) {

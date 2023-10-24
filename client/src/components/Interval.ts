@@ -56,7 +56,7 @@ export class Interval extends HTMLElement {
     // print the time
     if (this.intervalProgram) {
       console.log(this.intervalProgram[index]);
-      let timeMS = convertSeconds2Time(this.intervalProgram[index].total);
+      let timeMS = convertSeconds2Time(this.intervalProgram[index].time_seconds);
 
       // check length and resize.
       // TODO. limit timer length in creatation. 
@@ -66,7 +66,7 @@ export class Interval extends HTMLElement {
             ? this.timerHeader.style.fontSize = 'calc(var(--vh) * .23)'
               : this.timerHeader.style.removeProperty('font-size');
       this.timerHeader.innerHTML = timeMS;
-      this.categoryHeader.innerHTML = this.intervalProgram[index].name;
+      this.categoryHeader.innerHTML = this.intervalProgram[index].interval_name;
     }
   }
 
@@ -84,9 +84,10 @@ export class Interval extends HTMLElement {
     this.timerHeader.style.fontSize = '4rem';
     this.instruction.innerHTML = '';
     _timesUpApp.store.currentIndex = 0;
-    menuButton?.querySelector('a')?.addEventListener('click', () => {
-      clearSelf(menuButton);
-    });
+//    menuButton?.querySelector('a')?.addEventListener('click', () => {
+//      event?.preventDefault();
+////      clearSelf(menuButton);
+//    });
   }
 
 

@@ -53,11 +53,15 @@ export class IntervalForm extends HTMLElement {
           'interval_name': this.#newListItem.name,
           'sequence_number': this.#newListItem.id,
           'interval_program_id': parseInt(this.dataset.interval_program_id),
-          'time_seconds': this.#newListItem.total
+          'time_seconds': this.#newListItem.total,
+          'token': _timesUpApp.store.user.token
         }
 
         await UserDataAPI.post('/intervalName', intervalName);
       }
+
+      _timesUpApp.dataId = 0;
+      _timesUpApp.router.go('/menu');
 
     });
 
