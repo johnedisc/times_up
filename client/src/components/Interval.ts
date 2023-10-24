@@ -78,16 +78,15 @@ export class Interval extends HTMLElement {
     const menuButton = document.createElement('p');
     menuButton.setAttribute('id', 'menu-button');
     menuButton.innerHTML = `<a href='/menu'>menu</a>`;    
-    addLinkListener(this.divContainer);
     this.divContainer.appendChild(menuButton);
+    addLinkListener(this.divContainer);
     this.timerHeader.innerHTML = `all done`;
     this.timerHeader.style.fontSize = '4rem';
     this.instruction.innerHTML = '';
     _timesUpApp.store.currentIndex = 0;
-//    menuButton?.querySelector('a')?.addEventListener('click', () => {
-//      event?.preventDefault();
-////      clearSelf(menuButton);
-//    });
+    menuButton?.querySelector('a')?.addEventListener('click', () => {
+      clearSelf(this);
+    });
   }
 
 
