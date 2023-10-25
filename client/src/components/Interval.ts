@@ -55,7 +55,7 @@ export class Interval extends HTMLElement {
 
     // print the time
     if (this.intervalProgram) {
-      console.log(this.intervalProgram[index]);
+//      console.log(this.intervalProgram[index]);
       let timeMS = convertSeconds2Time(this.intervalProgram[index].time_seconds);
 
       // check length and resize.
@@ -101,7 +101,7 @@ export class Interval extends HTMLElement {
       for (let i = 0; i < _timesUpApp.store.user.programs.length; i++) {
         if (_timesUpApp.store.user.programs[i].program_name === this.dataset.programName) {
           this.intervalProgram = _timesUpApp.store.user.programs[i].intervals;
-          console.log(this.intervalProgram);
+//          console.log(this.intervalProgram);
           break;
         }
       }

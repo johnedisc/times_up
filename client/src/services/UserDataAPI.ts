@@ -5,7 +5,7 @@ export const UserDataAPI = {
   url: "/programs",
   grabPrograms: async () => {
     try {
-      console.log(_timesUpApp.store.user);
+//      console.log(_timesUpApp.store.user);
       const response: Response = await fetch(UserDataAPI.url, {
         method: 'POST',
         body: JSON.stringify(_timesUpApp.store.user)
@@ -15,20 +15,20 @@ export const UserDataAPI = {
       let headers: any = {};
       for (let item of response.headers) {
         headers[item[0]] = item[1];
-        console.log(item);
+//        console.log(item);
       }
       if (headers.ok) {
         apiResponse = await response.json();
         _timesUpApp.store.user.programs = apiResponse;
       } 
-      console.log(_timesUpApp.store);
+//      console.log(_timesUpApp.store);
     } catch (error) {
       console.log(error);
     }
   },
   post: async (pathName: string, data: any) => {
     try {
-      console.log(pathName, data);
+//      console.log(pathName, data);
       const response: Response = await fetch(pathName, {
         method: 'POST',
         body: JSON.stringify(data)
@@ -62,6 +62,7 @@ export const API = {
 
       let apiResponse;
       if (response.ok) {
+        console.log('response ok');
         apiResponse = await response.json();
         _timesUpApp.store.user = apiResponse;
         return response.ok;

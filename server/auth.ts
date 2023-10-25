@@ -43,6 +43,8 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
       const searchResults = findUsers(bodyJSON.email);
       searchResults
         .then((returnedValue) => {
+          console.log('auth login: ', bodyJSON);
+          console.log('auth login: ', returnedValue);
 
           // no exist 
           if (returnedValue === undefined) {
@@ -78,7 +80,6 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
                 { expiresIn: '1hr' }
               );
               userDataFromDB.token = token;
-              console.log(token);
 
               response.end(JSON.stringify(userDataFromDB));
               return 0;
@@ -95,6 +96,7 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
           });
         })
         .catch((error) => {
+          console.log(error);
           response.writeHead(501, { 
             'Content-Type': 'text/plain', 
             'ok': 'false',

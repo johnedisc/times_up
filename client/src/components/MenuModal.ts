@@ -15,6 +15,7 @@ export class MenuModal extends HTMLElement {
     const programList: HTMLLIElement = document.createElement('li');
 
     programList.innerHTML = `<a href='/program-form'>new interval program</a>`;
+    programList.style.backgroundColor = 'var(--link-font-color';
     ul.appendChild(programList);
 
     if(_timesUpApp.store.user.programs) {
@@ -38,7 +39,6 @@ export class MenuModal extends HTMLElement {
 
   async connectedCallback() {
     if (_timesUpApp.store.user) {
-      console.log(_timesUpApp.store.user);
       this.appendChild(this.renderMenu());
     } else {
       _timesUpApp.router.go('/error');

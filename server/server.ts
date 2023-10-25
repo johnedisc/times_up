@@ -69,6 +69,9 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
       case '.txt':
         contentType = 'text/plain';
       break;
+      case '.ico':
+        contentType = 'image/x-icon';
+      break;
       default:
         contentType = 'text/html';
     }
@@ -80,7 +83,11 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
             ? path.join(__dirname, '..', '..', 'client', 'index.html')
               : contentType === 'text/css'
                 ? path.join(__dirname, '..', '..', 'client', 'src', 'css', path.basename(request.url))
-                  : path.join(__dirname, '..', '..', 'client', request.url);
+                  : contentType === 'image/x-icon'
+                    ? path.join(__dirname, '..', '..', 'client', path.basename(request.url))
+                      : path.join(__dirname, '..', '..', 'client', request.url);
+
+    console.log('server.ts ', filePath);
 
     // ensures spa won't try to reload to the current spot
     if (!extension && request.url?.slice(-1) !== '/') {

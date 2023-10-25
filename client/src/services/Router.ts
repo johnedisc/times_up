@@ -46,6 +46,7 @@ export const Router = {
         pageElement = document.createElement('start-page');
         break;
       case "/menu":
+        clearScreen();
         pageElement = document.createElement('menu-modal');
         break;
       case "/interval":

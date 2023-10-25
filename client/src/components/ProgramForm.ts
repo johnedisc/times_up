@@ -21,6 +21,7 @@ export class ProgramForm extends HTMLElement {
 
   importGroupNames():string {
     let html: string = '';
+    console.log(_timesUpApp.store.user);
     for (let i = 0; i < _timesUpApp.store.user.groups.length; i++) {
       const name: string = _timesUpApp.store.user.groups[i].group_name;
       const id: string = _timesUpApp.store.user.groups[i].group_id;

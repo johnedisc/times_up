@@ -37,7 +37,6 @@ export function programs(request: IncomingMessage, response: ServerResponse): vo
     bodyJSON = JSON.parse(bodyString);
 
     let decoded = jwt.verify(bodyJSON.token, process.env.JWT_PASSWORD as jwt.Secret);
-    console.log('this is line 40, programs ', decoded);
 
     if (decoded && url === '/programs') {
       const programs = getIntervals(bodyJSON.id);
@@ -66,7 +65,6 @@ export function programs(request: IncomingMessage, response: ServerResponse): vo
       programs
         .then((programNamesFromSQL) => {
 
-          console.log(programNamesFromSQL);
               if (programNamesFromSQL === undefined) {
                 response.writeHead(401, {
                   'message': 'trouble with the create program function',
@@ -89,7 +87,6 @@ export function programs(request: IncomingMessage, response: ServerResponse): vo
       programs
         .then((programNamesFromSQL) => {
 
-          console.log(programNamesFromSQL);
               if (programNamesFromSQL === undefined) {
                 response.writeHead(401, {
                   'message': 'trouble with the create program function',
