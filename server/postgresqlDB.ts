@@ -30,14 +30,14 @@ type Config = {
 }
 
 const pool = new Pool({
-  host: 'localhost',
-  port: 5432,
-  user: 'johnedisc',
-  password: '1(Egbdf78',
-  database: 'intervaltimer',
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
+  host: process.env.PG_HOST,
+  port: process.env.PG_PORT as number | undefined,
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  database: process.env.PG_DATABASE,
+  max: process.env.PG_MAX as number | undefined,
+  idleTimeoutMillis: process.env.PG_IDLETIMEOUTMILLIS as number | undefined,
+  connectionTimeoutMillis: process.env.PG_CONNECTIONTIMEOUTMILLIS as number | undefined,
 })
 
 //pool.on('error', (err, client) => {
