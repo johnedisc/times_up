@@ -10,7 +10,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 export const serverHit = new EventEmitter();
-const PORT: number | string = process.env.PORT || 3300;
+const PORT: number | string = process.env.PORT || 3500;
 
 //const certs = {
 //  key: fs.readFileSync('/etc/ssl/sslTime/privateKey.pem'),
@@ -18,8 +18,7 @@ const PORT: number | string = process.env.PORT || 3300;
 //};
 //const certs = {
 //  key: fs.readFileSync('/etc/ssl/sslTime/timesup.test.key'),
-//  cert: fs.readFileSync('/etc/ssl/sslTime/timesup.test.crt'),
-//  passphrase: 'Priknedis'
+//  cert: fs.readFileSync('/etc/ssl/sslTime/timesup.test.crt')
 //};
 
 const serveFile = async (filePath: string, contentType: string, httpResponse: any): Promise<void> => {
