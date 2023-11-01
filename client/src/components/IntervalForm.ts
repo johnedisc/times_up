@@ -31,7 +31,6 @@ export class IntervalForm extends HTMLElement {
     `;
 
     if (this.dataset.id && this.innerHTML) {
-      console.log('does dataId exist?');
       const formElement = document.querySelector(`form`);
       this.classList.add('flex-down');
       this.setFormBindings(formElement as HTMLFormElement);
@@ -46,7 +45,7 @@ export class IntervalForm extends HTMLElement {
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      console.log(`this is interval ${this.#newListItem.id}`);
+//      console.log(`this is interval ${this.#newListItem.id}`);
 
       if (this.dataset.interval_program_id) {
         const intervalName = {
@@ -81,11 +80,11 @@ export class IntervalForm extends HTMLElement {
     //saying when a change occurs
     for (let i = 0; i < form.elements.length; i++) {
       let el = form.elements[i] as HTMLInputElement;
-      console.log(el.name);
+//      console.log(el.name);
 
       //on change, set the private property to form value
       el.addEventListener('change', () => {
-        console.log(el, el.value);
+//        console.log(el, el.value);
         let tempVal = el.value;
         this.#newListItem[el.name] = tempVal;
       });

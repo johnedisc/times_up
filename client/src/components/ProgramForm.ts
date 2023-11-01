@@ -94,6 +94,7 @@ export class ProgramForm extends HTMLElement {
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (this.#newProgram.name && this.#newProgram.groups && typeof this.#newProgram.groups === 'string') {
+        console.log('groups exist');
         const programName = {
           'program_name': this.#newProgram.name,
           'group_id': parseInt(this.#newProgram.groups),
@@ -103,7 +104,10 @@ export class ProgramForm extends HTMLElement {
 
         const programObject = await UserDataAPI.post('/programName', programName);
 
+//        console.log('submit event listener ', programObject);
         if (document.getElementById('program-name')) {
+
+          console.log('2');
           this.intervals(programObject.id);
         }
 

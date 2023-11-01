@@ -1,4 +1,5 @@
 import { Pool, QueryResult, QueryResultRow } from 'pg';
+import 'dotenv/config';
 
 type Config = {
   // all valid client config options are also valid here

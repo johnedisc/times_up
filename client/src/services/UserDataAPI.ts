@@ -41,10 +41,13 @@ export const UserDataAPI = {
       }
       if (headers.ok) {
         apiResponse = await response.json();
+        console.log(_timesUpApp.store);
         _timesUpApp.store.user.programs.push(apiResponse);
+        console.log('after ', _timesUpApp.store);
         return apiResponse;
-      } 
-      return undefined;
+      } else {
+        return undefined;
+      }
     } catch (error) {
       console.log(error);
     }
@@ -65,6 +68,8 @@ export const API = {
         console.log('response ok');
         apiResponse = await response.json();
         _timesUpApp.store.user = apiResponse;
+        console.log(_timesUpApp.store);
+        _timesUpApp.store.user.programs = [];
         return response.ok;
       }
       
