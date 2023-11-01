@@ -30,7 +30,6 @@ export class StartPage extends HTMLElement {
   connectedCallback() {
     document.body.style.backgroundColor = 'var(--bg-start-screen)';
     this.appendChild(this.div);
-    console.log(_timesUpApp.store);
     this.startScreen(_timesUpApp.store.user.name);
   }
 }

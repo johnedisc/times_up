@@ -20,6 +20,7 @@ export class MenuModal extends HTMLElement {
 
     if(_timesUpApp.store.user.programs) {
       for (let i=0; i < _timesUpApp.store.user.programs.length; i++) {
+        console.log('programs: ', _timesUpApp.store.user.programs, 'current: ', _timesUpApp.store.user.programs[i]);
         const li: HTMLLIElement = document.createElement('li');
         const programName = _timesUpApp.store.user.programs[i].program_name;
         li.innerHTML = `<a href='/interval/${programName}'>

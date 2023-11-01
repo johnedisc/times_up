@@ -15,13 +15,12 @@ export const UserDataAPI = {
       let headers: any = {};
       for (let item of response.headers) {
         headers[item[0]] = item[1];
-//        console.log(item);
       }
-      if (headers.ok) {
+      if (headers.ok === 'true') {
         apiResponse = await response.json();
         _timesUpApp.store.user.programs = apiResponse;
       } 
-//      console.log(_timesUpApp.store);
+
     } catch (error) {
       console.log(error);
     }
@@ -39,11 +38,9 @@ export const UserDataAPI = {
       for (let item of response.headers) {
         headers[item[0]] = item[1];
       }
-      if (headers.ok) {
+      if (headers.ok && pathName === '/programName') {
         apiResponse = await response.json();
-        console.log(_timesUpApp.store);
         _timesUpApp.store.user.programs.push(apiResponse);
-        console.log('after ', _timesUpApp.store);
         return apiResponse;
       } else {
         return undefined;
@@ -65,17 +62,14 @@ export const API = {
 
       let apiResponse;
       if (response.ok) {
-        console.log('response ok');
         apiResponse = await response.json();
         _timesUpApp.store.user = apiResponse;
-        console.log(_timesUpApp.store);
         _timesUpApp.store.user.programs = [];
         return response.ok;
+      } else {
+        apiResponse = await response.text();
+        return response.ok;
       }
-      
-      apiResponse = await response.text();
-      return response.ok;
-
     } catch (error) {
       console.log('this is a fetch error\n', error);
       return undefined;

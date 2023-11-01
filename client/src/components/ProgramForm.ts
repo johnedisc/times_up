@@ -21,7 +21,6 @@ export class ProgramForm extends HTMLElement {
 
   importGroupNames():string {
     let html: string = '';
-    console.log(_timesUpApp.store.user);
     for (let i = 0; i < _timesUpApp.store.user.groups.length; i++) {
       const name: string = _timesUpApp.store.user.groups[i].group_name;
       const id: string = _timesUpApp.store.user.groups[i].group_id;
@@ -37,7 +36,6 @@ export class ProgramForm extends HTMLElement {
     if (programId) {
       intervalForm.dataset.interval_program_id = programId.toString();
     }
-    console.log(intervalForm);
 //    intervalForm.dataset.interval_program_id = _timesUpApp.store.dataId;
     document.querySelector('button')?.before(intervalForm);
   }
@@ -92,9 +90,9 @@ export class ProgramForm extends HTMLElement {
   setFormBindings(form: HTMLFormElement) {
 
     form.addEventListener('submit', async (event) => {
+      console.log('prog submit');
       event.preventDefault();
       if (this.#newProgram.name && this.#newProgram.groups && typeof this.#newProgram.groups === 'string') {
-        console.log('groups exist');
         const programName = {
           'program_name': this.#newProgram.name,
           'group_id': parseInt(this.#newProgram.groups),
@@ -107,7 +105,6 @@ export class ProgramForm extends HTMLElement {
 //        console.log('submit event listener ', programObject);
         if (document.getElementById('program-name')) {
 
-          console.log('2');
           this.intervals(programObject.id);
         }
 

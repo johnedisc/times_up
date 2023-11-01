@@ -11,7 +11,6 @@ export class IntervalForm extends HTMLElement {
 
   constructor() {
     super();
-    console.log('constructor ', _timesUpApp.store.dataId);
     this.#newListItem.id = parseInt(_timesUpApp.store.dataId);
   }
 
@@ -44,6 +43,7 @@ export class IntervalForm extends HTMLElement {
   setFormBindings(form: HTMLFormElement) {
 
     form.addEventListener('submit', async (event) => {
+      console.log('interval submitted');
       event.preventDefault();
 //      console.log(`this is interval ${this.#newListItem.id}`);
 
@@ -59,8 +59,10 @@ export class IntervalForm extends HTMLElement {
         await UserDataAPI.post('/intervalName', intervalName);
       }
 
-      _timesUpApp.dataId = 0;
-      _timesUpApp.router.go('/menu');
+      if (this.#newListItem.id === parseInt(_timesUpApp.store.dataId)) {
+        _timesUpApp.dataId = 0;
+        _timesUpApp.router.go('/menu');
+      }
 
     });
 
