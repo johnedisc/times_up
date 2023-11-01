@@ -90,7 +90,6 @@ export class ProgramForm extends HTMLElement {
   setFormBindings(form: HTMLFormElement) {
 
     form.addEventListener('submit', async (event) => {
-      console.log('prog submit');
       event.preventDefault();
       if (this.#newProgram.name && this.#newProgram.groups && typeof this.#newProgram.groups === 'string') {
         const programName = {

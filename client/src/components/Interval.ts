@@ -1,4 +1,5 @@
 import { _timesUpApp } from "../main.js";
+import { UserDataAPI } from "../services/UserDataAPI.js";
 import { ITimerList } from '../utilities/interfaces.js';
 import {addLinkListener, clearSelf, convertSeconds2Time, counter} from '../utilities/utilities.js';
 
@@ -90,7 +91,7 @@ export class Interval extends HTMLElement {
   }
 
 
-  connectedCallback() {
+  async connectedCallback() {
 
     this.appendChild(this.divContainer);
     this.classList.add('flex-down');
