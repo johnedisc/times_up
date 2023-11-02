@@ -59,10 +59,10 @@ export class ProgramForm extends HTMLElement {
         </label>
         <input name='name' id='name' type='text' required />
 
-        <label for='group-select'>
+        <label for='groups'>
           group name
         </label>
-        <select name='groups' id='groups' id='group-select'>
+        <select name='groups' id='groups'>
           <option value=''>select a group</option>
           ${groups}
         </select>
