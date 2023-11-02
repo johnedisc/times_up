@@ -36,6 +36,11 @@ menu-modal h1 {
 
 program-form > * {
   width: 75%;
+  line-height: 2rem;
+}
+
+program-form p {
+  text-align: justify;
 }
 
 interval-form > input {
