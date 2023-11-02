@@ -41,8 +41,21 @@ export class ProgramForm extends HTMLElement {
   }
 
   formName():void {
+    let header: string;
+    if (_timesUpApp.store.user.programs.length > 0) {
+      header = `<h1>name your new program.</h1>`;
+    } else {
+      header = `
+        <h5>name your program</h5>
+        <p>a program contains a set of tasks</p>
+        <p>for example: "clean the kitchen" is a program that with tasks like: "wash dishes", "sweep floor", "organize fridge"</p>
+        <p>if the program is for personal use, select your name under group name</p>
+        <p>if the program is to be shared with others, select the name of the group it is for</p>
+      `;
+    }
     const groups: string = this.importGroupNames();
     this.innerHTML = `
+      ${header}
       <form id='program-name'>
         <label for='name'>
           program name

@@ -13,7 +13,6 @@ form#intervals {
 .menu {
   width: 100%;
   padding: 0 10%;
-  font-weight: 600;
   top: 0%;
   left: 0%;
 }
@@ -28,6 +27,15 @@ form#intervals {
 
 .menu ul:nth-child {
   background-color: var(--bg-2);
+}
+
+menu-modal h1 {
+  font-size: var(--h5);
+  line-height: 2rem;
+}
+
+program-form > * {
+  width: 75%;
 }
 
 interval-form > input {
@@ -67,6 +75,10 @@ program-form {
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
+
+  program-form > * {
+    width: 90%;
+  }
 
   .log-in {
     max-width: 90%;
