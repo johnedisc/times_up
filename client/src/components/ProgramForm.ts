@@ -43,7 +43,7 @@ export class ProgramForm extends HTMLElement {
   formName():void {
     let header: string;
     if (_timesUpApp.store.user.programs.length > 0) {
-      header = `<h1>name your new program.</h1>`;
+      header = `<h5>name your new program.</h5>`;
     } else {
       header = `
         <h5>name your program</h5>
