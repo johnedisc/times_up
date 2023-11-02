@@ -6,6 +6,7 @@ export class Register extends HTMLElement {
   #user: Record<string | symbol, string> = {
     'register-email': '',
     'register-password': '',
+    'confirm-password': '',
     'register-name': ''
   }
 
@@ -37,7 +38,11 @@ export class Register extends HTMLElement {
         <label for='register-password'>
           password
         </label>
-        <input id='register-password' name='register-password' type='password' required autocomplete='new-password' />
+        <input id='register-password' name='register-password' type='password' required autocomplete='off' />
+        <label for='confirm-password'>
+          confirm password
+        </label>
+        <input id='confirm-password' name='confirm-password' type='password' required autocomplete='off' />
         <button type='submit'>go</button>
       </form>
       <p 
@@ -63,13 +68,20 @@ export class Register extends HTMLElement {
   }
 
 
-  badCredentialsModal():void {
+  badCredentialsModal(type: string):void {
+    let pText = '';
+    if (type === 'db-error') {
+      pText = 'user already exists';
+    } else if (type === 'bad-passwords') {
+      pText = 'passwords are inconsistent';
+//      this.#user['confirm-password'] = '';
+    }
     const modal = document.createElement('div');
     modal.classList.add('modal');
     const messageBox = document.createElement('div');
     messageBox.classList.add('message-box', 'flex-down');
     messageBox.innerHTML =  `
-        <p style='color: red'>user already exists</p>
+        <p style='color: red'>${pText}</p>
         <button id='modal-button' type='button'>try again</button>
     `;
     _timesUpApp.store.container.appendChild(modal);
@@ -87,28 +99,32 @@ export class Register extends HTMLElement {
       form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        const userInput = {
-          'email': this.#user['register-email'],
-          'password': this.#user['register-password'],
-          'name': this.#user['register-name']
-        }
+        if (this.#user['register-password'] === this.#user['confirm-password']) {
+          const userInput = {
+            'email': this.#user['register-email'],
+            'password': this.#user['register-password'],
+            'name': this.#user['register-name']
+          }
 
-        const credentialsFromDB = await API.register(userInput);
+          const credentialsFromDB = await API.register(userInput);
 
-        // todo, check login credentials
-        console.log(credentialsFromDB);
-        if (credentialsFromDB === false) {
-          this.badCredentialsModal();
-          this.bad = false;
+          // todo, check login credentials
+          console.log(credentialsFromDB);
+          if (credentialsFromDB === false) {
+            this.badCredentialsModal('db-error');
+            this.bad = false;
+          } else {
+            // todo, grab user data from DB
+
+            _timesUpApp.router.go(`/`);
+          }
+
+          for (let i = 0; i < form.elements.length; i++) {
+            (form.elements[i] as HTMLInputElement).value = '';
+          };
         } else {
-          // todo, grab user data from DB
-
-          _timesUpApp.router.go(`/`);
+          this.badCredentialsModal('bad-passwords');
         }
-
-        for (let i = 0; i < form.elements.length; i++) {
-          (form.elements[i] as HTMLInputElement).value = '';
-        };
 
       });
 
