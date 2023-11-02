@@ -39,7 +39,7 @@ program-form > * {
   line-height: 2rem;
 }
 
-program-form p {
+.body-text {
   text-align: justify;
 }
 
