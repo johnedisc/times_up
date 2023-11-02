@@ -16,6 +16,7 @@ export class LogIn extends HTMLElement {
   }
 
   connectedCallback() {
+    document.body.style.backgroundColor = 'var(--bg-main)';
     this.logIn();
   }
 

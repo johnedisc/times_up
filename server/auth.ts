@@ -111,6 +111,7 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
     // REGISTER USER
     if (url === '/auth/register' && method === 'POST') {
 
+      console.log('auth reg ', bodyJSON);
       // data validation
       if (!bodyJSON.email || !bodyJSON.password || !bodyJSON.name) {
 

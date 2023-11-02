@@ -2,6 +2,7 @@
 
 :root {
   --bg-start-screen: #727272;
+  --bg-main: rgb(249,249,251);
   --bg-count-down: #FF6160;
   --primary-font-color: #000000;
   --primary-font: 'Archivo Black', sans-serif;

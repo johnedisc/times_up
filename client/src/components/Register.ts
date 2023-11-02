@@ -109,7 +109,6 @@ export class Register extends HTMLElement {
           const credentialsFromDB = await API.register(userInput);
 
           // todo, check login credentials
-          console.log(credentialsFromDB);
           if (credentialsFromDB === false) {
             this.badCredentialsModal('db-error');
             this.bad = false;
