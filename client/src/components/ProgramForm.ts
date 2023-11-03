@@ -47,7 +47,7 @@ export class ProgramForm extends HTMLElement {
     } else {
       header = `
         <h5>name your program</h5>
-        <p class='body-text'>a program contains a set of tasks. for example: <span style='color: var(--bg-main)'>"clean the kitchen"</span> is a program that with tasks like: <span style='color: var(--bg-main)'>"wash dishes", "sweep floor", "organize fridge"</span>. if the program is for personal use, select your name under group name. if the program is to be shared with others, select the name of the group it is for</p>
+        <p class='body-text'>a program contains a set of tasks. for example: <span style='color: var(--bg-main)'>"clean the kitchen"</span> is a program with tasks like: <span style='color: var(--bg-main)'>"wash dishes", "sweep floor", "organize fridge"</span>. if the program is for personal use, select your name under group name. if the program is to be shared with others, select the name of the group it is for</p>
       `;
     }
     const groups: string = this.importGroupNames();
