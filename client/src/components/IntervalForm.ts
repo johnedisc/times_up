@@ -36,6 +36,23 @@ export class IntervalForm extends HTMLElement {
     }
   }
 
+  badCredentialsModal():void {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    const messageBox = document.createElement('div');
+    messageBox.classList.add('message-box', 'flex-down');
+    messageBox.innerHTML =  `
+        <p style='color: red'></p>
+        <button id='modal-button' type='button'>try again</button>
+    `;
+    _timesUpApp.store.container.appendChild(modal);
+    _timesUpApp.store.container.appendChild(messageBox);
+    document.getElementById('modal-button')?.addEventListener('click', () => {
+      _timesUpApp.store.container.removeChild(messageBox);
+      _timesUpApp.store.container.removeChild(modal);
+    });
+  }
+
   connectedCallback() {
     this.intervals();
   }
@@ -43,6 +60,7 @@ export class IntervalForm extends HTMLElement {
   setFormBindings(form: HTMLFormElement) {
 
     form.addEventListener('submit', async (event) => {
+      if (
       event.preventDefault();
 //      console.log(`this is interval ${this.#newListItem.id}`);
 

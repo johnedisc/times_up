@@ -4,7 +4,7 @@ import { addLinkListener } from "../utilities/utilities.js";
 
 export class MenuModal extends HTMLElement {
   constructor() {
-    super();
+    super(); 
   }
 
   renderMenu():HTMLElement {
@@ -12,17 +12,21 @@ export class MenuModal extends HTMLElement {
 //    const h5: HTMLDivElement = document.createElement('h5');
     const div: HTMLDivElement = document.createElement('div');
     const ul: HTMLUListElement = document.createElement('ul');
-    const programList: HTMLLIElement = document.createElement('li');
+    const createProgram: HTMLLIElement = document.createElement('li');
+    const editProgram: HTMLLIElement = document.createElement('li');
 
     if (_timesUpApp.store.user.programs.length > 0) {
       h1.innerHTML = 'this is your list of programs.';
+      editProgram.innerHTML = `<a href='/'>edit program</a>`;
+      editProgram.style.backgroundColor = 'var(--link-font-color)';
+      ul.appendChild(editProgram);
     } else {
       h1.innerHTML = 'no programs yet. create one below.';
     }
 
-    programList.innerHTML = `<a href='/program-form'>create program</a>`;
-    programList.style.backgroundColor = 'var(--link-font-color)';
-    ul.appendChild(programList);
+    createProgram.innerHTML = `<a href='/program-form'>create program</a>`;
+    createProgram.style.backgroundColor = 'var(--link-font-color)';
+    ul.appendChild(createProgram);
 
     if(_timesUpApp.store.user.programs) {
       for (let i=0; i < _timesUpApp.store.user.programs.length; i++) {
@@ -46,8 +50,9 @@ export class MenuModal extends HTMLElement {
 
   async connectedCallback() {
     if (_timesUpApp.store.user) {
-      this.appendChild(this.renderMenu());
+      document.body.style.backgroundColor = 'var(--bg-start-screen)';
       await UserDataAPI.grabPrograms();
+      this.appendChild(this.renderMenu());
     } else {
       _timesUpApp.router.go('/');
     }
