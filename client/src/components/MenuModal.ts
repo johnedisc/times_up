@@ -17,9 +17,9 @@ export class MenuModal extends HTMLElement {
 
     if (_timesUpApp.store.user.programs.length > 0) {
       h1.innerHTML = 'this is your list of programs.';
-      editProgram.innerHTML = `<a href='/'>edit program</a>`;
-      editProgram.style.backgroundColor = 'var(--link-font-color)';
-      ul.appendChild(editProgram);
+//      editProgram.innerHTML = `<a href='/'>edit program</a>`;
+//      editProgram.style.backgroundColor = 'var(--link-font-color)';
+//      ul.appendChild(editProgram);
     } else {
       h1.innerHTML = 'no programs yet. create one below.';
     }

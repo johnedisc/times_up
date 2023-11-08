@@ -102,7 +102,8 @@ export class LogIn extends HTMLElement {
         } else {
 
           await UserDataAPI.grabPrograms();
-          _timesUpApp.router.go(`/start`);
+          document.body.style.backgroundColor = 'var(--bg-start-screen)';
+          _timesUpApp.router.go(`/menu`);
         }
 
         for (let i = 0; i < form.elements.length; i++) {
