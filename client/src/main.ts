@@ -12,6 +12,7 @@ import { ProgramForm } from './components/ProgramForm.js';
 import { LogIn } from './components/LogIn.js';
 import { Register } from './components/Register.js';
 import { ErrorPage } from './components/ErrorPage.js';
+import { NavBar } from './components/NavBar.js';
 import { grabColors } from './utilities/utilities.js';
 customElements.define('interval-page', Interval);
 customElements.define('interval-form', IntervalForm);
@@ -22,6 +23,7 @@ customElements.define('menu-modal', MenuModal);
 customElements.define('start-page', StartPage);
 customElements.define('register-user', Register);
 customElements.define('log-in', LogIn);
+customElements.define('navbar', NavBar);
 
 //declare global {
 //  interface Window {
