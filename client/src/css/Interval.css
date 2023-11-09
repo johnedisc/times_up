@@ -19,6 +19,11 @@ interval-page {
   width: 100%;
   height: 100%;
   font-weight: 400;
+  border: solid blue 2px;
+}
+
+.inner-container h1 {
+  border: solid pink 2px;
 }
 
 #menu-button {
@@ -34,7 +39,7 @@ interval-page {
 @media screen and (min-width: 320px) and (max-width: 767px) {
 
   interval-page {
-    width: 90vh;
+    width: 85vh;
     height: 90vw;
   }
 
@@ -51,7 +56,9 @@ interval-page {
   */
 
   h1 {
+    /*
     font-size: calc(var(--vh) * .39);
+    */
     font-weight: 100;
     margin: 0;
     line-height: .9;

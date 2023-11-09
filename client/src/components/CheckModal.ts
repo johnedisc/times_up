@@ -1,6 +1,6 @@
 import { _timesUpApp } from "../main.js";
 
-export function checkModal(type: string):void {
+export function checkModal(type: string, url: string = '/'):void {
   let warningText = '';
   let buttonText = '';
 
@@ -21,12 +21,23 @@ export function checkModal(type: string):void {
   modal.classList.add('modal');
   const messageBox = document.createElement('div');
   messageBox.classList.add('message-box', 'flex-down');
-  messageBox.innerHTML =  `
-  <p style='color: red'>${warningText}</p>
-  <button id='modal-button' type='button'>${buttonText}</button>
-  `;
+
+  if (type === 'stop' || type === 'delete') {
+    messageBox.innerHTML =  `
+    <p style='color: red'>${warningText}</p>
+    <button id='modal-button' type='button'>resume</button>
+    <button id='end-button' type='button'>${buttonText}</button>
+    `;
+
+  } 
+
   _timesUpApp.store.container.appendChild(modal);
   _timesUpApp.store.container.appendChild(messageBox);
+
+  document.getElementById('end-button')?.addEventListener('click', () => {
+    _timesUpApp.router.go(`${url}`);
+  });
+
   document.getElementById('modal-button')?.addEventListener('click', () => {
     _timesUpApp.store.container.removeChild(messageBox);
     _timesUpApp.store.container.removeChild(modal);

@@ -8,16 +8,12 @@ export class NavigationBar extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
     <div id='nav-bar'>
-      <div id='back-btn'>
-        <a href='/'>
-          <div id='back-btn-inner'></div>
-        </a>
-      </div>
-      <div id='menu-btn'>
-        <a href='/menu'>
-          <div id='menu-btn-inner'></div>
-        </a>
-      </div>
+      <a href='/' id='back-btn'>
+            <div id='back-btn-inner'></div>
+      </a>
+      <a href='/menu' id='menu-btn'>
+            <div id='menu-btn-inner'></div>
+      </a>
     </div>
     `;
     addLinkListener(this);

@@ -90,14 +90,16 @@ navigation-bar {
   justify-content: space-around;
   align-items: center;
   opacity: .5;
-  z-index: 100;
 }
 
 #nav-bar > * {
   padding: 1rem 0;
+  height: 100%;
   flex: 1 1 auto;
   display: flex;
   justify-content: center;
+  border-bottom: pink solid 2px;
+  z-index: 100;
 }
 
 #back-btn-inner {

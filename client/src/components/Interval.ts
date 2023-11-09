@@ -20,6 +20,7 @@ export class Interval extends HTMLElement {
     this.categoryHeader = document.createElement('h4');
     this.categoryHeader.classList.add('h3');
     this.divContainer = document.createElement('div');
+    this.divContainer.style.zIndex = '1';
     this.divContainer.classList.add('flex-down', 'inner-container');
     this.instruction = document.createElement('p');
     this.instruction.innerHTML = 'tap to advance to the next interval';
