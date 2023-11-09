@@ -98,7 +98,6 @@ navigation-bar {
   flex: 1 1 auto;
   display: flex;
   justify-content: center;
-  border-bottom: pink solid 2px;
   z-index: 100;
 }
 
@@ -115,6 +114,16 @@ navigation-bar {
   height: 1.3rem;
   border: solid var(--bg-main) 2px;
   border-radius: 100%;
+}
+
+.button-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.button-group > * {
+  width: 4rem;
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {

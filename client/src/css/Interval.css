@@ -19,11 +19,9 @@ interval-page {
   width: 100%;
   height: 100%;
   font-weight: 400;
-  border: solid blue 2px;
 }
 
 .inner-container h1 {
-  border: solid pink 2px;
 }
 
 #menu-button {
