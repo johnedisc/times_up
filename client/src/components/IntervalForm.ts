@@ -60,7 +60,6 @@ export class IntervalForm extends HTMLElement {
   setFormBindings(form: HTMLFormElement) {
 
     form.addEventListener('submit', async (event) => {
-      if (
       event.preventDefault();
 //      console.log(`this is interval ${this.#newListItem.id}`);
 

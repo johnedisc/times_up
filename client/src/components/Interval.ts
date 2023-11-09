@@ -26,6 +26,7 @@ export class Interval extends HTMLElement {
     this.divContainer.appendChild(this.categoryHeader);
     this.divContainer.appendChild(this.timerHeader);
     this.divContainer.appendChild(this.instruction);
+    _timesUpApp.store.currentIndex = 0;
 
     //    no shadow required here
 //    this.root = this.attachShadow({ mode: 'open' });
@@ -46,13 +47,13 @@ export class Interval extends HTMLElement {
     //    console.log('this is the intervalProgram', this.intervalProgram);
 
     //    advance the backgroundColor
-    if (_timesUpApp.store.backgroundColors[this.backgroundColorIndex]) {
-      document.body.style.backgroundColor = _timesUpApp.store.backgroundColors[this.backgroundColorIndex];
-      this.backgroundColorIndex++;
-    } else {
-      this.backgroundColorIndex = 0;
-      document.body.style.backgroundColor = _timesUpApp.store.backgroundColors[this.backgroundColorIndex];
-    }
+//    if (_timesUpApp.store.backgroundColors[this.backgroundColorIndex]) {
+//      document.body.style.backgroundColor = _timesUpApp.store.backgroundColors[this.backgroundColorIndex];
+//      this.backgroundColorIndex++;
+//    } else {
+//      this.backgroundColorIndex = 0;
+//      document.body.style.backgroundColor = _timesUpApp.store.backgroundColors[this.backgroundColorIndex];
+//    }
 
     // print the time
     if (this.intervalProgram) {
@@ -84,50 +85,47 @@ export class Interval extends HTMLElement {
     this.timerHeader.innerHTML = `all done`;
     this.timerHeader.style.fontSize = '4rem';
     this.instruction.innerHTML = '';
-    _timesUpApp.store.currentIndex = 0;
     menuButton?.querySelector('a')?.addEventListener('click', () => {
       clearSelf(this);
     });
   }
-
 
   async connectedCallback() {
 
     this.appendChild(this.divContainer);
     this.classList.add('flex-down');
     try {
+
       if (!this.dataset.programName) {
         throw new Error('this program can\'t be accessed');
       }
+
+      // grab user selected program and assign to class
       for (let i = 0; i < _timesUpApp.store.user.programs.length; i++) {
         if (_timesUpApp.store.user.programs[i].program_name === this.dataset.programName) {
           this.intervalProgram = _timesUpApp.store.user.programs[i].intervals;
-//          console.log(this.intervalProgram);
           break;
         }
       }
-//      this.intervalProgram = _timesUpApp.store.user.timerList.filter((item: ITimerList) => {
-//        item.name === this.dataset.programName
-//      })[0].list;
+
       this.renderInterval(0);
 
       // add event listeners
       this.divContainer.addEventListener('click', () => {
         if (this.intervalProgram) {
+          this.timerHeader.style.color = 'var(--warning-text)';
+          this.timerHeader.innerHTML = 'GO';
+          this.timerHeader.style.color = 'var(--primary-font-color)';
           this.intervalID = counter(this.intervalProgram, this.timerHeader, _timesUpApp.store.currentIndex);
 
           this.divContainer.addEventListener('click', () => {
-            this.timerHeader.removeAttribute('id');
-            //          console.log(this.intervalProgram[_timesUpApp.store.currentIndex].name, this.timerHeader.dataset.runningTotal);
             clearInterval(this.intervalID);
             if (this.intervalProgram && _timesUpApp.store.currentIndex < this.intervalProgram.length - 1) {
               _timesUpApp.store.currentIndex++;
               this.intervalID = counter(this.intervalProgram, this.timerHeader, _timesUpApp.store.currentIndex);
             } else if (this.intervalProgram && _timesUpApp.store.currentIndex === this.intervalProgram.length - 1) {
               _timesUpApp.store.currentIndex++;
-            } else {
-              throw new Error('divContainer intervalProgram problems');
-            }
+            } 
           });
         }
       }, { once: true });
