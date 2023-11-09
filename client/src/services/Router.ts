@@ -47,10 +47,6 @@ export const Router = {
         clearScreen();
         pageElement = document.createElement('register-user');
         break;
-      case "/start":
-        clearScreen();
-        pageElement = document.createElement('start-page');
-        break;
       case "/menu":
         clearScreen();
         pageElement = document.createElement('menu-modal');
@@ -75,7 +71,13 @@ export const Router = {
         pageElement = document.createElement('error-page');
     }
 
+    if (purePath === '/' || purePath === '/register') {
     _timesUpApp.store.container.appendChild(pageElement);
+    } else {
+      const navBar = document.createElement('navigation-bar');
+      _timesUpApp.store.container.appendChild(navBar);
+      _timesUpApp.store.container.appendChild(pageElement);
+    }
 //    window.scrollX = 0;
 //    window.scrollY = 0;
   }

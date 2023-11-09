@@ -1,3 +1,4 @@
+import { checkModal } from "../components/CheckModal.js";
 import { _timesUpApp } from "../main.js";
 import { ITimerList } from "./interfaces.js";
 
@@ -138,7 +139,11 @@ export const addLinkListener = (parent: HTMLElement):void => {
 //        const url = (event.target as HTMLAnchorElement).href;
 //        const url = links[i].href;
 //        const trimmedUrl = url.slice(url.lastIndexOf('/'));
-        _timesUpApp.router.go(url);
+        if (document.querySelector('interval-page')) {
+          checkModal('stop');
+        } else {
+          _timesUpApp.router.go(url);
+        }
       });
     };
   }
