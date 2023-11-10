@@ -28,6 +28,7 @@
   --x-small: calc(var(--small) / var(--scale));
   --base-line-height: 1; 
   --button-border-radius: 2rem;
+  --box-line-height: 1.5rem;
   }
 
   h1, h2, h3, h4, h5 {
@@ -142,6 +143,10 @@
     gap: 1rem;
     border-radius: var(--button-border-radius);
     z-index: 100;
+  }
+
+  .message-box p {
+    line-height: var(--box-line-height);
   }
 
   .modal {

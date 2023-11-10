@@ -24,7 +24,7 @@ export function checkModal(type: string, url: string = '/'):void {
 
   if (type === 'stop' || type === 'delete') {
     messageBox.innerHTML =  `
-    <p style='color: red'>${warningText}</p>
+    <p style='color: var(--bg-main)'>${warningText}</p>
     <div class='button-group'>
       <button id='modal-button' type='button'>resume</button>
       <button id='end-button' type='button'>${buttonText}</button>
