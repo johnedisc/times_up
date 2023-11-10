@@ -134,14 +134,12 @@ export const addLinkListener = (parent: HTMLElement):void => {
   if (links) {
     for (let i = 0; i < links.length; i++) {
       links[i].addEventListener('click', (event) => {
-        console.log(links[i]);
         event.preventDefault();
         const url = links[i].getAttribute('href');
 //        const url = (event.target as HTMLAnchorElement).href;
 //        const url = links[i].href;
 //        const trimmedUrl = url.slice(url.lastIndexOf('/'));
-        if (document.querySelector('interval-page') && url && links[i].offsetParent?.id !== 'menu-button') {
-          console.log('hi');
+        if (document.querySelector('interval-page') && url && !(document.querySelector('interval-page') as any).complete) {
           checkModal('stop', url);
         } else {
           _timesUpApp.router.go(url);

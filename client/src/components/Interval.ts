@@ -13,6 +13,7 @@ export class Interval extends HTMLElement {
   intervalProgram: ITimerList[] | null = null;
   backgroundColorIndex: number = 0;
   remainder: number = 0;
+  complete: boolean = false;
 
   constructor() {
     super();
@@ -78,17 +79,14 @@ export class Interval extends HTMLElement {
     clearSelf(this.categoryHeader);
 //    clearSelf(this.timerHeader);
 //    this.divContainer.appendChild(this.timerHeader);
-    const menuButton = document.createElement('p');
-    menuButton.setAttribute('id', 'menu-button');
-    menuButton.innerHTML = `<a href='/menu'>menu</a>`;    
-    this.divContainer.appendChild(menuButton);
     addLinkListener(this.divContainer);
+    this.complete = true;
     this.timerHeader.innerHTML = `all done`;
     this.timerHeader.style.fontSize = '4rem';
     this.instruction.innerHTML = '';
-    menuButton?.querySelector('a')?.addEventListener('click', () => {
-      clearSelf(this);
-    });
+//    menuButton?.querySelector('a')?.addEventListener('click', () => {
+//      clearSelf(this);
+//    });
   }
 
   async connectedCallback() {
