@@ -133,7 +133,13 @@ add-remove-button {
 
 .add-remove-button {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: var(--gutter);
+}
+
+#remove-button,
+#add-button {
+  width: 50%;
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
