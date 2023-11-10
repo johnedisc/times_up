@@ -15,6 +15,7 @@ form#intervals {
   padding: 0 10%;
   top: 0%;
   left: 0%;
+  gap: var(--gutter);
 }
 
 .menu li, interval-form {
@@ -124,6 +125,15 @@ navigation-bar {
 
 .button-group > * {
   width: 4rem;
+}
+
+add-remove-button {
+  width: var(--mobile-width);
+}
+
+.add-remove-button {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {

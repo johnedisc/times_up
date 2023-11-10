@@ -29,6 +29,7 @@
   --base-line-height: 1; 
   --button-border-radius: 2rem;
   --box-line-height: 1.5rem;
+  --mobile-width: 85%;
   }
 
   h1, h2, h3, h4, h5 {

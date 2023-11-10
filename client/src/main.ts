@@ -13,6 +13,7 @@ import { LogIn } from './components/LogIn.js';
 import { Register } from './components/Register.js';
 import { ErrorPage } from './components/ErrorPage.js';
 import { NavigationBar } from './components/NavigationBar.js';
+import { AddRemoveButton } from './components/AddRemoveButton.js';
 import { grabColors } from './utilities/utilities.js';
 customElements.define('interval-page', Interval);
 customElements.define('interval-form', IntervalForm);
@@ -24,6 +25,7 @@ customElements.define('start-page', StartPage);
 customElements.define('register-user', Register);
 customElements.define('log-in', LogIn);
 customElements.define('navigation-bar', NavigationBar);
+customElements.define('add-remove-button', AddRemoveButton);
 
 //declare global {
 //  interface Window {

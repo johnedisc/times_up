@@ -86,13 +86,19 @@ export class ProgramForm extends HTMLElement {
 
         <button type='submit'>send</button>
       </form>
-      <p id='add-interval'>add another interval</p>
+      <add-remove-button></add-remove-button>
     `;
 
     this.addIntervalElements(programId);
-    document.getElementById('add-interval')?.addEventListener('click', () => {
+    document.getElementById('add-button')?.addEventListener('click', (event) => {
+      event?.preventDefault();
 //      if (programForm) this.setIntervalBindings(programForm);
       this.addIntervalElements(programId);
+    });
+    document.getElementById('remove-button')?.addEventListener('click', (event) => {
+      event?.preventDefault();
+      const lastForm: NodeList = document.querySelectorAll('interval-form');
+      (lastForm[lastForm.length -1] as HTMLElement).remove();
     });
 
   }
