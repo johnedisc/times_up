@@ -26,30 +26,27 @@ export const UserDataAPI = {
     }
   },
   post: async (pathName: string, data: any) => {
-    try {
-//      console.log(pathName, data);
-      const response: Response = await fetch(pathName, {
-        method: 'POST',
-        body: JSON.stringify(data)
-      });
+    const response: Response = await fetch(pathName, {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
 
-      let apiResponse;
-      let headers: any = {};
-      for (let item of response.headers) {
-        headers[item[0]] = item[1];
-      }
-      if (headers.ok && pathName === '/programName') {
-        apiResponse = await response.json();
-        _timesUpApp.store.user.programs.push(apiResponse);
-        return apiResponse;
-      } else {
-        return undefined;
-      }
-    } catch (error) {
-      console.log(error);
+    console.log(response.ok);
+    let apiResponse;
+    let headers: any = {};
+    for (let item of response.headers) {
+      headers[item[0]] = item[1];
+    }
+    if (headers.ok && pathName === '/programName') {
+      apiResponse = await response.json();
+      _timesUpApp.store.user.programs.push(apiResponse);
+      return apiResponse;
+    } else {
+      return undefined;
     }
   }
 }
+
 
 export const API = {
   url: "/auth",

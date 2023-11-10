@@ -27,7 +27,8 @@ export function programs(request: IncomingMessage, response: ServerResponse): vo
 
     // if there is no body
     if (body.length === 0) {
-      response.end('you didn\'t send anything');
+      response.writeHead(301, { 'Location': '/' });
+      response.end();
       return 0;
     }
 
