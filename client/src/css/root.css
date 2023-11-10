@@ -109,6 +109,7 @@
     font-size: var(--base-font-size);
     line-height: var(--base-line-height);
     text-align: center;
+    z-index: -10;
   }
 
   #container {
@@ -140,6 +141,7 @@
     padding: 1rem;
     gap: 1rem;
     border-radius: var(--button-border-radius);
+    z-index: 100;
   }
 
   .modal {

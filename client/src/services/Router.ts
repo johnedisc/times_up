@@ -6,7 +6,7 @@ export const Router = {
 
     // event handler for changes popstate
     window.addEventListener('popstate', (event) => {
-      console.log('pop');
+      console.log(event.state.path);
       Router.go(event.state.path, false);
     });
     
