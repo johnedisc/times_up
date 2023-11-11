@@ -102,7 +102,11 @@ export class Interval extends HTMLElement {
       // grab user selected program and assign to class
       for (let i = 0; i < _timesUpApp.store.user.programs.length; i++) {
         if (_timesUpApp.store.user.programs[i].program_name === this.dataset.programName) {
-          this.intervalProgram = _timesUpApp.store.user.programs[i].intervals;
+
+          //make a shallow copy. this matter?
+          this.intervalProgram = [..._timesUpApp.store.user.programs[i].intervals];
+          //sort the list so it is in order
+          this.intervalProgram?.sort((a, b) => a.sequence_number - b.sequence_number);
           break;
         }
       }
