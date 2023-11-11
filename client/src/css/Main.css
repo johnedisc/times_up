@@ -1,5 +1,9 @@
 @import url('./root.css');
 
+body > * {
+  max-width: 1000px;
+}
+
 .start-screen,
 .error-page,
 .log-in,
@@ -33,6 +37,9 @@ form#intervals {
 menu-modal h1 {
   font-size: var(--h5);
   line-height: 2rem;
+}
+
+program-form {
 }
 
 program-form > * {
