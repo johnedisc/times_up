@@ -37,7 +37,7 @@ export class ProgramForm extends HTMLElement {
       intervalForm.dataset.interval_program_id = programId.toString();
     }
 //    intervalForm.dataset.interval_program_id = _timesUpApp.store.dataId;
-    document.querySelector('button')?.before(intervalForm);
+    document.querySelector('add-remove-button')?.before(intervalForm);
   }
 
   formName():void {
@@ -84,9 +84,9 @@ export class ProgramForm extends HTMLElement {
       <h1 class='h4'>${this.#newProgram.name}</h1>
       <form id='intervals' class='flex-down start-screen'>
 
+        <add-remove-button></add-remove-button>
         <button type='submit'>send</button>
       </form>
-      <add-remove-button></add-remove-button>
     `;
 
     this.addIntervalElements(programId);
