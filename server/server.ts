@@ -6,6 +6,7 @@ import EventEmitter from 'events';
 import { IncomingMessage, ServerResponse } from 'http';
 import { handleAPI } from './auth.js';
 import { programs } from './programs.js';
+import { checkSession } from './postgresqlDB.js';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -34,16 +35,29 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: an
   }
 }
 
-const parseRequest = (request: IncomingMessage, response: ServerResponse): void => {
+const parseRequest = async (request: IncomingMessage, response: ServerResponse): Promise<void> => {
+  console.log('cookies: ', request.headers['cookie']?.slice(3));
   if (request.url?.includes('auth')) console.log('parse req: ', request.url);
 
   serverHit.emit('hit', request);
 
-  if (request.url?.includes('auth')) {
-    handleAPI(request, response);
+  if (request.url?.includes('program') || request.url?.includes('intervalName')) {
+    console.log('program entry');
+    const checkCookie = async (cookie: string) => {
+      const exists = await checkSession(cookie);
+      if (!exists) {
+        response.writeHead(302, { 'Location': '/' });
+        response.end();
+        return 0;
+      }
+    }
+    if (request.headers['cookie']) {
+      await checkCookie(request.headers['cookie']?.slice(3));
+      programs(request, response);
+    }
     return;
-  } else if (request.url?.includes('program') || request.url?.includes('intervalName')) {
-    programs(request, response);
+  } else if (request.url?.includes('auth')) {
+    handleAPI(request, response);
     return;
   } else if (request.url) {
     const extension: any  = path.extname(request.url);
@@ -86,7 +100,6 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
                     ? path.join(__dirname, '..', '..', 'client', path.basename(request.url))
                       : path.join(__dirname, '..', '..', 'client', request.url);
 
-    console.log('server.ts ', filePath);
 
     // ensures spa won't try to reload to the current spot
     if (!extension && request.url?.slice(-1) !== '/') {
@@ -123,4 +136,5 @@ const parseRequest = (request: IncomingMessage, response: ServerResponse): void 
 } 
 
 const server = http.createServer(parseRequest);
+
 server.listen(PORT, () => console.log(`server is running on ${PORT}`));

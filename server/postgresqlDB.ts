@@ -177,7 +177,6 @@ export const getIntervals = async (id: number): Promise<undefined | string | any
   const result:QueryResultRow = await pool.query(text, values);
 
   if (result.rows.length === 0) {
-    console.log(result);
     return undefined;
   } else {
     for (let i = 0; i < result.rows.length; i++) {
@@ -185,4 +184,27 @@ export const getIntervals = async (id: number): Promise<undefined | string | any
     }
     return result.rows;
   }
+}
+
+export const createSession = async (sessionId: string, accountId: number): Promise<undefined | string | any> => {
+  const text = 'INSERT INTO sessions(session_id, account_id) VALUES ($1,$2) RETURNING *';
+  const values = [sessionId, accountId];
+  const result:QueryResultRow = await pool.query(text, values);
+  if (result.rows.length === 0) return undefined;
+  return result.rows[0];
+}
+
+export const checkSession = async (sessionId: string = '', accountId: number = 0): Promise<boolean> => {
+  let index: string | number;
+  if (sessionId.length > 0) {
+    index = sessionId;
+  } else {
+    index = accountId;
+  }
+  const text = 'SELECT * FROM sessions WHERE account_id=$1';
+  const values = [index];
+  const result:QueryResultRow = await pool.query(text, values);
+  if (result.rows.length === 0) return false;
+//  await pool.query('DELETE FROM sessions WHERE account_id=$1', [accountId]);
+  return true;
 }

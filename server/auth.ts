@@ -1,9 +1,9 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { registerUser, findUsers, createGroup } from "./postgresqlDB.js";
+import { registerUser, findUsers, createGroup, createSession, checkSession } from "./postgresqlDB.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { QueryResultRow } from "pg";
-
+import { v4 as uuidv4 } from 'uuid';
 
 export function handleAPI(request: IncomingMessage, response: ServerResponse): void {
 
@@ -35,6 +35,7 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
     // parse out the body from string to JS object
     bodyString = Buffer.concat(body).toString(); 
     bodyJSON = JSON.parse(bodyString);
+    const userId = bodyJSON.id;
 
 
     if (url === '/auth/login') {
@@ -57,32 +58,43 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
             // email/password correct
             if (result) {
 
-              response.on('error', err => {
-                console.error(err);
-              });
+              checkSession(returnedValue.id).then(thing => console.log('checkSession: ', thing));
+              
+              const session = createSession(uuidv4(), returnedValue.id);
+              session
+                .then((sessionData: any) => {
+                  
+                  response.on('error', err => {
+                    console.error(err);
+                  });
 
-              response.writeHead(200, { 
-                'Content-Type': 'application/json', 
-                'ok': 'true',
-                'message': 'successful login',
-              });
+                  response.writeHead(200, { 
+                    'Content-Type': 'application/json', 
+                    'ok': 'true',
+                    'message': 'successful login',
+                    'Set-Cookie': `id=${sessionData.session_id}; Secure; HttpOnly; SameSite=None; Path=/; Domain=localhost:3300`
+                  });
 
-              const userDataFromDB = { 
-                name: returnedValue.name, 
-                email: returnedValue.email,
-                id: returnedValue.id,
-                groups: returnedValue.groups,
-                token: ''
-              };
-              const token = jwt.sign(
-                userDataFromDB, 
-                process.env.JWT_PASSWORD as jwt.Secret,
-                { expiresIn: '1hr' }
-              );
-              userDataFromDB.token = token;
+                  const userDataFromDB = { 
+                    name: returnedValue.name, 
+                    email: returnedValue.email,
+                    id: returnedValue.id,
+                    groups: returnedValue.groups,
+                    token: ''
+                  };
+                  const token = jwt.sign(
+                    userDataFromDB, 
+                    process.env.JWT_PASSWORD as jwt.Secret,
+                    { expiresIn: '1hr' }
+                  );
+                  userDataFromDB.token = token;
 
-              response.end(JSON.stringify(userDataFromDB));
-              return 0;
+                  response.end(JSON.stringify(userDataFromDB));
+
+                });
+
+                return 0;
+
             }
 
             response.writeHead(401, { 
@@ -168,3 +180,5 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
     }
   });
 }
+
+

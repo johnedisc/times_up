@@ -34,9 +34,9 @@ export const Router = {
 
     // if the store is empty and the requested page needs the store, reroute to home
     // MUST FIX!!!
-    if ((purePath !== '/' && purePath !== '/register') && !_timesUpApp.store.user) {
-      purePath = '/';
-    }
+//    if ((purePath !== '/' && purePath !== '/register') && !_timesUpApp.store.user) {
+//      purePath = '/';
+//    }
 
     switch (purePath) {
       case "/":
