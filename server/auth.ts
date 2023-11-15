@@ -64,7 +64,6 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
               session
                 .then((sessionData: any) => {
                   
-                  console.log('auth session: ', sessionData);
                   response.on('error', err => {
                     console.error(err);
                   });

@@ -77,7 +77,7 @@ export class IntervalForm extends HTMLElement {
 
       if (this.#newListItem.id === parseInt(_timesUpApp.store.dataId)) {
         _timesUpApp.dataId = 0;
-        _timesUpApp.router.go('/menu');
+        _timesUpApp.router.go('/');
       }
 
     });

@@ -49,13 +49,16 @@ export class MenuModal extends HTMLElement {
   }
 
   async connectedCallback() {
-    if (_timesUpApp.store.user) {
       document.body.style.backgroundColor = 'var(--bg-start-screen)';
       await UserDataAPI.grabPrograms();
       this.appendChild(this.renderMenu());
-    } else {
-      _timesUpApp.router.go('/');
-    }
+//    if (_timesUpApp.store.user) {
+//      document.body.style.backgroundColor = 'var(--bg-start-screen)';
+//      await UserDataAPI.grabPrograms();
+//      this.appendChild(this.renderMenu());
+//    } else {
+//      _timesUpApp.router.go('/');
+//    }
   }
 }
 

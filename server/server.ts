@@ -42,10 +42,10 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
   serverHit.emit('hit', request);
 
   if (request.url?.includes('program') || request.url?.includes('intervalName')) {
-    console.log('program entry');
+
     const checkCookie = async (cookie: string) => {
       const exists = await checkSession(cookie);
-      console.log('exists: ', exists);
+
       if (!exists) {
         response.writeHead(302, { 'Location': '/' });
         response.end();

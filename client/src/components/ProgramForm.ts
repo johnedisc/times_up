@@ -116,7 +116,7 @@ export class ProgramForm extends HTMLElement {
         }
 
         const programObject = await UserDataAPI.post('/programName', programName);
-        if (!programObject) { _timesUpApp.router.go('/'); }
+//        if (!programObject) { _timesUpApp.router.go('/'); }
 
 //        console.log('submit event listener ', programObject);
         if (document.getElementById('program-name')) {

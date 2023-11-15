@@ -15,6 +15,7 @@ export const Router = {
 
   },
   go: (path: string, addToHistory=true) => {
+    console.log(path, addToHistory);
 
     if (addToHistory) {
       history.pushState({ path }, '', path)
@@ -41,15 +42,15 @@ export const Router = {
     switch (purePath) {
       case "/":
         clearScreen();
+        pageElement = document.createElement('menu-modal');
+        break;
+      case "/login":
+        clearScreen();
         pageElement = document.createElement('log-in');
         break;
       case "/register":
         clearScreen();
         pageElement = document.createElement('register-user');
-        break;
-      case "/menu":
-        clearScreen();
-        pageElement = document.createElement('menu-modal');
         break;
       case "/interval":
         clearScreen();

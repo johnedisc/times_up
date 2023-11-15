@@ -18,15 +18,15 @@ export class StartPage extends HTMLElement {
   
   startScreen(user: string):void {
     const firstName: string = user.split(/\s|\W/g)[0]
-    this.h1.innerHTML = `<a href='/menu'>hi, ${firstName}</a>`;
-    this.h5.innerHTML = `<a href='/menu'>this is the start screen.</a>`;
-    this.h5_2.innerHTML = `<a href='/menu' style='color: var(--bg-main)'>click here for menu</a>`;
+    this.h1.innerHTML = `<a href='/'>hi, ${firstName}</a>`;
+    this.h5.innerHTML = `<a href='/'>this is the start screen.</a>`;
+    this.h5_2.innerHTML = `<a href='/' style='color: var(--bg-main)'>click here for menu</a>`;
     this.div.classList.add('flex-down', 'start-screen');
     this.h1.classList.add('h2');
     
     addLinkListener(this.div);
 //    this.h5.addEventListener('click', () => {
-//      _timesUpApp.router.go('/menu');
+//      _timesUpApp.router.go('/');
 //    })
   }
 

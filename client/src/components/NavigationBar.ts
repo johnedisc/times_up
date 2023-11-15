@@ -11,7 +11,7 @@ export class NavigationBar extends HTMLElement {
       <a href='/' id='back-btn'>
             <div id='back-btn-inner'></div>
       </a>
-      <a href='/menu' id='menu-btn'>
+      <a href='/' id='menu-btn'>
             <div id='menu-btn-inner'></div>
       </a>
     </div>

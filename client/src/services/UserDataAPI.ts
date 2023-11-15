@@ -6,6 +6,7 @@ export const UserDataAPI = {
   grabPrograms: async () => {
     try {
 //      console.log(_timesUpApp.store.user);
+//      if (!_timesUpApp.store.user) API.login
       const response: Response = await fetch(UserDataAPI.url, {
         method: 'POST',
         body: JSON.stringify(_timesUpApp.store.user)

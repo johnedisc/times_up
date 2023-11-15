@@ -10,7 +10,7 @@ export class AddRemoveButton extends HTMLElement {
       <a href='/' id='remove-button'>
         <p style='color: var(--warning-text)'>remove</p>
       </a>
-      <a href='/menu' id='add-button'>
+      <a href='/' id='add-button'>
         <p style='color: var(--bg-main)'>add</p>
       </a>
     </div>

@@ -204,11 +204,11 @@ export const checkSession = async (sessionId: string = '', accountId: number = 0
     index = accountId;
     field = 'account_id';
   }
-  console.log('postgres session: ', index);
+//  console.log('postgres session: ', index);
   const text = `SELECT * FROM sessions WHERE ${field}=$1`;
   const values = [index];
   const result:QueryResultRow = await pool.query(text, values);
-  console.log('check session: ', result.rows[0]);
+//  console.log('check session: ', result.rows[0]);
   if (result.rows.length === 0) return false;
 //  await pool.query('DELETE FROM sessions WHERE account_id=$1', [accountId]);
   return true;
