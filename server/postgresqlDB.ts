@@ -196,14 +196,19 @@ export const createSession = async (sessionId: string, accountId: number): Promi
 
 export const checkSession = async (sessionId: string = '', accountId: number = 0): Promise<boolean> => {
   let index: string | number;
+  let field: string;
   if (sessionId.length > 0) {
     index = sessionId;
+    field = 'session_id';
   } else {
     index = accountId;
+    field = 'account_id';
   }
-  const text = 'SELECT * FROM sessions WHERE account_id=$1';
+  console.log('postgres session: ', index);
+  const text = `SELECT * FROM sessions WHERE ${field}=$1`;
   const values = [index];
   const result:QueryResultRow = await pool.query(text, values);
+  console.log('check session: ', result.rows[0]);
   if (result.rows.length === 0) return false;
 //  await pool.query('DELETE FROM sessions WHERE account_id=$1', [accountId]);
   return true;

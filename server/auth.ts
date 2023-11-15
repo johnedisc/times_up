@@ -58,12 +58,13 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
             // email/password correct
             if (result) {
 
-              checkSession(returnedValue.id).then(thing => console.log('checkSession: ', thing));
+//              checkSession(returnedValue.id).then(thing => console.log('checkSession: ', thing));
               
               const session = createSession(uuidv4(), returnedValue.id);
               session
                 .then((sessionData: any) => {
                   
+                  console.log('auth session: ', sessionData);
                   response.on('error', err => {
                     console.error(err);
                   });
@@ -72,8 +73,9 @@ export function handleAPI(request: IncomingMessage, response: ServerResponse): v
                     'Content-Type': 'application/json', 
                     'ok': 'true',
                     'message': 'successful login',
-                    'Set-Cookie': `id=${sessionData.session_id}; Secure; HttpOnly; SameSite=None; Path=/; Domain=localhost:3300`
+                    'Set-Cookie': `id=${sessionData.session_id}; Path=/`
                   });
+//Secure; HttpOnly; SameSite=None; Path=/; Domain=localhost:3300
 
                   const userDataFromDB = { 
                     name: returnedValue.name, 

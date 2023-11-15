@@ -36,8 +36,8 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: an
 }
 
 const parseRequest = async (request: IncomingMessage, response: ServerResponse): Promise<void> => {
-  console.log('cookies: ', request.headers['cookie']?.slice(3));
-  if (request.url?.includes('auth')) console.log('parse req: ', request.url);
+  console.log(request.url, 'cookies: ', request.headers['cookie']);
+//  if (request.url?.includes('auth')) console.log('parse req: ', request.url);
 
   serverHit.emit('hit', request);
 
@@ -45,6 +45,7 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
     console.log('program entry');
     const checkCookie = async (cookie: string) => {
       const exists = await checkSession(cookie);
+      console.log('exists: ', exists);
       if (!exists) {
         response.writeHead(302, { 'Location': '/' });
         response.end();
@@ -52,6 +53,7 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
       }
     }
     if (request.headers['cookie']) {
+      console.log('program entry cookie ', request.headers['cookie']);
       await checkCookie(request.headers['cookie']?.slice(3));
       programs(request, response);
     }
