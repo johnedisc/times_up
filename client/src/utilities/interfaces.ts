@@ -22,7 +22,8 @@ export interface IStore {
   currentIndex: number | null,
   dataId: number | null,
   usageData: any | null,
-  backgroundColors: string[] | null
+  backgroundColors: string[] | null,
+  accessToken: string | null
 }
 
 export interface IApp {

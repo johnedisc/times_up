@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { registerUser, findUsers, createGroup, createSession, checkSession, deleteSession } from "./postgresqlDB.js";
+import { registerUser, findUsers, createGroup, createSession, checkSession } from "./postgresqlDB.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from 'uuid';
@@ -39,73 +39,64 @@ export async function handleAPI(request: IncomingMessage, response: ServerRespon
     if (url === '/auth/login') {
 
       // check that email exists in DB
-          console.log('auth login: ', bodyJSON);
       const searchResults = findUsers(bodyJSON.email);
       searchResults
         .then((returnedValue) => {
+          console.log('auth login: ', bodyJSON);
           console.log('auth login: ', returnedValue);
 
-          // check pass
+          // no exist 
+          if (returnedValue === undefined) {
+            throw new Error('log in error')
+          };
+
+          // exist
           bcrypt.compare(bodyJSON.password, returnedValue.password as any).then(function(result) {
 
-            // correct pass
+            // email/password correct
             if (result) {
 
-              const logoutSession = async (id: number) => {
-                const exists = await checkSession('',id);
-                if (exists) await deleteSession(id);
-              }
-              //delete previous session if exists
-              logoutSession(returnedValue.id);
+//              checkSession(returnedValue.id).then(thing => console.log('checkSession: ', thing));
+              
+              const session = createSession(uuidv4(), returnedValue.id);
+              session
+                .then((sessionData: any) => {
+                  
+                  response.on('error', err => {
+                    console.error(err);
+                  });
 
-              //create accessToken for login
-              const accessToken = jwt.sign(
-                { 'email': bodyJSON.email }, 
-                process.env.JWT_PASSWORD_ACCESS as jwt.Secret,
-                { expiresIn: '30m' }
-              );
-              //create refreshToken for a session
-              const refreshToken = jwt.sign(
-                { 'email': bodyJSON.email }, 
-                process.env.JWT_PASSWORD_REFRESH as jwt.Secret,
-                { expiresIn: '1d' }
-              );
+                  response.writeHead(200, { 
+                    'Content-Type': 'application/json', 
+                    'ok': 'true',
+                    'message': 'successful login',
+                    'Set-Cookie': `id=${sessionData.session_id}; Path=/`
+                  });
+//Secure; HttpOnly; SameSite=None; Path=/; Domain=localhost:3300
 
-              // store session
-              const session = createSession(refreshToken, returnedValue.id);
+                  const userDataFromDB = { 
+                    name: returnedValue.name, 
+                    email: returnedValue.email,
+                    id: returnedValue.id,
+                    groups: returnedValue.groups,
+                    token: ''
+                  };
+                  const token = jwt.sign(
+                    userDataFromDB, 
+                    process.env.JWT_PASSWORD as jwt.Secret,
+                    { expiresIn: '1hr' }
+                  );
+                  userDataFromDB.token = token;
 
-              console.log('refreshToken: ', refreshToken);
-              // send cookie
-              response.writeHead(201, { 
-                'Content-Type': 'text/plain',
-                'ok': 'true',
-                'message': 'successful insertion',
-                'Set-Cookie': `id=${refreshToken}; Path=/; HttpOnly; Max-Age="${24 * 60 * 60 * 1000}"; Secure`
-              });
-              ////Secure; HttpOnly; SameSite=None; Path=/; Domain=localhost:3300
-              response.end(JSON.stringify(accessToken));
+                  response.end(JSON.stringify(userDataFromDB));
 
+                });
 
-//              const userDataFromDB = { 
-//                name: returnedValue.name, 
-//                email: returnedValue.email,
-//                id: returnedValue.id,
-//                groups: returnedValue.groups,
-//                token: ''
-//              };
-//              const token = jwt.sign(
-//                userDataFromDB, 
-//                process.env.JWT_PASSWORD as jwt.Secret,
-//                { expiresIn: '1hr' }
-//              );
-//              userDataFromDB.token = token;
-
-              return 0;
+                return 0;
 
             }
 
-            //bad credentials
-            response.writeHead(403, { 
+            response.writeHead(401, { 
               'Content-Type': 'text/plain', 
               'ok': 'false',
               'message': 'bad login credentials'
@@ -152,6 +143,8 @@ export async function handleAPI(request: IncomingMessage, response: ServerRespon
           password: hashedPassword,
           name: bodyJSON.name
         }
+
+
         // check if user already exists
         const searchResults = findUsers(userLogInData.userName);
         searchResults.then((returnedValue) => {
@@ -160,7 +153,9 @@ export async function handleAPI(request: IncomingMessage, response: ServerRespon
           };
           const dbResponse = registerUser(userLogInData.userName, userLogInData.name, userLogInData.password);
           dbResponse.then((returnedValue) => {
-            createGroup(returnedValue.id, userLogInData.name);
+            const dbResponse2 = createGroup(returnedValue.id, userLogInData.name);
+            dbResponse2.then((value) => {
+            })
             response.writeHead(201, { 
               'Content-Type': 'text/plain',
               'ok': 'true',
@@ -172,7 +167,7 @@ export async function handleAPI(request: IncomingMessage, response: ServerRespon
         .catch((error) => {
           console.log('catch statement', error);
           response
-          .writeHead(401, { 
+          .writeHead(400, { 
             'Content-Type': 'text/plain', 
             'ok': 'false',
             'message': error
@@ -186,5 +181,3 @@ export async function handleAPI(request: IncomingMessage, response: ServerRespon
 }
 
 
-
-            

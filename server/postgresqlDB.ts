@@ -194,7 +194,7 @@ export const createSession = async (sessionId: string, accountId: number): Promi
   return result.rows[0];
 }
 
-export const checkSession = async (sessionId: string = '', accountId: number = 0): Promise<boolean> => {
+export const checkSession = async (sessionId: string = '', accountId: number = 0): Promise<boolean | any> => {
   let index: string | number;
   let field: string;
   if (sessionId.length > 0) {
@@ -211,5 +211,16 @@ export const checkSession = async (sessionId: string = '', accountId: number = 0
 //  console.log('check session: ', result.rows[0]);
   if (result.rows.length === 0) return false;
 //  await pool.query('DELETE FROM sessions WHERE account_id=$1', [accountId]);
-  return true;
+  return result.rows[0];
+}
+
+export const deleteSession = async (accountId: number): Promise<boolean | any> => {
+//  console.log('postgres session: ', index);
+  const text = `DELETE FROM sessions WHERE account_id=$1`;
+  const values = [accountId];
+  const result:QueryResultRow = await pool.query(text, values);
+//  console.log('check session: ', result.rows[0]);
+  if (result.rows.length === 0) return false;
+//  await pool.query('DELETE FROM sessions WHERE account_id=$1', [accountId]);
+  return result.rows[0];
 }

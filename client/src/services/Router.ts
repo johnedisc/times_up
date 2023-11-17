@@ -42,7 +42,7 @@ export const Router = {
     switch (purePath) {
       case "/":
         clearScreen();
-        pageElement = document.createElement('menu-modal');
+        pageElement = document.createElement('user-menu');
         break;
       case "/login":
         clearScreen();
@@ -72,7 +72,7 @@ export const Router = {
         pageElement = document.createElement('error-page');
     }
 
-    if (purePath === '/' || purePath === '/register') {
+    if (purePath === '/login' || purePath === '/register') {
     _timesUpApp.store.container.appendChild(pageElement);
     } else {
       const navBar = document.createElement('navigation-bar');

@@ -1,8 +1,9 @@
 import { UserDataAPI } from "../services/UserDataAPI.js";
 import { _timesUpApp } from "../main.js";
 import { addLinkListener } from "../utilities/utilities.js";
+import { Auth } from "../services/Auth.js";
 
-export class MenuModal extends HTMLElement {
+export class Menu extends HTMLElement {
   constructor() {
     super(); 
   }
@@ -49,15 +50,28 @@ export class MenuModal extends HTMLElement {
   }
 
   async connectedCallback() {
-      document.body.style.backgroundColor = 'var(--bg-start-screen)';
-      await UserDataAPI.grabPrograms();
-      this.appendChild(this.renderMenu());
+      const userPrograms = await UserDataAPI.grabPrograms();
+      if (userPrograms) {
+        document.body.style.backgroundColor = 'var(--bg-start-screen)';
+        this.appendChild(this.renderMenu());
+      }
+//    if (_timesUpApp.auth.isLoggedIn) {
+//      document.body.style.backgroundColor = 'var(--bg-start-screen)';
+//      await UserDataAPI.grabPrograms();
+//      this.appendChild(this.renderMenu());
+//    } else {
+//      document.body.style.backgroundColor = 'var(--bg-start-screen)';
+//      await UserDataAPI.grabPrograms();
+//      this.appendChild(this.renderMenu());
+//      _timesUpApp.auth.login();
+//      _timesUpApp.router.go('/login');
+//    }
 //    if (_timesUpApp.store.user) {
 //      document.body.style.backgroundColor = 'var(--bg-start-screen)';
 //      await UserDataAPI.grabPrograms();
 //      this.appendChild(this.renderMenu());
 //    } else {
-//      _timesUpApp.router.go('/');
+//      _timesUpApp.router.go('/login');
 //    }
   }
 }

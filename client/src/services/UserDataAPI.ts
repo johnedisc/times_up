@@ -5,25 +5,36 @@ export const UserDataAPI = {
   url: "/programs",
   grabPrograms: async () => {
     try {
-//      console.log(_timesUpApp.store.user);
-//      if (!_timesUpApp.store.user) API.login
+        console.log(_timesUpApp.store.accessToken);
       const response: Response = await fetch(UserDataAPI.url, {
         method: 'POST',
-        body: JSON.stringify(_timesUpApp.store.user)
+        headers: {
+          "Authorization": `Bearer ${_timesUpApp.store.accessToken}`
+        }
       });
 
-      let apiResponse;
-      let headers: any = {};
-      for (let item of response.headers) {
-        headers[item[0]] = item[1];
+        console.log(response);
+      if (response.status === 403) {
+        //if no bearer
+        _timesUpApp.router.go('/login');
+        return false;
       }
-      if (headers.ok === 'true') {
-        apiResponse = await response.json();
-        _timesUpApp.store.user.programs = apiResponse;
-      } 
 
+//      let headers: any = {};
+//      for (let item of response.headers) {
+//        headers[item[0]] = item[1];
+//      }
+//
+//      let apiResponse;
+//      if (response.ok) {
+//        apiResponse = await response.json();
+//        console.log(apiResponse);
+//        _timesUpApp.store.user.programs = apiResponse;
+//        return true;
+//      } 
+//
     } catch (error) {
-      console.log(error);
+      console.log('this is UserDataAPI: ', error);
     }
   },
   post: async (pathName: string, data: any) => {
@@ -61,12 +72,18 @@ export const API = {
       let apiResponse;
       if (response.ok) {
         apiResponse = await response.json();
-        _timesUpApp.store.user = apiResponse;
-        _timesUpApp.store.user.programs = [];
+//        _timesUpApp.auth.isLoggedIn = true;
+//        _timesUpApp.auth.account = apiResponse;
+        console.log('json: ', apiResponse);
+        _timesUpApp.store.accessToken = apiResponse;
+//        console.log(_timesUpApp);
+//        _timesUpApp.store.user = apiResponse;
+//        _timesUpApp.store.user.programs = [];
         return response.ok;
       } else {
         apiResponse = await response.text();
-        return response.ok;
+        console.log('text: ',apiResponse);
+//        return response.ok;
       }
     } catch (error) {
       console.log('this is a fetch error\n', error);

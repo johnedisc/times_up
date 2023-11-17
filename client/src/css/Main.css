@@ -34,7 +34,7 @@ form#intervals {
   background-color: var(--bg-2);
 }
 
-menu-modal h1 {
+user-menu h1 {
   font-size: var(--h5);
   line-height: 2rem;
 }

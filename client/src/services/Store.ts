@@ -8,7 +8,8 @@ const Store: IStore = {
   currentIndex: null,
   dataId: null,
   usageData: null,
-  backgroundColors: null
+  backgroundColors: null,
+  accessToken: null
 }
 
 export const StoreProxy = new Proxy(Store, {

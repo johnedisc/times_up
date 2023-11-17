@@ -8,6 +8,8 @@ import { handleAPI } from './auth.js';
 import { programs } from './programs.js';
 import { checkSession } from './postgresqlDB.js';
 import * as dotenv from 'dotenv';
+import { verifyJWT } from './verifyJWT.js';
+import { refreshJWT } from './refreshJWT.js';
 dotenv.config();
 
 export const serverHit = new EventEmitter();
@@ -22,6 +24,16 @@ const PORT: number | string = process.env.PORT || 3500;
 //  cert: fs.readFileSync('/etc/ssl/sslTime/timesup.test.crt')
 //};
 
+    export const checkCookie = async (cookie: string) => {
+      return await checkSession(cookie);
+
+//      if (request.headers['cookie']) {
+//        console.log('hello?');
+//        const dbData = await checkSession(request.headers['cookie']?.slice(3));
+//        console.log(dbData);
+//      }
+    }
+
 const serveFile = async (filePath: string, contentType: string, httpResponse: any): Promise<void> => {
 //  console.log('line 10', filePath, contentType);
   try {
@@ -35,28 +47,20 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: an
   }
 }
 
-const parseRequest = async (request: IncomingMessage, response: ServerResponse): Promise<void> => {
-  console.log(request.url, 'cookies: ', request.headers['cookie']);
-//  if (request.url?.includes('auth')) console.log('parse req: ', request.url);
+export interface IncomingMessageWithUser extends IncomingMessage {
+  userId: number;
+}
 
+const parseRequest = async (request: IncomingMessage, response: ServerResponse): Promise<void> => {
+//  console.log(request.headers.origin, 'cookies: ', request.headers['cookie']);
+
+  
   serverHit.emit('hit', request);
 
   if (request.url?.includes('program') || request.url?.includes('intervalName')) {
-
-    const checkCookie = async (cookie: string) => {
-      const exists = await checkSession(cookie);
-
-      if (!exists) {
-        response.writeHead(302, { 'Location': '/' });
-        response.end();
-        return 0;
-      }
-    }
-    if (request.headers['cookie']) {
-      console.log('program entry cookie ', request.headers['cookie']);
-      await checkCookie(request.headers['cookie']?.slice(3));
-      programs(request, response);
-    }
+    const verified = verifyJWT(request, response);
+    console.log(verified);
+//    if (verified) programs(sessionData.account_id, request, response);
     return;
   } else if (request.url?.includes('auth')) {
     handleAPI(request, response);

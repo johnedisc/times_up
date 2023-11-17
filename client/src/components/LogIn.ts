@@ -92,18 +92,18 @@ export class LogIn extends HTMLElement {
           'password': this.#user.password
         }
 
-        const credentialsFromDB = await API.login(userInput);
+        const credentialsFromDB = await _timesUpApp.auth.login(userInput);
+        console.log('cred ', credentialsFromDB, _timesUpApp.store.accessToken);
 
 
-        // todo, check login credentials
-        if (credentialsFromDB === false) {
+        if (!credentialsFromDB) {
           this.badCredentialsModal();
           this.bad = false;
         } else {
 
-          await UserDataAPI.grabPrograms();
-          document.body.style.backgroundColor = 'var(--bg-start-screen)';
           _timesUpApp.router.go(`/`);
+//          await UserDataAPI.grabPrograms();
+//          document.body.style.backgroundColor = 'var(--bg-start-screen)';
         }
 
         for (let i = 0; i < form.elements.length; i++) {

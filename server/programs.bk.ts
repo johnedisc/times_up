@@ -1,12 +1,12 @@
+
 import { IncomingMessage, ServerResponse } from "http";
 import { createProgram, getIntervals, getTable, createInterval } from "./postgresqlDB.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { QueryResultRow } from "pg";
-import { IncomingMessageWithUser } from "./server.js";
 
 
-export function programs(userId: number, request: IncomingMessage, response: ServerResponse): void {
+export function programs(request: IncomingMessage, response: ServerResponse): void {
 
   // initialize the request body stream variables
   let body:any = [];
@@ -42,8 +42,10 @@ export function programs(userId: number, request: IncomingMessage, response: Ser
     bodyString = Buffer.concat(body).toString();
     bodyJSON = JSON.parse(bodyString);
 
-    if (url === '/programs') {
-      const programs = getIntervals(userId);
+    let decoded = jwt.verify(bodyJSON.token, process.env.JWT_PASSWORD as jwt.Secret);
+
+    if (decoded && url === '/programs') {
+      const programs = getIntervals(bodyJSON.id);
       programs
         .then((programNamesFromSQL) => {
 
@@ -64,7 +66,7 @@ export function programs(userId: number, request: IncomingMessage, response: Ser
                 response.end(JSON.stringify(programNamesFromSQL));
               }
         });
-    } else if (bodyJSON && url === '/programName') {
+    } else if (decoded && url === '/programName') {
       const programs = createProgram(bodyJSON.user_id, bodyJSON.group_id, bodyJSON.program_name);
       programs
         .then((programNamesFromSQL) => {
@@ -86,7 +88,7 @@ export function programs(userId: number, request: IncomingMessage, response: Ser
                 response.end(JSON.stringify(programNamesFromSQL));
               }
         });
-    } else if (bodyJSON && url === '/intervalName') {
+    } else if (decoded && url === '/intervalName') {
       const programs = createInterval(bodyJSON.interval_program_id, bodyJSON.interval_name, bodyJSON.sequence_number, bodyJSON.time_seconds);
       programs
         .then((programNamesFromSQL) => {
