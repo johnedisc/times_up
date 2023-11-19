@@ -24,18 +24,8 @@ const PORT: number | string = process.env.PORT || 3500;
 //  cert: fs.readFileSync('/etc/ssl/sslTime/timesup.test.crt')
 //};
 
-    export const checkCookie = async (cookie: string) => {
-      return await checkSession(cookie);
-
-//      if (request.headers['cookie']) {
-//        console.log('hello?');
-//        const dbData = await checkSession(request.headers['cookie']?.slice(3));
-//        console.log(dbData);
-//      }
-    }
-
 const serveFile = async (filePath: string, contentType: string, httpResponse: any): Promise<void> => {
-//  console.log('line 10', filePath, contentType);
+  //  console.log('line 10', filePath, contentType);
   try {
     const data = await fsPromises.readFile(filePath, 'utf8');
     httpResponse.writeHead(200, { 'Content-Type': contentType });
@@ -47,98 +37,125 @@ const serveFile = async (filePath: string, contentType: string, httpResponse: an
   }
 }
 
-export interface IncomingMessageWithUser extends IncomingMessage {
-  userId: number;
-}
-
-const parseRequest = async (request: IncomingMessage, response: ServerResponse): Promise<void> => {
-//  console.log(request.headers.origin, 'cookies: ', request.headers['cookie']);
-
-  
-  serverHit.emit('hit', request);
-
-  if (request.url?.includes('program') || request.url?.includes('intervalName')) {
-    const verified = verifyJWT(request, response);
-    console.log(verified);
-//    if (verified) programs(sessionData.account_id, request, response);
+function serveStaticFiles(request: IncomingMessage, response: ServerResponse) {
+  if (typeof request.url !== 'string') {
+    response.writeHead(301, { 'Location': '/' });
+    response.end();
     return;
-  } else if (request.url?.includes('auth')) {
-    handleAPI(request, response);
-    return;
-  } else if (request.url) {
-    const extension: any  = path.extname(request.url);
-    let contentType: string;
+  }
 
-    switch (extension) {
-      case '.css':
-        contentType = 'text/css';
-      break;
-      case '.js':
-        contentType = 'text/javascript';
-      break;
-      case '.json':
-        contentType = 'application/json';
-      break;
-      case '.jpg':
-        contentType = 'image/jpeg';
-      break;
-      case '.png':
-        contentType = 'image/png';
-      break;
-      case '.txt':
-        contentType = 'text/plain';
-      break;
-      case '.ico':
-        contentType = 'image/x-icon';
-      break;
-      default:
-        contentType = 'text/html';
-    }
+  const extension: any  = path.extname(request.url);
+  let contentType: string;
 
-    let filePath = 
-      contentType === 'text/html' && request.url === '/'
+  switch (extension) {
+    case '.css':
+      contentType = 'text/css';
+    break;
+    case '.js':
+      contentType = 'text/javascript';
+    break;
+    case '.json':
+      contentType = 'application/json';
+    break;
+    case '.jpg':
+      contentType = 'image/jpeg';
+    break;
+    case '.png':
+      contentType = 'image/png';
+    break;
+    case '.txt':
+      contentType = 'text/plain';
+    break;
+    case '.ico':
+      contentType = 'image/x-icon';
+    break;
+    default:
+      contentType = 'text/html';
+  }
+
+  let filePath = 
+    contentType === 'text/html' && request.url === '/'
+      ? path.join(__dirname, '..', '..', 'client', 'index.html')
+      : contentType === 'text/html' && request.url === '/index.html'
         ? path.join(__dirname, '..', '..', 'client', 'index.html')
-          : contentType === 'text/html' && request.url === '/index.html'
-            ? path.join(__dirname, '..', '..', 'client', 'index.html')
-              : contentType === 'text/css'
-                ? path.join(__dirname, '..', '..', 'client', 'src', 'css', path.basename(request.url))
-                  : contentType === 'image/x-icon'
-                    ? path.join(__dirname, '..', '..', 'client', path.basename(request.url))
-                      : path.join(__dirname, '..', '..', 'client', request.url);
-
+        : contentType === 'text/css'
+          ? path.join(__dirname, '..', '..', 'client', 'src', 'css', path.basename(request.url))
+          : contentType === 'image/x-icon'
+            ? path.join(__dirname, '..', '..', 'client', path.basename(request.url))
+            : path.join(__dirname, '..', '..', 'client', request.url);
 
     // ensures spa won't try to reload to the current spot
     if (!extension && request.url?.slice(-1) !== '/') {
       filePath = path.join(__dirname, '..', '..', 'client', 'index.html');
     }
 
-//    console.log(filePath);
-    // check if file exists
-    let fileExists = fs.existsSync(filePath);
-
-
-    if (fileExists) {
+    if (fs.existsSync(filePath)) {
       // serve file
       serveFile(filePath, contentType, response);
-
     } else {
       // 301 redirect
       switch(path.parse(filePath).base) {
-        case 'unused-url.html':
-          response.writeHead(301, { 'Location': '/index.html' });
-          response.end();
-          break;
-        case 'www-something.html':
+        case '':
           response.writeHead(301, { 'Location': '/' });
-          response.end();
-          break;
-        default:
-////          serve a 404
-          console.log('trouble at the mill', request.url);
-//          serveFile(path.join(__dirname, '..', '..', 'client', 'src', '404.html'), 'text/html', response);
+        response.end();
+        break;
       };
     };
-  }
+}
+
+export interface IncomingMessageWithUser extends IncomingMessage {
+  userId: number;
+}
+
+const parseRequest = async (request: IncomingMessage, response: ServerResponse): Promise<void> => {
+  console.log(request.url);
+  // log it
+  serverHit.emit('hit', request);
+
+  // initialize the request body stream variables
+  let body:any = [];
+  let bodyString:string;
+  let bodyJSON:any;
+
+  // parse out the request info
+  const { headers, method, url } = request;
+
+  request
+  .on('error', err => {
+    console.error('request error', err);
+  })
+  .on('data', chunk => {
+    body.push(chunk);
+  })
+  .on('end', async () => {
+
+    if (body.length > 0) {
+      // parse out the body from string to JS object
+      bodyString = Buffer.concat(body).toString();
+      bodyJSON = JSON.parse(bodyString);
+      console.log('body');
+    }
+
+    if (request.url?.includes('program') || request.url?.includes('intervalName')) {
+      try {
+        const verified = await verifyJWT(request, response);
+        console.log('verify=== ', verified);
+        if (typeof verified === 'number') {
+          programs(verified, bodyJSON, request, response);
+        }
+      } catch (err) {
+        console.log('this is a program error', err);
+      }
+    } else if (request.url?.includes('auth')) {
+      handleAPI(bodyJSON, request, response);
+      console.log('auth');
+    } else if (request.url) {
+      serveStaticFiles(request, response);
+      return;
+    }
+    console.log('end');
+  });
+
 } 
 
 const server = http.createServer(parseRequest);

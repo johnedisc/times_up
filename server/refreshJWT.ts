@@ -1,14 +1,12 @@
 
 import { IncomingMessage, ServerResponse } from "http";
 import jwt from "jsonwebtoken";
-import { checkSession, findUsers } from "./postgresqlDB.js";
+import { checkSession } from "./postgresqlDB.js";
 
-export const refreshJWT = async (request: IncomingMessage, response: ServerResponse) => {
+export const refreshJWT = async (request: IncomingMessage, response: ServerResponse): Promise<boolean | number> => {
   const cookie = request.headers['cookie']?.slice(3);
   const sessionData = await checkSession(cookie);
 
-  console.log('session: ', sessionData);
-  console.log('cookie: ', cookie);
   if (!cookie) {
     response
     .writeHead(403, {
@@ -18,14 +16,15 @@ export const refreshJWT = async (request: IncomingMessage, response: ServerRespo
     })
     .end(); 
     return false;
+
   } else {
     jwt.verify(
       cookie, 
       process.env.JWT_PASSWORD_REFRESH as jwt.Secret, 
       function(error, decoded) {
-        console.log(decoded);
-        if (error) {
-          console.log('what\'s the error look like?', error);
+
+        if (error || sessionData.account_id !== (decoded as any).id) {
+          console.log('tampered token', error);
           response
           .writeHead(403, {
             'Content-Type': 'text/plain', 
@@ -45,7 +44,9 @@ export const refreshJWT = async (request: IncomingMessage, response: ServerRespo
         );
 
         response.end(JSON.stringify(accessToken));
-        return ;
       })
+
+        console.log('in refresh function');
+      return sessionData.account_id;
   }
 }

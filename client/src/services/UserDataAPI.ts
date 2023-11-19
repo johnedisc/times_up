@@ -5,7 +5,6 @@ export const UserDataAPI = {
   url: "/programs",
   grabPrograms: async () => {
     try {
-        console.log(_timesUpApp.store.accessToken);
       const response: Response = await fetch(UserDataAPI.url, {
         method: 'POST',
         headers: {
@@ -13,9 +12,9 @@ export const UserDataAPI = {
         }
       });
 
-        console.log(response);
       if (response.status === 403) {
         //if no bearer
+        console.log('403');
         _timesUpApp.router.go('/login');
         return false;
       }
@@ -25,14 +24,13 @@ export const UserDataAPI = {
 //        headers[item[0]] = item[1];
 //      }
 //
-//      let apiResponse;
-//      if (response.ok) {
-//        apiResponse = await response.json();
-//        console.log(apiResponse);
+      let apiResponse = await response.json();
+      if (response.ok) {
+        console.log('grabPrograms: ',apiResponse);
 //        _timesUpApp.store.user.programs = apiResponse;
-//        return true;
-//      } 
-//
+        return true;
+      } 
+
     } catch (error) {
       console.log('this is UserDataAPI: ', error);
     }
@@ -43,7 +41,6 @@ export const UserDataAPI = {
       body: JSON.stringify(data)
     });
 
-    console.log(response.ok);
     let apiResponse;
     let headers: any = {};
     for (let item of response.headers) {
@@ -74,7 +71,6 @@ export const API = {
         apiResponse = await response.json();
 //        _timesUpApp.auth.isLoggedIn = true;
 //        _timesUpApp.auth.account = apiResponse;
-        console.log('json: ', apiResponse);
         _timesUpApp.store.accessToken = apiResponse;
 //        console.log(_timesUpApp);
 //        _timesUpApp.store.user = apiResponse;
@@ -82,7 +78,6 @@ export const API = {
         return response.ok;
       } else {
         apiResponse = await response.text();
-        console.log('text: ',apiResponse);
 //        return response.ok;
       }
     } catch (error) {

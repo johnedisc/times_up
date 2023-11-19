@@ -1,117 +1,107 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { createProgram, getIntervals, getTable, createInterval } from "./postgresqlDB.js";
+import { createProgram, getIntervals, getTable, createInterval, findEmailById, findUsers } from "./postgresqlDB.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { QueryResultRow } from "pg";
 import { IncomingMessageWithUser } from "./server.js";
 
 
-export function programs(userId: number, request: IncomingMessage, response: ServerResponse): void {
-
-  // initialize the request body stream variables
-  let body:any = [];
-  let bodyString:string;
-  let bodyJSON:any;
-
+export async function programs(userId: number, body: any, request: IncomingMessage, response: ServerResponse): Promise<void> {
+  
   // parse out the request info
   const { headers, method, url } = request;
-  console.log('programs: ', url, method);
 
-  request
-  .on('error', err => {
-    console.error('request error', err);
-  })
-  .on('data', chunk => {
-    body.push(chunk);
-  })
-  .on('end', () => {
+  const email = await findEmailById(userId);
+  const user = await findUsers(email.email);
 
-    // if there is no body
-    if (body.length === 0) {
+  const userDataFromDB = { 
+    name: user.name, 
+    email: user.email,
+    id: user.id,
+    groups: user.groups,
+    programs: []
+  };
+
+
+
+  console.log('userDataFromDB: ',userDataFromDB);
+
+  if (url === '/programs') {
+    console.log(1);
+
+    const programs = await getIntervals(userDataFromDB.id);
+
+    if (programs === undefined) {
+    console.log(undefined);
       response.writeHead(401, {
         'message': 'program not found',
         'ok': 'false',
         'programs': 'false'
       });
-      response.end();
-      return 0;
-    }
-
-
-    // parse out the body from string to JS object
-    bodyString = Buffer.concat(body).toString();
-    bodyJSON = JSON.parse(bodyString);
-
-    if (url === '/programs') {
-      const programs = getIntervals(userId);
-      programs
-        .then((programNamesFromSQL) => {
-
-              if (programNamesFromSQL === undefined) {
-                response.writeHead(401, {
-                  'message': 'program not found',
-                  'ok': 'false',
-                  'programs': 'false'
-                });
-                response.end();
-                return 1;
-              } else {
-                response.writeHead(200, { 
-                  'Content-Type': 'application/json',
-                  'ok': 'true',
-                  'message': 'program found'
-                });
-                response.end(JSON.stringify(programNamesFromSQL));
-              }
-        });
-    } else if (bodyJSON && url === '/programName') {
-      const programs = createProgram(bodyJSON.user_id, bodyJSON.group_id, bodyJSON.program_name);
-      programs
-        .then((programNamesFromSQL) => {
-
-              if (programNamesFromSQL === undefined) {
-                response.writeHead(401, {
-                  'message': 'trouble with the create program function',
-                  'ok': 'false',
-                  'programs': 'false'
-                });
-                response.end();
-                return 1;
-              } else {
-                response.writeHead(200, { 
-                  'Content-Type': 'application/json',
-                  'ok': 'true',
-                  'message': 'program found'
-                });
-                response.end(JSON.stringify(programNamesFromSQL));
-              }
-        });
-    } else if (bodyJSON && url === '/intervalName') {
-      const programs = createInterval(bodyJSON.interval_program_id, bodyJSON.interval_name, bodyJSON.sequence_number, bodyJSON.time_seconds);
-      programs
-        .then((programNamesFromSQL) => {
-
-              if (programNamesFromSQL === undefined) {
-                response.writeHead(401, {
-                  'message': 'trouble with the create program function',
-                  'ok': 'false',
-                  'programs': 'false'
-                });
-                response.end();
-                return 1;
-              } else {
-                response.writeHead(200, { 
-                  'Content-Type': 'application/json',
-                  'ok': 'true',
-                  'message': 'program found'
-                });
-                response.end(JSON.stringify(programNamesFromSQL));
-              }
-        });
+      response.end(JSON.stringify(userDataFromDB));
+      return;
     } else {
-      response.writeHead(401, 'token expired');
-      response.end();
-      return 0;
+    console.log('yes');
+      response.writeHead(200, { 
+        'Content-Type': 'application/json',
+        'ok': 'true',
+        'message': 'program found'
+      });
+      userDataFromDB.programs = programs;
+      response.end(JSON.stringify(userDataFromDB));
+      return;
     }
-  });
+
+  } else if (body && url === '/programName') {
+    console.log(2);
+    const programs = createProgram(user.user_id, body.group_id, body.program_name);
+    programs
+    .then((programNamesFromSQL) => {
+
+      if (programNamesFromSQL === undefined) {
+        response.writeHead(401, {
+          'message': 'trouble with the create program function',
+          'ok': 'false',
+          'programs': 'false'
+        });
+        response.end();
+        return;
+      } else {
+        response.writeHead(200, { 
+          'Content-Type': 'application/json',
+          'ok': 'true',
+          'message': 'program found'
+        });
+        response.end(JSON.stringify(programNamesFromSQL));
+      }
+    });
+  } else if (body && url === '/intervalName') {
+    console.log(3);
+    const programs = createInterval(body.interval_program_id, body.interval_name, body.sequence_number, body.time_seconds);
+    programs
+    .then((programNamesFromSQL) => {
+
+      if (programNamesFromSQL === undefined) {
+        response.writeHead(401, {
+          'message': 'trouble with the create program function',
+          'ok': 'false',
+          'programs': 'false'
+        });
+        response.end();
+        return 1;
+      } else {
+        response.writeHead(200, { 
+          'Content-Type': 'application/json',
+          'ok': 'true',
+          'message': 'program found'
+        });
+        response.end(JSON.stringify(programNamesFromSQL));
+      }
+    });
+  } else {
+    console.log(4);
+    response.writeHead(401, 'token expired');
+    response.end();
+  }
+
 }
