@@ -8,26 +8,21 @@ export const UserDataAPI = {
       const response: Response = await fetch(UserDataAPI.url, {
         method: 'POST',
         headers: {
-          "Authorization": `Bearer ${_timesUpApp.store.accessToken}`
+          "Authorization": `Bearer ${sessionStorage.getItem('accessToken')}`
         }
       });
 
-      if (response.status === 403) {
+      if (!response.ok) {
         //if no bearer
-        console.log('403');
+        console.log('didnt work', response.status);
         _timesUpApp.router.go('/login');
         return false;
-      }
+      } else if (response.ok) {
 
-//      let headers: any = {};
-//      for (let item of response.headers) {
-//        headers[item[0]] = item[1];
-//      }
-//
-      let apiResponse = await response.json();
-      if (response.ok) {
+        let apiResponse = await response.json();
         console.log('grabPrograms: ',apiResponse);
-//        _timesUpApp.store.user.programs = apiResponse;
+        sessionStorage.setItem("accessToken", apiResponse.session_id);
+        _timesUpApp.store.user = apiResponse;
         return true;
       } 
 
@@ -71,7 +66,8 @@ export const API = {
         apiResponse = await response.json();
 //        _timesUpApp.auth.isLoggedIn = true;
 //        _timesUpApp.auth.account = apiResponse;
-        _timesUpApp.store.accessToken = apiResponse;
+        sessionStorage.removeItem('accessToken');
+        sessionStorage.setItem("accessToken", apiResponse);
 //        console.log(_timesUpApp);
 //        _timesUpApp.store.user = apiResponse;
 //        _timesUpApp.store.user.programs = [];

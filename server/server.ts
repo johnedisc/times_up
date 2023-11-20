@@ -139,9 +139,12 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
     if (request.url?.includes('program') || request.url?.includes('intervalName')) {
       try {
         const verified = await verifyJWT(request, response);
-        console.log('verify=== ', verified);
-        if (typeof verified === 'number') {
-          programs(verified, bodyJSON, request, response);
+        if (verified) {
+          const refreshId = await refreshJWT(request, response);
+          console.log(refreshId);
+          if (refreshId) {
+            programs(refreshId, bodyJSON, request, response);
+          }
         }
       } catch (err) {
         console.log('this is a program error', err);

@@ -4,10 +4,14 @@ import jwt from "jsonwebtoken";
 import { checkSession } from "./postgresqlDB.js";
 
 export const refreshJWT = async (request: IncomingMessage, response: ServerResponse): Promise<boolean | number> => {
+
   const cookie = request.headers['cookie']?.slice(3);
   const sessionData = await checkSession(cookie);
 
+  let returnValue = false;
+
   if (!cookie) {
+    console.log('no cookie');
     response
     .writeHead(403, {
       'Content-Type': 'text/plain', 
@@ -15,13 +19,12 @@ export const refreshJWT = async (request: IncomingMessage, response: ServerRespo
       'message': 'return to login'
     })
     .end(); 
-    return false;
 
   } else {
     jwt.verify(
       cookie, 
       process.env.JWT_PASSWORD_REFRESH as jwt.Secret, 
-      function(error, decoded) {
+      async function(error, decoded) {
 
         if (error || sessionData.account_id !== (decoded as any).id) {
           console.log('tampered token', error);
@@ -33,20 +36,22 @@ export const refreshJWT = async (request: IncomingMessage, response: ServerRespo
           })
           .end(); 
 
-          return false;
-        }
-        
-        //create accessToken
-        const accessToken = jwt.sign(
-          { 'email': 'ralph' }, 
-          process.env.JWT_PASSWORD_ACCESS as jwt.Secret,
-          { expiresIn: '30m' }
-        );
+        } else if (decoded) {
 
-        response.end(JSON.stringify(accessToken));
+          //create accessToken
+          const accessToken = jwt.sign(
+            { 'email': 'ralph' }, 
+            process.env.JWT_PASSWORD_ACCESS as jwt.Secret,
+            { expiresIn: '30m' }
+          );
+
+          console.log('access: ', accessToken);
+          returnValue = sessionData;
+        }
+
       })
 
-        console.log('in refresh function');
-      return sessionData.account_id;
   }
+
+  return returnValue;
 }

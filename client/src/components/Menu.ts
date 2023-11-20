@@ -52,6 +52,7 @@ export class Menu extends HTMLElement {
   async connectedCallback() {
       const userPrograms = await UserDataAPI.grabPrograms();
       if (userPrograms) {
+        if (!_timesUpApp.store.user.programs) _timesUpApp.router.go('/');
         document.body.style.backgroundColor = 'var(--bg-start-screen)';
         this.appendChild(this.renderMenu());
       }

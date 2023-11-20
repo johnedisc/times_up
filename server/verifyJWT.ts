@@ -3,11 +3,14 @@ import jwt from "jsonwebtoken";
 import { refreshJWT } from "./refreshJWT";
 
 export const verifyJWT = async (request: IncomingMessage, response: ServerResponse): Promise<boolean | number> => {
+
   const accessToken = request.headers['authorization']?.split(' ')[1];
-        console.log('accessToken === ', accessToken);
+  console.log('accessToken === ', request.headers);
+
+  let verified = false;
 
   if (accessToken === 'null' || !accessToken || accessToken === '') {
-        console.log('no token');
+    console.log('no token');
 
     response
       .writeHead(401, {
@@ -17,13 +20,13 @@ export const verifyJWT = async (request: IncomingMessage, response: ServerRespon
     })
       .end(); 
 
-
   } else if (accessToken) {
 
+    console.log('token exists');
     jwt.verify(
       accessToken, 
       process.env.JWT_PASSWORD_ACCESS as jwt.Secret, 
-      function(error, decoded) {
+      async function(error, decoded) {
         if (error) {
           console.log('token not verified ', error);
           response
@@ -34,14 +37,12 @@ export const verifyJWT = async (request: IncomingMessage, response: ServerRespon
           })
           .end(); 
 
-          return false;
         } else if (decoded) {
-          return refreshJWT(request, response);
+          console.log('token is good', decoded);
+          verified = true;
         }
       })
-      console.log('is this real');
   }
 
-  return false;
-
+  return verified;
 }

@@ -6,15 +6,17 @@ import { QueryResultRow } from "pg";
 import { IncomingMessageWithUser } from "./server.js";
 
 
-export async function programs(userId: number, body: any, request: IncomingMessage, response: ServerResponse): Promise<void> {
+export async function programs(sessionData: any, body: any, request: IncomingMessage, response: ServerResponse): Promise<void> {
   
   // parse out the request info
   const { headers, method, url } = request;
+  const { session_id, account_id } = sessionData;
 
-  const email = await findEmailById(userId);
+  const email = await findEmailById(account_id);
   const user = await findUsers(email.email);
 
   const userDataFromDB = { 
+    accessToken: session_id,
     name: user.name, 
     email: user.email,
     id: user.id,
@@ -30,16 +32,17 @@ export async function programs(userId: number, body: any, request: IncomingMessa
     console.log(1);
 
     const programs = await getIntervals(userDataFromDB.id);
+    console.log('programs: ', programs);
 
     if (programs === undefined) {
-    console.log(undefined);
-      response.writeHead(401, {
-        'message': 'program not found',
+      response.writeHead(200, {
+        'Content-Type': 'application/json',
+        'message': 'no programs',
         'ok': 'false',
         'programs': 'false'
       });
       response.end(JSON.stringify(userDataFromDB));
-      return;
+
     } else {
     console.log('yes');
       response.writeHead(200, { 
@@ -49,7 +52,6 @@ export async function programs(userId: number, body: any, request: IncomingMessa
       });
       userDataFromDB.programs = programs;
       response.end(JSON.stringify(userDataFromDB));
-      return;
     }
 
   } else if (body && url === '/programName') {
@@ -65,7 +67,6 @@ export async function programs(userId: number, body: any, request: IncomingMessa
           'programs': 'false'
         });
         response.end();
-        return;
       } else {
         response.writeHead(200, { 
           'Content-Type': 'application/json',
@@ -88,7 +89,6 @@ export async function programs(userId: number, body: any, request: IncomingMessa
           'programs': 'false'
         });
         response.end();
-        return 1;
       } else {
         response.writeHead(200, { 
           'Content-Type': 'application/json',
