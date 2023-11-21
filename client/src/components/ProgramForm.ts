@@ -111,17 +111,17 @@ export class ProgramForm extends HTMLElement {
         const programName = {
           'program_name': this.#newProgram.name,
           'group_id': parseInt(this.#newProgram.groups),
-          'user_id': _timesUpApp.store.user.id,
-          'token': _timesUpApp.store.user.token
+          'user_id': _timesUpApp.store.user.id
         }
 
         const programObject = await UserDataAPI.post('/programName', programName);
 //        if (!programObject) { _timesUpApp.router.go('/'); }
+        console.log('prog obj', programObject);
 
 //        console.log('submit event listener ', programObject);
         if (document.getElementById('program-name')) {
 
-          this.intervals(programObject.id);
+          this.intervals(programObject.programs[programObject.programs.length-1].program_id);
         }
 
       }

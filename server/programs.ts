@@ -35,7 +35,7 @@ export async function programs(sessionData: any, body: any, request: IncomingMes
     const programs = await getIntervals(userDataFromDB.id);
     console.log('programs: ', programs);
 
-    if (programs === undefined) {
+    if (!programs) {
       response.writeHead(200, {
         'Content-Type': 'application/json',
         'message': 'no programs',
@@ -57,11 +57,12 @@ export async function programs(sessionData: any, body: any, request: IncomingMes
 
   } else if (body && url === '/programName') {
     console.log(2);
-    const programs = createProgram(userDataFromDB.id, body.group_id, body.program_name);
-    programs
-    .then((programNamesFromSQL) => {
+    const programs = await createProgram(userDataFromDB.id, body.group_id, body.program_name);
+    const allPrograms = await getIntervals(userDataFromDB.id);
+    console.log(programs);
+    console.log(userDataFromDB);
 
-      if (programNamesFromSQL === undefined) {
+      if (!programs) {
         response.writeHead(401, {
           'message': 'trouble with the create program function',
           'ok': 'false',
@@ -74,16 +75,16 @@ export async function programs(sessionData: any, body: any, request: IncomingMes
           'ok': 'true',
           'message': 'program found'
         });
-        response.end(JSON.stringify(programNamesFromSQL));
+        userDataFromDB.programs = allPrograms;
+        response.end(JSON.stringify(userDataFromDB));
       }
-    });
+
   } else if (body && url === '/intervalName') {
-    console.log(3);
-    const programs = createInterval(body.interval_program_id, body.interval_name, body.sequence_number, body.time_seconds);
-    programs
-    .then((programNamesFromSQL) => {
+    console.log(3, body);
+    const programs = await createInterval(body.interval_program_id, body.interval_name, body.sequence_number, body.time_seconds);
+    const allPrograms = await getIntervals(userDataFromDB.id);
 
-      if (programNamesFromSQL === undefined) {
+      if (programs === undefined) {
         response.writeHead(401, {
           'message': 'trouble with the create program function',
           'ok': 'false',
@@ -96,9 +97,9 @@ export async function programs(sessionData: any, body: any, request: IncomingMes
           'ok': 'true',
           'message': 'program found'
         });
-        response.end(JSON.stringify(programNamesFromSQL));
+        userDataFromDB.programs = allPrograms;
+        response.end(JSON.stringify(userDataFromDB));
       }
-    });
   } else {
     console.log(4);
     response.writeHead(401, 'token expired');

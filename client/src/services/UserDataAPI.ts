@@ -34,19 +34,23 @@ export const UserDataAPI = {
     }
   },
   post: async (pathName: string, data: any) => {
+    console.log('data: ', data);
     const response: Response = await fetch(pathName, {
       method: 'POST',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      headers: {
+        "Authorization": `Bearer ${sessionStorage.getItem('accessToken')}`
+      }
     });
 
     let apiResponse;
-    let headers: any = {};
-    for (let item of response.headers) {
-      headers[item[0]] = item[1];
-    }
-    if (headers.ok && pathName === '/programName') {
+
+    if (response.ok && pathName === '/programName') {
       apiResponse = await response.json();
-      _timesUpApp.store.user.programs.push(apiResponse);
+      sessionStorage.clear();
+      sessionStorage.setItem("accessToken", apiResponse.accessToken);
+      _timesUpApp.store.user = apiResponse;
+      //      _timesUpApp.store.user.programs.push(apiResponse);
       return apiResponse;
     } else {
       return undefined;
