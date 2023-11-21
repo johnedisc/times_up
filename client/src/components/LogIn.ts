@@ -93,7 +93,7 @@ export class LogIn extends HTMLElement {
         }
 
         const credentialsFromDB = await _timesUpApp.auth.login(userInput);
-        console.log('cred ', credentialsFromDB, _timesUpApp.store.accessToken);
+        console.log('cred ', credentialsFromDB, sessionStorage);
 
 
         if (!credentialsFromDB) {

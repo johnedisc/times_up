@@ -10,13 +10,13 @@ export async function programs(sessionData: any, body: any, request: IncomingMes
   
   // parse out the request info
   const { headers, method, url } = request;
-  const { session_id, account_id } = sessionData;
+  const { id, accessToken } = sessionData;
 
-  const email = await findEmailById(account_id);
+  const email = await findEmailById(id);
   const user = await findUsers(email.email);
 
   const userDataFromDB = { 
-    accessToken: session_id,
+    accessToken: accessToken,
     name: user.name, 
     email: user.email,
     id: user.id,
@@ -26,6 +26,7 @@ export async function programs(sessionData: any, body: any, request: IncomingMes
 
 
 
+  console.log('body', body);
   console.log('userDataFromDB: ',userDataFromDB);
 
   if (url === '/programs') {
@@ -56,7 +57,7 @@ export async function programs(sessionData: any, body: any, request: IncomingMes
 
   } else if (body && url === '/programName') {
     console.log(2);
-    const programs = createProgram(user.user_id, body.group_id, body.program_name);
+    const programs = createProgram(userDataFromDB.id, body.group_id, body.program_name);
     programs
     .then((programNamesFromSQL) => {
 

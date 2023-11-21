@@ -3,12 +3,13 @@ import { IncomingMessage, ServerResponse } from "http";
 import jwt from "jsonwebtoken";
 import { checkSession } from "./postgresqlDB.js";
 
-export const refreshJWT = async (request: IncomingMessage, response: ServerResponse): Promise<boolean | number> => {
+export const refreshJWT = async (request: IncomingMessage, response: ServerResponse): Promise<boolean | {}> => {
 
   const cookie = request.headers['cookie']?.slice(3);
   const sessionData = await checkSession(cookie);
+    console.log('sessionData', sessionData);
 
-  let returnValue = false;
+  let returnValue: boolean | {} = false;
 
   if (!cookie) {
     console.log('no cookie');
@@ -40,13 +41,16 @@ export const refreshJWT = async (request: IncomingMessage, response: ServerRespo
 
           //create accessToken
           const accessToken = jwt.sign(
-            { 'email': 'ralph' }, 
+            { 'id': sessionData.account_id }, 
             process.env.JWT_PASSWORD_ACCESS as jwt.Secret,
             { expiresIn: '30m' }
           );
 
           console.log('access: ', accessToken);
-          returnValue = sessionData;
+          returnValue = {
+            'accessToken': accessToken,
+            'id': sessionData.account_id
+          };
         }
 
       })

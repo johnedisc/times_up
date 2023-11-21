@@ -5,6 +5,7 @@ export const UserDataAPI = {
   url: "/programs",
   grabPrograms: async () => {
     try {
+      console.log('before: ',sessionStorage.getItem('accessToken'));
       const response: Response = await fetch(UserDataAPI.url, {
         method: 'POST',
         headers: {
@@ -21,8 +22,10 @@ export const UserDataAPI = {
 
         let apiResponse = await response.json();
         console.log('grabPrograms: ',apiResponse);
-        sessionStorage.setItem("accessToken", apiResponse.session_id);
+        sessionStorage.clear();
+        sessionStorage.setItem("accessToken", apiResponse.accessToken);
         _timesUpApp.store.user = apiResponse;
+      console.log('after: ',sessionStorage.getItem('accessToken'));
         return true;
       } 
 
@@ -66,9 +69,8 @@ export const API = {
         apiResponse = await response.json();
 //        _timesUpApp.auth.isLoggedIn = true;
 //        _timesUpApp.auth.account = apiResponse;
-        sessionStorage.removeItem('accessToken');
+        console.log(apiResponse);
         sessionStorage.setItem("accessToken", apiResponse);
-//        console.log(_timesUpApp);
 //        _timesUpApp.store.user = apiResponse;
 //        _timesUpApp.store.user.programs = [];
         return response.ok;
