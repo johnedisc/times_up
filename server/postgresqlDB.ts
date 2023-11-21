@@ -80,6 +80,35 @@ export const registerUser = async (email: string, name: string, password: string
   }
 }
 
+export const updateUser = async (id: number, email: string, name: string, password: string): Promise<any> => {
+  try {
+    const text = `Update user_info
+      Set   email = $1
+            name = $2
+            password = $3
+      Where id = $4
+      RETURNING email, name, id`;
+    const values = [email,name,password,id];
+    const returnValue = await pool.query(text, values);
+    return returnValue.rows[0];
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export const deleteUser = async (id: number): Promise<any> => {
+  try {
+    const text = `Delete from user_info
+      Where id = $1
+      `;
+    const values = [id];
+    const returnValue = await pool.query(text, values);
+    return returnValue.rows[0];
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export const createGroup = async (id: number, name: string): Promise<undefined | string | any> => {
   const text = 'INSERT INTO groups(group_name, owner_id) VALUES ($1,$2) RETURNING groups.id';
   const values = [name, id];
