@@ -30,7 +30,7 @@ type Config = {
   allowExitOnIdle?: boolean
 }
 
-export const pool = new Pool({
+const pool = new Pool({
   host: process.env.PG_HOST,
   port: process.env.PG_PORT as number | undefined,
   user: process.env.PG_USER,

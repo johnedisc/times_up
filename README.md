@@ -13,6 +13,43 @@ at the conclusion of the sequence, data is stored about how long over or under t
 - postgreSQL
 - future plans involve finishing a testing and building pipeline with github actions and codedeploy
 
+### endpoints
+
+GET 	/users/:id        	get single user data
+PUT	    /users/:id  	    update user info
+POST	/users/auth  	    authenticate user
+POST	/users/register  	create new user
+DELETE	/users/:id  	    delete one user
+
+GET 	/programs        	get all programs
+DELETE	/programs  	        delete one program
+POST	/programs  	        create new program
+GET 	/programs/:id       get one program
+PUT	    /programs/:id  	    update program name
+DELETE	/programs/:id  	    delete one program
+
+GET 	/programs/:id/intervals      get all intervals with PROGRAM ID
+GET 	/intervals/:id      get single interval
+PUT	    /intervals/:id  	update interval
+POST	/intervals  	    create new interval
+DELETE	/intervals/:id  	delete single interval
+
+GET 	/data/:id           get all program data with PROGRAM ID
+GET	    /data?time=[time]&group=[group]&program=[id]	
+                            find all transactions for a given group on a given day for an id
+POST 	/data               add a completed interval to the transition
+DELETE	/data/:id  	        delete single transaction
+DELETE	/data/programs/:id  delete transactions 
+DELETE	/data?time=[time]&group=[group]&program=[id]	
+                            delete transactions at a given time for a given group with an id                            
+
+GET 	/groups/:id         get all groups by user_id
+PUT	    /groups/:id  	    update group name
+DELETE	/groups/:id  	    delete group
+POST	/groups/            create new group
+POST	/groups/members  	new group member
+
+
 ### database
 ```mermaid
     erDiagram

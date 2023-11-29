@@ -10,6 +10,8 @@ import { checkSession } from './postgresqlDB.js';
 import * as dotenv from 'dotenv';
 import { verifyJWT } from './verifyJWT.js';
 import { refreshJWT } from './refreshJWT.js';
+import { userRoute } from './controllers/Users.js';
+import { verification } from './verify.js';
 dotenv.config();
 
 export const serverHit = new EventEmitter();
@@ -103,8 +105,8 @@ function serveStaticFiles(request: IncomingMessage, response: ServerResponse) {
     };
 }
 
-export interface IncomingMessageWithUser extends IncomingMessage {
-  userId: number;
+export interface IncomingMessageWithBody extends IncomingMessage {
+  body: any;
 }
 
 const parseRequest = async (request: IncomingMessage, response: ServerResponse): Promise<void> => {
@@ -133,26 +135,22 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
       // parse out the body from string to JS object
       bodyString = Buffer.concat(body).toString();
       bodyJSON = JSON.parse(bodyString);
-      console.log('body');
+      console.log('body', bodyJSON);
     }
 
     if (request.url?.includes('program') || request.url?.includes('intervalName')) {
-      try {
-        const verified = await verifyJWT(request, response);
-          console.log('verified',verified);
-        if (verified) {
-          const refreshId = await refreshJWT(request, response);
-          console.log('refrefreshId', refreshId);
-          if (refreshId) {
-            programs(refreshId, bodyJSON, request, response);
-          }
-        }
-      } catch (err) {
-        console.log('this is a program error', err);
+      const refreshId = verification(request, response);
+      if (refreshId) programs(refreshId, bodyJSON, request, response);
+//    } else if (request.url?.includes('auth')) {
+//      handleAPI(bodyJSON, request, response);
+//      console.log('auth');
+    } else if (request.url?.includes('/users')) {
+      if (request.url?.includes('/register')) {
+        userRoute(bodyJSON, request, response);
+      } else {
+        const refreshId = verification(request, response);
+        if (refreshId !== undefined) userRoute(bodyJSON, request, response);
       }
-    } else if (request.url?.includes('auth')) {
-      handleAPI(bodyJSON, request, response);
-      console.log('auth');
     } else if (request.url) {
       serveStaticFiles(request, response);
       return;

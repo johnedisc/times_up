@@ -3,7 +3,6 @@ import { createProgram, getIntervals, getTable, createInterval, findEmailById, f
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { QueryResultRow } from "pg";
-import { IncomingMessageWithUser } from "./server.js";
 
 
 export async function programs(sessionData: any, body: any, request: IncomingMessage, response: ServerResponse): Promise<void> {
