@@ -34,8 +34,6 @@ export const getIdByEmail = async (email: string): Promise<undefined | string | 
 
 export const registerUser = async (body: any, req: IncomingMessage, res: ServerResponse): Promise<any> => {
 
-  console.log('auth reg ', body);
-
   // data validation
   if (!body.email || !body.password || !body.name) {
 
