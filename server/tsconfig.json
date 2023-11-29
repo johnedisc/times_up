@@ -7,6 +7,5 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "strict": true
-  },
-  "files": ["server.ts", "postgresqlDB.ts", "auth.ts", "logger.ts"]
+  }
 }

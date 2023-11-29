@@ -1,5 +1,5 @@
 import { QueryResultRow } from "pg";
-import { pool } from "../postgresqlDB.js";
+import { pool } from "../services/postgresqlDB.js";
 
 export const getGroups = async (id: number): Promise<undefined | string | any> => {
   const result:QueryResultRow = await pool.query(

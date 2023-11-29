@@ -10,7 +10,7 @@ import { checkSession } from './postgresqlDB.js';
 import * as dotenv from 'dotenv';
 import { verifyJWT } from './verifyJWT.js';
 import { refreshJWT } from './refreshJWT.js';
-import { userRoute } from './controllers/Users.js';
+import { userRoute } from './controllers/users.js';
 import { verification } from './verify.js';
 dotenv.config();
 
@@ -145,7 +145,7 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
 //      handleAPI(bodyJSON, request, response);
 //      console.log('auth');
     } else if (request.url?.includes('/users')) {
-      if (request.url?.includes('/register')) {
+      if (request.url?.includes('/register') || request.url?.includes('/auth')) {
         userRoute(bodyJSON, request, response);
       } else {
         const refreshId = verification(request, response);

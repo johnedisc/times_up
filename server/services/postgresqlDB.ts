@@ -227,16 +227,20 @@ export const getIntervals = async (id: number): Promise<undefined | string | any
 }
 
 export const createSession = async (sessionId: string, accountId: number): Promise<undefined | string | any> => {
-  const text = 'INSERT INTO sessions(session_id, account_id) VALUES ($1,$2) RETURNING *';
-  const values = [sessionId, accountId];
-  const result:QueryResultRow = await pool.query(text, values);
+  const result:QueryResultRow = await pool.query(
+    'INSERT INTO sessions(session_id, account_id) VALUES ($1,$2) RETURNING *',
+    [sessionId, accountId]
+  );
+
   if (result.rows.length === 0) return undefined;
+
   return result.rows[0];
 }
 
 export const checkSession = async (sessionId: string = '', accountId: number = 0): Promise<boolean | any> => {
   let index: string | number;
   let field: string;
+
   if (sessionId.length > 0) {
     index = sessionId;
     field = 'session_id';
@@ -244,23 +248,25 @@ export const checkSession = async (sessionId: string = '', accountId: number = 0
     index = accountId;
     field = 'account_id';
   }
-//  console.log('postgres session: ', index);
-  const text = `SELECT * FROM sessions WHERE ${field}=$1`;
-  const values = [index];
-  const result:QueryResultRow = await pool.query(text, values);
-//  console.log('check session: ', result.rows[0]);
-  if (result.rows.length === 0) return false;
-//  await pool.query('DELETE FROM sessions WHERE account_id=$1', [accountId]);
+
+  const result:QueryResultRow = await pool.query(
+    `SELECT * FROM sessions WHERE ${field}=$1`,
+      [index]
+  );
+
+  if (result.rows.length === 0) return undefined;
+
   return result.rows[0];
 }
 
 export const deleteSession = async (accountId: number): Promise<boolean | any> => {
-//  console.log('postgres session: ', index);
-  const text = `DELETE FROM sessions WHERE account_id=$1`;
-  const values = [accountId];
-  const result:QueryResultRow = await pool.query(text, values);
-//  console.log('check session: ', result.rows[0]);
-  if (result.rows.length === 0) return false;
-//  await pool.query('DELETE FROM sessions WHERE account_id=$1', [accountId]);
+
+  const result:QueryResultRow = await pool.query(
+    `DELETE FROM sessions WHERE account_id=$1`,
+      [accountId]
+  );
+
+  if (result.rows.length === 0) return undefined;
+
   return result.rows[0];
 }

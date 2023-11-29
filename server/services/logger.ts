@@ -1,4 +1,4 @@
-import { serverHit } from './server.js';
+import { serverHit } from '../server.js';
 import fs from 'node:fs';
 import path from 'path';
 import { IncomingMessage } from 'http';
