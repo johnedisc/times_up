@@ -1,9 +1,8 @@
 import { IncomingMessage, ServerResponse } from "http";
 import bcrypt from 'bcrypt';
-import { getIdByEmail } from './users.js';
 import { createGroup } from './groups.js';
 import { QueryResultRow } from "pg";
-import { pool } from "../services/postgresqlDB.js";
+import { pool, getIdByEmail } from "../services/postgresqlDB.js";
 import { logoutSession, createSession } from './sessions.js';
 import jwt from "jsonwebtoken";
 

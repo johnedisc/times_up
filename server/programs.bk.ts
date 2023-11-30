@@ -1,6 +1,6 @@
 
 import { IncomingMessage, ServerResponse } from "http";
-import { createProgram, getIntervals, getTable, createInterval } from "./postgresqlDB.js";
+import { createProgram, getIntervals, getTable, createInterval } from "./services/postgresqlDB.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { QueryResultRow } from "pg";

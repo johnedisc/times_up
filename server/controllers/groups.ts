@@ -1,5 +1,6 @@
 import { QueryResultRow } from "pg";
 import { pool } from "../services/postgresqlDB.js";
+import { IncomingMessage, ServerResponse } from "http";
 
 export const getGroups = async (id: number): Promise<undefined | string | any> => {
   const result:QueryResultRow = await pool.query(
@@ -30,19 +31,30 @@ export const getGroups = async (id: number): Promise<undefined | string | any> =
   return result.rows;
 }
 
-export const createGroup = async (ownerId: number, name: string): Promise<undefined | string | any> => {
+export const createGroup = async (body: any, req: IncomingMessage, res: ServerResponse): Promise<void> => {
   const result:QueryResultRow = await pool.query(
     `
     INSERT INTO groups(group_name, owner_id) 
     VALUES ($1,$2) 
     RETURNING groups.id
     `,
-    [name, ownerId]
+    [body.name, body.ownerId]
   );
-  if (result.rows.length === 0) return undefined;
+  if (result.rows.length === 0) {
+    res.writeHead(500, { 
+      'ok': 'false',
+      'message': 'db error'
+    })
+    .end();
+    return;
+  }
+  res.writeHead(201, { 
+    'ok': 'true',
+    'message': 'sucessful update',
+    'Content-Type': 'application/json'
+  })
+  .end(JSON.stringify(result.rows[0]));
 
-  await createGroupMember(result.rows[0].id, ownerId);
-  return result.rows[0];
 }
 
 export const createGroupMember = async (groupId: number, userId: number): Promise<undefined | string | any> => {

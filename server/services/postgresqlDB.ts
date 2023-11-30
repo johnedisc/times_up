@@ -46,15 +46,27 @@ export const pool = new Pool({
 //  process.exit(-1);
 //})
 
-export const findEmailById = async (id: number): Promise<undefined | string | any> => {
-  const result:QueryResultRow = await pool.query(
-    'SELECT email FROM user_info WHERE id = $1', 
-    [id]
-  );
+//export const findEmailById = async (id: number): Promise<undefined | string | any> => {
+//  const result:QueryResultRow = await pool.query(
+//    'SELECT email FROM user_info WHERE id = $1', 
+//    [id]
+//  );
+//
+//  if (result.rows.length === 0) return undefined;
+//  return result.rows[0];
+//}
 
+export const getIdByEmail = async (email: string): Promise<undefined | string | any> => {
+  const result:QueryResultRow = await pool.query(
+    'SELECT * FROM user_info WHERE email = $1',
+    [email]
+  );
   if (result.rows.length === 0) return undefined;
-  return result.rows[0];
+  else {
+    return result.rows[0].id;
+  }
 }
+
 
 export const findUsers = async (email: string): Promise<undefined | string | any> => {
   const text = 'SELECT * FROM user_info WHERE email = $1';

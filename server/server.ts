@@ -4,14 +4,10 @@ import * as fs from 'fs';
 import * as fsPromises from 'fs/promises';
 import EventEmitter from 'events';
 import { IncomingMessage, ServerResponse } from 'http';
-import { handleAPI } from './auth.js';
 import { programs } from './programs.js';
-import { checkSession } from './postgresqlDB.js';
 import * as dotenv from 'dotenv';
-import { verifyJWT } from './verifyJWT.js';
-import { refreshJWT } from './refreshJWT.js';
 import { userRoute } from './controllers/users.js';
-import { verification } from './verify.js';
+import { verification } from './services/verify.js';
 dotenv.config();
 
 export const serverHit = new EventEmitter();
@@ -139,7 +135,7 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
     }
 
     if (request.url?.includes('program') || request.url?.includes('intervalName')) {
-      const refreshId = verification(request, response);
+      const refreshId = await verification(request, response);
       if (refreshId) programs(refreshId, bodyJSON, request, response);
 //    } else if (request.url?.includes('auth')) {
 //      handleAPI(bodyJSON, request, response);
@@ -148,14 +144,17 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
       if (request.url?.includes('/register') || request.url?.includes('/auth')) {
         userRoute(bodyJSON, request, response);
       } else {
-        const refreshId = verification(request, response);
-        if (refreshId !== undefined) userRoute(bodyJSON, request, response);
+        const refreshId = await verification(request, response);
+        console.log('refreshId', refreshId);
+        if (refreshId !== undefined) {
+          bodyJSON.id = refreshId;
+          userRoute(bodyJSON, request, response);
+        }
       }
     } else if (request.url) {
       serveStaticFiles(request, response);
       return;
     }
-    console.log('end');
   });
 
 } 

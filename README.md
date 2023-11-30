@@ -16,9 +16,11 @@ at the conclusion of the sequence, data is stored about how long over or under t
 ### endpoints
 
 GET 	/users/:id        	get single user data
-PUT	    /users/:id  	    update user info
+PUT	    /users  	        update user info
+PUT	    /users/password  	update password info
 POST	/users/auth  	    authenticate user
-POST	/users/register  	create new user
+POST	/users/register  	create new users
+        return => bool
 DELETE	/users/:id  	    delete one user
 
 GET 	/programs        	get all programs
@@ -47,7 +49,8 @@ GET 	/groups/:id         get all groups by user_id
 PUT	    /groups/:id  	    update group name
 DELETE	/groups/:id  	    delete group
 POST	/groups/            create new group
-POST	/groups/members  	new group member
+        return => id(group):number
+POST	/groups/members  	create group member
 
 
 ### database

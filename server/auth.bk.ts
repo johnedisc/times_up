@@ -1,5 +1,5 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { registerUser, findUsers, createGroup, createSession, checkSession } from "./postgresqlDB.js";
+import { registerUser, findUsers, createGroup, createSession, checkSession, deleteSession } from "./services/postgresqlDB.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from 'uuid';

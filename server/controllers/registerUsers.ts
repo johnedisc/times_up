@@ -1,9 +1,8 @@
 import { IncomingMessage, ServerResponse } from "http";
 import bcrypt from 'bcrypt';
-import { getIdByEmail } from './users.js';
 import { createGroup } from './groups.js';
 import { QueryResultRow } from "pg";
-import { pool } from "../services/postgresqlDB.js";
+import { pool, getIdByEmail } from "../services/postgresqlDB.js";
 
 export const registerUsers = async (body: any, req: IncomingMessage, res: ServerResponse): Promise<void> => {
 
@@ -51,7 +50,6 @@ export const registerUsers = async (body: any, req: IncomingMessage, res: Server
     .end(JSON.stringify({ 'message': 'db entry error' }));
     return;
   } else {
-    createGroup(result.rows[0].id, userLogInData.name);
     res.writeHead(201, { 
       'ok': 'true',
       'message': 'successful insertion'

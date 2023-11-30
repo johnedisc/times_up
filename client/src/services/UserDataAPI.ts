@@ -60,10 +60,8 @@ export const UserDataAPI = {
 
 
 export const API = {
-  url: "/auth",
-  login: async (userInput: any = {}): Promise<Boolean | undefined> => {
-    try {
-      const response: Response = await fetch(API.url + '/login', {
+  auth: async (userInput: any = {}): Promise<Boolean> => {
+      const response: Response = await fetch('/users/auth', {
         method: 'POST',
         body: JSON.stringify(userInput)
       });
@@ -77,32 +75,23 @@ export const API = {
         sessionStorage.setItem("accessToken", apiResponse);
 //        _timesUpApp.store.user = apiResponse;
 //        _timesUpApp.store.user.programs = [];
-        return response.ok;
-      } else {
-        apiResponse = await response.text();
-//        return response.ok;
       }
-    } catch (error) {
-      console.log('this is a fetch error\n', error);
-      return undefined;
-    }
+      return false;
   },
-  register: async (userInput: any) => {
+  register: async (userInput: any):Promise<Boolean> => {
     try {
-      const response = await fetch(API.url + '/register', {
+      const response = await fetch('/users/register', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(userInput)
       });
-      
-      const apiResponse = await response.text();
-
       return response.ok;
 
     } catch (error) {
-//      console.error('this is a fetch error\n', error);
+      console.error('this is a fetch error\n', error);
+      return false;
     }
   }
 }
