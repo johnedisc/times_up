@@ -2,12 +2,10 @@ import { _timesUpApp } from "../main.js";
 import { LoadData } from "./LoadData.js";
 
 export const UserDataAPI = {
-  url: "/programs",
-  grabPrograms: async () => {
+  getAllPrograms: async () => {
     try {
       console.log('before: ',sessionStorage.getItem('accessToken'));
-      const response: Response = await fetch(UserDataAPI.url, {
-        method: 'POST',
+      const response: Response = await fetch('/programs', {
         headers: {
           "Authorization": `Bearer ${sessionStorage.getItem('accessToken')}`
         }
@@ -21,7 +19,7 @@ export const UserDataAPI = {
       } else if (response.ok) {
 
         let apiResponse = await response.json();
-        console.log('grabPrograms: ',apiResponse);
+        console.log('getAllPrograms: ',apiResponse);
         sessionStorage.clear();
         sessionStorage.setItem("accessToken", apiResponse.accessToken);
         _timesUpApp.store.user = apiResponse;
@@ -75,6 +73,8 @@ export const API = {
         sessionStorage.setItem("accessToken", apiResponse);
 //        _timesUpApp.store.user = apiResponse;
 //        _timesUpApp.store.user.programs = [];
+        return true;
+
       }
       return false;
   },

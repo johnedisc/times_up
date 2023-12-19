@@ -50,26 +50,27 @@ export class Menu extends HTMLElement {
   }
 
   async connectedCallback() {
-      const userPrograms: boolean | undefined = await UserDataAPI.grabPrograms();
-      if (userPrograms) {
-        if (!_timesUpApp.store.user.programs) _timesUpApp.router.go('/');
-        document.body.style.backgroundColor = 'var(--bg-start-screen)';
-        this.appendChild(this.renderMenu());
-      }
+      const userPrograms: boolean | undefined = await UserDataAPI.getAllPrograms();
+//      if (userPrograms) {
+//        if (!_timesUpApp.store.user.programs) _timesUpApp.router.go('/');
+//        document.body.style.backgroundColor = 'var(--bg-start-screen)';
+//        this.appendChild(this.renderMenu());
+//      }
+
 //    if (_timesUpApp.auth.isLoggedIn) {
 //      document.body.style.backgroundColor = 'var(--bg-start-screen)';
-//      await UserDataAPI.grabPrograms();
+//      await UserDataAPI.getAllPrograms();
 //      this.appendChild(this.renderMenu());
 //    } else {
 //      document.body.style.backgroundColor = 'var(--bg-start-screen)';
-//      await UserDataAPI.grabPrograms();
+//      await UserDataAPI.getAllPrograms();
 //      this.appendChild(this.renderMenu());
 //      _timesUpApp.auth.login();
 //      _timesUpApp.router.go('/login');
 //    }
 //    if (_timesUpApp.store.user) {
 //      document.body.style.backgroundColor = 'var(--bg-start-screen)';
-//      await UserDataAPI.grabPrograms();
+//      await UserDataAPI.getAllPrograms();
 //      this.appendChild(this.renderMenu());
 //    } else {
 //      _timesUpApp.router.go('/login');

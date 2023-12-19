@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as fsPromises from 'fs/promises';
 import EventEmitter from 'events';
 import { IncomingMessage, ServerResponse } from 'http';
-import { programs } from './programs.js';
+import { programsRoute } from './controllers/programs.js';
 import * as dotenv from 'dotenv';
 import { userRoute } from './controllers/users.js';
 import { verification } from './services/verify.js';
@@ -134,9 +134,12 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
       console.log('body', bodyJSON);
     }
 
-    if (request.url?.includes('program') || request.url?.includes('intervalName')) {
+    if (request.url?.includes('programs') || request.url?.includes('intervalName')) {
       const refreshId = await verification(request, response);
-      if (refreshId) programs(refreshId, bodyJSON, request, response);
+      if (refreshId) {
+        bodyJSON.id = refreshId;
+        programsRoute(bodyJSON, request, response);
+      }
 //    } else if (request.url?.includes('auth')) {
 //      handleAPI(bodyJSON, request, response);
 //      console.log('auth');

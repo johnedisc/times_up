@@ -1,15 +1,31 @@
 import { IncomingMessage, ServerResponse } from "http";
-import { createProgram, getIntervals, getTable, createInterval, getIdByEmail, findUsers } from "./services/postgresqlDB.js";
+import { createProgram, getIntervals, getTable, createInterval, findUsers, getIdByEmail } from "../services/postgresqlDB.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { QueryResultRow } from "pg";
 
 
-export async function programs(sessionData: any, body: any, request: IncomingMessage, response: ServerResponse): Promise<void> {
+export async function programsRoute(body: any, req: IncomingMessage, res: ServerResponse): Promise<void> {
+  console.log('programsRoute', req.url, req.method);
+  if (req.method === 'POST' && req.url === '/programs') {
+
+  } else {
+    let urlParameterString = req.url?.slice(req.url?.lastIndexOf('/')+1);
+    if (urlParameterString) {
+      let urlParameter = parseInt(urlParameterString);
+
+      if (req.method === 'GET') getPrograms(urlParameter, body, req, res);
+    }
+  }
+
+}
+
+export async function getPrograms(programNumber: number, body: any, req: IncomingMessage, res: ServerResponse): Promise<void> {
   
-  // parse out the request info
-  const { headers, method, url } = request;
-  const { id, accessToken } = sessionData;
+  console.log('getPrograms', programNumber, body);
+  // parse out the req info
+  const { headers, method, url } = req;
+  const { id, accessToken } = body;
 
   const email = await getIdByEmail(id);
   const user = await findUsers(email.email);
@@ -35,23 +51,23 @@ export async function programs(sessionData: any, body: any, request: IncomingMes
     console.log('programs: ', programs);
 
     if (!programs) {
-      response.writeHead(200, {
+      res.writeHead(200, {
         'Content-Type': 'application/json',
         'message': 'no programs',
         'ok': 'false',
         'programs': 'false'
       });
-      response.end(JSON.stringify(userDataFromDB));
+      res.end(JSON.stringify(userDataFromDB));
 
     } else {
     console.log('yes');
-      response.writeHead(200, { 
+      res.writeHead(200, { 
         'Content-Type': 'application/json',
         'ok': 'true',
         'message': 'program found'
       });
       userDataFromDB.programs = programs;
-      response.end(JSON.stringify(userDataFromDB));
+      res.end(JSON.stringify(userDataFromDB));
     }
 
   } else if (body && url === '/programName') {
@@ -62,20 +78,20 @@ export async function programs(sessionData: any, body: any, request: IncomingMes
     console.log(userDataFromDB);
 
       if (!programs) {
-        response.writeHead(401, {
+        res.writeHead(401, {
           'message': 'trouble with the create program function',
           'ok': 'false',
           'programs': 'false'
         });
-        response.end();
+        res.end();
       } else {
-        response.writeHead(200, { 
+        res.writeHead(200, { 
           'Content-Type': 'application/json',
           'ok': 'true',
           'message': 'program found'
         });
         userDataFromDB.programs = allPrograms;
-        response.end(JSON.stringify(userDataFromDB));
+        res.end(JSON.stringify(userDataFromDB));
       }
 
   } else if (body && url === '/intervalName') {
@@ -84,25 +100,25 @@ export async function programs(sessionData: any, body: any, request: IncomingMes
     const allPrograms = await getIntervals(userDataFromDB.id);
 
       if (programs === undefined) {
-        response.writeHead(401, {
+        res.writeHead(401, {
           'message': 'trouble with the create program function',
           'ok': 'false',
           'programs': 'false'
         });
-        response.end();
+        res.end();
       } else {
-        response.writeHead(200, { 
+        res.writeHead(200, { 
           'Content-Type': 'application/json',
           'ok': 'true',
           'message': 'program found'
         });
         userDataFromDB.programs = allPrograms;
-        response.end(JSON.stringify(userDataFromDB));
+        res.end(JSON.stringify(userDataFromDB));
       }
   } else {
     console.log(4);
-    response.writeHead(401, 'token expired');
-    response.end();
+    res.writeHead(401, 'token expired');
+    res.end();
   }
 
 }
