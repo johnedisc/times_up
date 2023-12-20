@@ -7,7 +7,7 @@ export async function verification(request: IncomingMessage, response: ServerRes
   console.log('verified',verified);
   if (verified) {
     const refreshId = await refreshJWT(request, response);
-    console.log('refrefreshId', refreshId);
+    console.log('refreshId', refreshId);
     return refreshId;
   }
 }

@@ -113,7 +113,7 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
   // initialize the request body stream variables
   let body:any = [];
   let bodyString:string;
-  let bodyJSON:any;
+  let bodyJSON:any = {};
 
   // parse out the request info
   const { headers, method, url } = request;
@@ -135,9 +135,9 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
     }
 
     if (request.url?.includes('programs') || request.url?.includes('intervalName')) {
-      const refreshId = await verification(request, response);
+      const refreshId: any = await verification(request, response);
       if (refreshId) {
-        bodyJSON.id = refreshId;
+        bodyJSON.id = refreshId.id;
         programsRoute(bodyJSON, request, response);
       }
 //    } else if (request.url?.includes('auth')) {
