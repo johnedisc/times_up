@@ -1,0 +1,28 @@
+POST http://localhost:3500/users/register
+Content-Type: application/json
+
+{
+  "email": "buck@gmail.com",
+  "password": "a",
+  "name": "buck"
+}
+
+
+
+POST http://localhost:3500/users/auth
+Content-Type: application/json
+
+{
+  "email": "buck@gmail.com",
+  "password": "a"
+}
+
+
+GET http://localhost:3500/
+Cookie: id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsImlhdCI6MTcwMzI3Njk2NSwiZXhwIjoxNzAzMzYzMzY1fQ.XdptrYptU-NBpgA1TR06r6rItIbJtDbhUyK11JCVA8I
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsImlhdCI6MTcwMzI3Njk2NSwiZXhwIjoxNzAzMjc4NzY1fQ.0gxqoqMxlN9e7uZIwO5m41totPl8f-C32eUX6LkeqAQ
+
+GET http://localhost:3500/programs
+Cookie: id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsImlhdCI6MTcwMzI4NTgyMywiZXhwIjoxNzAzMzcyMjIzfQ.9WgsOUjMzYX3Z0BO1_ZbMxdU2AmMO4jEUCW7u7HsGK4; Path=/; HttpOnly; Max-Age="86400000"; Secure
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsImlhdCI6MTcwMzI4NTgyMywiZXhwIjoxNzAzMjg3NjIzfQ.ITsgBa3LTWLsybpi29ix9-QriC6baI7iBnJgF84nySY
+Content-Type: application/json

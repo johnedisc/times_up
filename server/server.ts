@@ -124,6 +124,7 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
   })
   .on('data', chunk => {
     body.push(chunk);
+      console.log('chunk', body);
   })
   .on('end', async () => {
 
@@ -144,6 +145,7 @@ const parseRequest = async (request: IncomingMessage, response: ServerResponse):
 //      handleAPI(bodyJSON, request, response);
 //      console.log('auth');
     } else if (request.url?.includes('/users')) {
+  console.log('headers', request.rawHeaders);
       if (request.url?.includes('/register') || request.url?.includes('/auth')) {
         userRoute(bodyJSON, request, response);
       } else {

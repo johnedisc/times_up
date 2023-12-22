@@ -5,6 +5,7 @@ import { QueryResultRow } from "pg";
 import { pool, getIdByEmail } from "../services/postgresqlDB.js";
 
 export const registerUsers = async (body: any, req: IncomingMessage, res: ServerResponse): Promise<void> => {
+  console.log('body', body);
 
   // data validation
   if (!body.email || !body.password || !body.name) {
